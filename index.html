@@ -1,0 +1,1084 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>First Notes – Learn Guitar &amp; Clarinet Free (EN · DE · TR)</title>
+<meta name="description" content="Free beginner lessons for classical guitar and the Turkish G clarinet (sol klarnet): chord diagrams, strumming, fingerpicking, capo, fingering charts, reading music and a tuner. English, Deutsch, Türkçe.">
+<meta name="keywords" content="learn guitar, guitar chords for beginners, fingerpicking, capo calculator, guitar tuner, sol klarnet, G clarinet fingering chart, klarnet öğren, gitar akorları, Gitarre lernen, Klarinette Griffe">
+<link rel="canonical" href="https://sinandmrr.github.io/first-notes/">
+<meta name="theme-color" content="#1f7a5c">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f7a5c'/%3E%3Cellipse cx='26' cy='44' rx='10' ry='7.5' transform='rotate(-20 26 44)' fill='%23fff'/%3E%3Crect x='33' y='12' width='4' height='32' fill='%23fff'/%3E%3Cpath d='M37 12c6 4 10 7 8 15' stroke='%23fff' stroke-width='4' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f7a5c'/%3E%3Cellipse cx='26' cy='44' rx='10' ry='7.5' transform='rotate(-20 26 44)' fill='%23fff'/%3E%3Crect x='33' y='12' width='4' height='32' fill='%23fff'/%3E%3Cpath d='M37 12c6 4 10 7 8 15' stroke='%23fff' stroke-width='4' fill='none'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="First Notes – Learn Guitar &amp; Clarinet Free">
+<meta property="og:description" content="Free beginner lessons for classical guitar and the Turkish G clarinet (sol klarnet): chord diagrams, strumming, fingerpicking, capo, fingering charts, reading music and a tuner. English, Deutsch, Türkçe.">
+<meta property="og:url" content="https://sinandmrr.github.io/first-notes/">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"First Notes","url":"https://sinandmrr.github.io/first-notes/","applicationCategory":"EducationalApplication","operatingSystem":"Any","inLanguage":["en","de","tr"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Free beginner lessons for classical guitar and the Turkish G clarinet (sol klarnet): chord diagrams, strumming, fingerpicking, capo, fingering charts, reading music and a tuner. English, Deutsch, Türkçe."}</script>
+<style>[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+</head>
+<body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Music&display=swap">
+<style>
+/* Layout: sticky top bar (instrument + language), then one column of panels; tools put a diagram beside the controls on wide screens */
+:root{
+  --bg:#f2f4f3; --surface:#ffffff; --ink:#1a2321; --muted:#5a6865; --line:#d3dbd8;
+  --body:#1d2a2e; --key:#c3ccc9; --string:#98a29f;
+  --accent:#1f7a5c; --accent-soft:#dcefe6; --hi:#b8740f; --hi-soft:#f7e9d1;
+  --lh:#2f6fd0; --rh:#d2552a; --p:#7a4bd1; --i:#1f7a5c; --m:#2f6fd0; --a:#c2452a;
+  --ok:#2e7d4f; --warn:#b4531f;
+  --display:"Bricolage Grotesque",system-ui,sans-serif; --text:"Atkinson Hyperlegible",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1514; --surface:#172020; --ink:#e6eeeb; --muted:#9cafaa; --line:#2a3836;
+  --body:#090d0e; --key:#46545a; --string:#7d8a86;
+  --accent:#4fc297; --accent-soft:#17322a; --hi:#efa63a; --hi-soft:#3a2b13;
+  --lh:#6fa4f2; --rh:#f08a5d; --p:#a98af0; --i:#4fc297; --m:#78a8f5; --a:#f07f63;
+  --ok:#5cc28a; --warn:#ec8b5a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1514; --surface:#172020; --ink:#e6eeeb; --muted:#9cafaa; --line:#2a3836;
+  --body:#090d0e; --key:#46545a; --string:#7d8a86;
+  --accent:#4fc297; --accent-soft:#17322a; --hi:#efa63a; --hi-soft:#3a2b13;
+  --lh:#6fa4f2; --rh:#f08a5d; --p:#a98af0; --i:#4fc297; --m:#78a8f5; --a:#f07f63;
+  --ok:#5cc28a; --warn:#ec8b5a; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px}
+.bar-in{max-width:980px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.brand{font:800 1.15rem var(--display);letter-spacing:.01em}
+.bar-ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.seg{display:flex;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{font:700 .92rem var(--text);border:none;background:transparent;color:var(--ink);padding:7px 13px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 40px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font:800 clamp(1.8rem,6vw,2.6rem)/1.05 var(--display);margin:0;text-wrap:balance}
+.intro{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{font:700 .95rem var(--text);padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+h2{font:800 1.35rem/1.2 var(--display);margin:0 0 6px;text-wrap:balance}
+h3{font:600 1.1rem/1.3 var(--display);margin:14px 0 4px}
+.lead{margin:0 0 12px;color:var(--muted);max-width:66ch}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+.two{display:grid;grid-template-columns:1fr;gap:20px}
+@media (min-width:760px){.two{grid-template-columns:1fr 1fr}}
+@media (max-width:759px){.tool>.main{order:-1}}
+.tool{display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:760px){.tool{grid-template-columns:240px minmax(0,1fr)}}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row label{font-size:.92rem;color:var(--muted)}
+select{font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+input[type=range]{accent-color:var(--accent)}
+.btn{font:700 1rem var(--text);padding:11px 18px;border-radius:10px;border:none;cursor:pointer;background:var(--ink);color:var(--bg)}
+.btn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.go{background:var(--accent);color:#fff}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font:700 1rem var(--text);padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;min-width:50px}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.chip.done{border-color:var(--ok);color:var(--ok)}
+.diagram svg{width:100%;max-width:240px;height:auto;display:block;margin:0 auto}
+.big{font:800 clamp(2.6rem,10vw,3.6rem)/1 var(--display)}
+.steps{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
+.steps li{display:flex;gap:10px;align-items:flex-start;line-height:1.35}
+.steps .n{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 .8rem var(--text);background:var(--ink);color:var(--bg)}
+.steps .n.x{background:transparent;color:var(--warn);border:2px solid var(--warn)}
+.steps .n.o{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.steps .n.lh{background:var(--lh);color:#fff} .steps .n.rh{background:var(--rh);color:#fff}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:.93rem;align-items:center}
+.legend .k{font:700 .85rem var(--text);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;border:2px solid var(--ink)}
+.facts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.facts div{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.facts b{display:block;font:600 1rem var(--display);margin-bottom:2px}
+.facts span{color:var(--muted);font-size:.93rem}
+.beats{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:6px;margin:12px 0}
+.beat{border:1px solid var(--line);border-radius:10px;padding:8px 2px;text-align:center;display:flex;flex-direction:column;gap:2px;align-items:center}
+.beat .ar{font:800 clamp(1.3rem,5vw,2rem)/1.1 var(--display);height:1.2em}
+.beat .ct{font-size:.8rem;color:var(--muted)}
+.beat.main .ct{color:var(--ink);font-weight:700}
+.beat.cur,.cur-hi{background:var(--hi-soft);border-color:var(--hi);box-shadow:0 0 0 2px var(--hi)}
+.prog{display:flex;gap:8px;flex-wrap:wrap}
+.prog span{font:600 1.15rem var(--display);padding:6px 12px;border-radius:8px;border:1px solid var(--line)}
+.prog span.cur{background:var(--accent-soft);border-color:var(--accent)}
+.wrap>*,.tool>*,.two>*{min-width:0;max-width:100%}
+.scroll-x{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll-x svg{display:block;height:auto}
+.fingers{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.fingers div{border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;gap:10px;align-items:center}
+.fingers i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 1rem var(--text);color:#fff;font-style:normal}
+.fingers span{font-size:.9rem;line-height:1.3}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.strong{font:600 1rem var(--display)}
+tr.click{cursor:pointer} tr.click:hover,tr.click[aria-selected="true"]{background:var(--accent-soft)}
+.sheet{font-family:ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;white-space:pre;line-height:1.6;font-size:.95rem}
+.sheet b{color:var(--accent)}
+.path{display:flex;flex-direction:column;gap:10px}
+.week{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.week summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.week summary::-webkit-details-marker{display:none}
+.week .wk{flex:none;font:700 .75rem var(--text);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);width:66px}
+.week .wt{flex:1;min-width:0;font:600 1.05rem var(--display)}
+.week .wp{flex:none;font-size:.8rem;color:var(--muted)}
+.week.full .wp{color:var(--ok);font-weight:700}
+.week .body{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+.week .why{color:var(--muted);font-size:.93rem;margin:0}
+.check{display:flex;gap:10px;align-items:flex-start;cursor:pointer;line-height:1.4}
+.check input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--ok)}
+.bar-prog{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 2px}
+.bar-prog i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.routine{display:flex;flex-direction:column;gap:8px}
+.rstep{display:grid;grid-template-columns:52px 1fr;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+.rstep .min{font:800 1.15rem var(--display)}
+.rstep.cur{border-color:var(--hi);background:var(--hi-soft)} .rstep.past{opacity:.55}
+.rstep b{display:block} .rstep span{color:var(--muted);font-size:.93rem}
+.clock{font:800 2.6rem/1 var(--display);font-variant-numeric:tabular-nums}
+.fix{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.fix div{border-left:4px solid var(--hi);padding:6px 10px;background:var(--bg);border-radius:0 8px 8px 0}
+.fix b{display:block} .fix span{color:var(--muted);font-size:.93rem}
+ol.plain{margin:6px 0 0;padding-left:1.3em;display:flex;flex-direction:column;gap:6px}
+ol.plain li::marker{color:var(--accent);font-weight:700}
+.staff-note{cursor:pointer}
+.strings{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.strings button{font:700 1.2rem var(--display);padding:14px 0;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.strings button small{font:400 .7rem var(--text);color:var(--muted)}
+.strings button.cur{border-color:var(--accent);background:var(--accent-soft)}
+.meter{position:relative;height:46px;border-radius:10px;border:1px solid var(--line);overflow:hidden;margin:10px 0 6px;background:linear-gradient(90deg,var(--warn) 0,transparent 30%,transparent 70%,var(--warn) 100%)}
+.meter .zone{position:absolute;left:42%;width:16%;top:0;bottom:0;background:color-mix(in srgb,var(--ok) 28%,transparent)}
+.meter .mid{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--muted)}
+.meter .needle{position:absolute;top:4px;bottom:4px;width:4px;border-radius:2px;background:var(--ink);left:calc(50% - 2px);transition:left .12s}
+.scale{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted)}
+.status{font:800 1.3rem var(--display);min-height:1.6em;margin:10px 0 2px}
+.status.ok{color:var(--ok)} .status.warn{color:var(--warn)}
+.notice{font-size:.9rem;background:var(--hi-soft);border-left:4px solid var(--hi);padding:10px 12px;border-radius:6px;margin-top:12px}
+.dur{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.dur svg{width:70px;height:80px}
+.dur b{font:600 1.05rem var(--display)}
+.durs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+textarea{width:100%;min-height:110px;font:1rem/1.5 ui-monospace,Menlo,Consolas,monospace;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.howto{font-size:.92rem;color:var(--muted);display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:10px 0}
+.howto code{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--ink);background:var(--bg);padding:1px 6px;border-radius:5px}
+.song{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.sbar{display:flex;gap:6px;align-items:stretch;flex-wrap:wrap}
+.sbar .num{flex:none;width:26px;font-size:.75rem;color:var(--muted);padding-top:12px}
+.nb{flex:var(--b) 1 0;min-width:calc(var(--b) * 46px);border:1px solid var(--line);border-radius:10px;padding:6px 8px;background:var(--surface);color:var(--ink);font:inherit;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px}
+.nb b{font:600 1.1rem var(--display)}
+.nb.rest{background:transparent;border-style:dashed;color:var(--muted)}
+.nb.bad{border-color:var(--warn);color:var(--warn)}
+.nb.cur{background:var(--hi-soft);border-color:var(--hi);box-shadow:0 0 0 2px var(--hi)}
+footer{font-size:.8rem;color:var(--muted);max-width:980px;margin:24px auto 0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="bar"><div class="bar-in">
+  <div class="brand">First Notes</div>
+  <div class="bar-ctl">
+    <div class="seg" id="instSeg" role="group" aria-label="Instrument"></div>
+    <div class="seg" id="langSeg" role="group" aria-label="Language"></div>
+  </div>
+</div></div>
+<main><div class="wrap" id="app"></div><footer id="foot"></footer></main>
+
+<script>
+(function(){
+"use strict";
+/* ============================================================
+   First Notes – beginner lessons for classical guitar and the
+   Turkish G clarinet. Single file, no build step, no tracking.
+   ============================================================ */
+
+// ---------- storage ----------
+const store={
+  get(k,d){ try{ const v=localStorage.getItem(k); return v==null?d:JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
+};
+
+// ---------- i18n ----------
+const LANGS=[["en","EN"],["de","DE"],["tr","TR"]];
+let lang=store.get("fn-lang","en"); if(!LANGS.some(l=>l[0]===lang)) lang="en";
+/** Pick the current language from a {en,de,tr} object (falls back to English). */
+const L=o=>(o&&typeof o==="object"&&!Array.isArray(o))?(o[lang]??o.en):o;
+/** Inline translation: X("English","Deutsch","Türkçe"). */
+const X=(en,de,tr)=>L({en,de,tr});
+const fill=(s,p)=>s.replace(/\{(\w+)\}/g,(_,k)=>p[k]??"");
+
+// ---------- note names ----------
+const NAMES={
+  en:["C","C♯","D","E♭","E","F","F♯","G","G♯","A","B♭","B"],
+  de:["C","Cis","D","Es","E","F","Fis","G","Gis","A","B","H"],
+  tr:["Do","Do♯","Re","Mi♭","Mi","Fa","Fa♯","Sol","Sol♯","La","Si♭","Si"]
+};
+const SOLF=NAMES.tr, LETTER_EN=NAMES.en;
+const pc=m=>((m%12)+12)%12;
+const noteName=m=>NAMES[lang][pc(m)];
+/** Chord root names: German uses H/B, Turkish chord charts use English letters. */
+const CHORD_ROOT={en:["C","C♯","D","E♭","E","F","F♯","G","G♯","A","B♭","B"],de:["C","Cis","D","Es","E","F","Fis","G","Gis","A","B","H"],tr:["C","C♯","D","E♭","E","F","F♯","G","G♯","A","B♭","B"]};
+const chordName=(root,suffix)=>CHORD_ROOT[lang][pc(root)]+suffix;
+
+// ---------- audio ----------
+let actx=null;
+function ctx(){ if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)(); if(actx.state==="suspended") actx.resume(); return actx; }
+const hz=m=>440*Math.pow(2,(m-69)/12);
+/** Soft woodwind-like tone (odd harmonics). Returns a stop() function. */
+function windTone(m,dur=1.4,vol=.22){
+  try{
+    const c=ctx(), t=c.currentTime, g=c.createGain(), oscs=[];
+    const rel=Math.min(.25,dur*.3);
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+.04); g.gain.setValueAtTime(vol,t+dur-rel); g.gain.linearRampToValueAtTime(0,t+dur);
+    g.connect(c.destination);
+    [[1,1],[3,.35],[5,.15]].forEach(([h,a])=>{ const o=c.createOscillator(), og=c.createGain(); o.frequency.value=hz(m)*h; og.gain.value=a; o.connect(og); og.connect(g); o.start(t); o.stop(t+dur+.05); oscs.push(o); });
+    return ()=>oscs.forEach(o=>{ try{o.stop();}catch(e){} });
+  }catch(e){ return ()=>{}; }
+}
+/** Plucked nylon string (Karplus-Strong). Returns the source node. */
+const pluckCache={};
+function pluckBuffer(m){
+  if(pluckCache[m]) return pluckCache[m];
+  const c=ctx(), sr=c.sampleRate, len=Math.floor(sr*2.6), b=c.createBuffer(1,len,sr), d=b.getChannelData(0);
+  const N=Math.max(2,Math.round(sr/hz(m))), r=new Float32Array(N);
+  let prev=0; for(let i=0;i<N;i++){ const w=Math.random()*2-1; prev=prev*.6+w*.4; r[i]=prev; }
+  const decay=m<50?.9975:.9965; let k=0;
+  for(let i=0;i<len;i++){ const a=r[k], nb=r[(k+1)%N]; r[k]=decay*.5*(a+nb); d[i]=a*.6; k=(k+1)%N; }
+  return pluckCache[m]=b;
+}
+function pluck(m,when=0,vol=.6){ try{ const c=ctx(), s=c.createBufferSource(), g=c.createGain(); s.buffer=pluckBuffer(m); g.gain.value=vol; s.connect(g); g.connect(c.destination); s.start(c.currentTime+when); return s; }catch(e){ return null; } }
+function click(accent,when=0){ try{ const c=ctx(), t=c.currentTime+when, o=c.createOscillator(), g=c.createGain(); o.frequency.value=accent?1500:1000; g.gain.setValueAtTime(.12,t); g.gain.exponentialRampToValueAtTime(.001,t+.05); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+.06);}catch(e){} }
+
+// ---------- pitch detection (autocorrelation) ----------
+function detectPitch(buf,rate,minF,maxF){
+  let rms=0; for(const v of buf) rms+=v*v; rms=Math.sqrt(rms/buf.length); if(rms<.011) return -1;
+  const n=buf.length, minL=Math.floor(rate/maxF), maxL=Math.floor(rate/minF), c=new Float32Array(maxL+2);
+  let e=0; for(let i=0;i<n;i++) e+=buf[i]*buf[i];
+  for(let l=minL;l<=maxL+1;l++){ let s=0; for(let i=0;i<n-l;i++) s+=buf[i]*buf[i+l]; c[l]=s; }
+  let best=-1,bv=0;
+  for(let l=minL+1;l<=maxL;l++){ const v=c[l]/e; if(v>.5&&c[l]>c[l-1]&&c[l]>=c[l+1]){ if(v>bv){bv=v;best=l;} if(v>.85) break; } }
+  if(best<0) return -1;
+  const a=c[best-1],b=c[best],d=c[best+1],sh=(a-d)/(2*(a-2*b+d)||1);
+  return rate/(best+(isFinite(sh)?sh:0));
+}
+const mic={stream:null,raf:0,
+  async start(onPitch,minF,maxF){
+    this.stop();
+    try{ this.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}}); }
+    catch(e){ return false; }
+    const c=ctx(), an=c.createAnalyser(); an.fftSize=4096; c.createMediaStreamSource(this.stream).connect(an);
+    const data=new Float32Array(an.fftSize);
+    const loop=()=>{ an.getFloatTimeDomainData(data); onPitch(detectPitch(data,c.sampleRate,minF,maxF)); this.raf=requestAnimationFrame(loop); };
+    loop(); return true;
+  },
+  stop(){ if(this.stream){ cancelAnimationFrame(this.raf); this.stream.getTracks().forEach(t=>t.stop()); this.stream=null; } },
+  get on(){ return !!this.stream; }
+};
+const micBlocked=()=>X(
+  "The microphone is blocked here. Pages shown inside Claude may not use it. Host this file yourself (for example on GitHub Pages) and the tuner works.",
+  "Das Mikrofon ist hier gesperrt. Seiten innerhalb von Claude dürfen es nicht nutzen. Stell die Datei selbst online (z. B. auf GitHub Pages), dann funktioniert das Stimmgerät.",
+  "Mikrofon burada engelli. Claude içinde gösterilen sayfalar mikrofonu kullanamaz. Dosyayı kendin yayınla (örneğin GitHub Pages'te), akort cihazı orada çalışır.");
+
+// ---------- timers that must stop when the view changes ----------
+const running=new Set();
+function stopAll(){ running.forEach(f=>{ try{f();}catch(e){} }); running.clear(); mic.stop(); }
+
+// ---------- shared drawing ----------
+const DIA={0:0,1:0,2:1,3:2,4:2,5:3,6:3,7:4,8:4,9:5,10:6,11:6};
+const ACC={1:"♯",6:"♯",8:"♯",3:"♭",10:"♭"};
+/** Treble staff. items: [{w: written midi, label, color}] */
+function staffSVG(items,sel,opts={}){
+  const hs=7, bottom=118, x0=opts.octaveBelow?78:72, dx=opts.dx||42, W=x0+items.length*dx+10;
+  const yOf=d=>bottom-(d-30)*hs;
+  let o=`<svg viewBox="0 0 ${W} 200" width="${W}" role="img" aria-label="${X("Staff","Notenlinien","Porte")}">`;
+  for(let i=0;i<5;i++){ const y=bottom-i*2*hs; o+=`<line x1="6" y1="${y}" x2="${W-6}" y2="${y}" stroke="var(--muted)" stroke-width="1.3"/>`; }
+  o+=`<text x="8" y="${bottom+10}" font-size="78" fill="var(--ink)" font-family="'Noto Music',serif">𝄞</text>`;
+  if(opts.octaveBelow) o+=`<text x="30" y="${bottom+34}" font-size="13" fill="var(--ink)">8</text>`;
+  items.forEach((it,i)=>{
+    const p=pc(it.w), oct=Math.floor(it.w/12)-1, d=DIA[p]+7*oct, x=x0+i*dx+16, y=yOf(d), on=i===sel;
+    let g=`<g class="staff-note" data-i="${i}" tabindex="0" role="button" aria-label="${it.label}">`;
+    g+=`<rect x="${x-19}" y="8" width="38" height="186" rx="8" fill="${on?"var(--accent-soft)":"transparent"}"/>`;
+    for(let Ld=28;Ld>=d;Ld-=2) g+=`<line x1="${x-14}" y1="${yOf(Ld)}" x2="${x+14}" y2="${yOf(Ld)}" stroke="var(--muted)" stroke-width="1.3"/>`;
+    for(let Ld=40;Ld<=d;Ld+=2) g+=`<line x1="${x-14}" y1="${yOf(Ld)}" x2="${x+14}" y2="${yOf(Ld)}" stroke="var(--muted)" stroke-width="1.3"/>`;
+    if(ACC[p]) g+=`<text x="${x-22}" y="${y+6}" font-size="17" fill="var(--ink)">${ACC[p]}</text>`;
+    g+=`<ellipse cx="${x}" cy="${y}" rx="8.5" ry="6.3" transform="rotate(-20 ${x} ${y})" fill="${it.color||"var(--ink)"}"/>`;
+    g+=`<text x="${x}" y="190" font-size="12" font-weight="${on?700:400}" fill="var(--ink)" text-anchor="middle">${it.label}</text>`;
+    o+=g+`</g>`;
+  });
+  return o+`</svg>`;
+}
+function durSVG(s){
+  const head=f=>`<ellipse cx="30" cy="58" rx="11" ry="8" transform="rotate(-20 30 58)" fill="${f?"var(--ink)":"var(--surface)"}" stroke="var(--ink)" stroke-width="2.5"/>`;
+  const stem=`<line x1="40" y1="55" x2="40" y2="12" stroke="var(--ink)" stroke-width="2.5"/>`;
+  const m={whole:`<ellipse cx="35" cy="45" rx="13" ry="9" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/>`,
+    half:head(false)+stem, quarter:head(true)+stem,
+    eighth:head(true)+stem+`<path d="M40 12 C50 22 58 28 52 44" fill="none" stroke="var(--ink)" stroke-width="2.5"/>`,
+    dotted:head(false)+stem+`<circle cx="52" cy="58" r="3.5" fill="var(--ink)"/>`,
+    rest:`<path d="M30 18 L42 32 L32 44 L44 58 C34 54 28 60 36 70 C22 62 26 50 36 52 L26 40 L36 30 Z" fill="var(--ink)"/>`};
+  return `<svg viewBox="0 0 70 80" aria-hidden="true">${m[s]}</svg>`;
+}
+const DURS=()=>[
+  {b:4,s:"whole",n:X("Whole note","Ganze Note","Birlik nota"),d:X("Hold 4 beats","4 Schläge halten","4 vuruş tut")},
+  {b:2,s:"half",n:X("Half note","Halbe Note","İkilik nota"),d:X("Hold 2 beats","2 Schläge halten","2 vuruş tut")},
+  {b:1,s:"quarter",n:X("Quarter note","Viertelnote","Dörtlük nota"),d:X("1 beat","1 Schlag","1 vuruş")},
+  {b:.5,s:"eighth",n:X("Eighth note","Achtelnote","Sekizlik nota"),d:X("½ beat, two fit in one beat","½ Schlag, zwei pro Schlag","½ vuruş, bir vuruşa iki tane")},
+  {b:3,s:"dotted",n:X("Dotted half","Halbe mit Punkt","Noktalı ikilik"),d:X("The dot adds half: 2 + 1 = 3 beats","Punkt = Hälfte dazu: 2 + 1 = 3 Schläge","Nokta yarısını ekler: 2 + 1 = 3 vuruş")},
+  {b:1,s:"rest",n:X("Quarter rest","Viertelpause","Dörtlük sus"),d:X("1 beat of silence","1 Schlag nichts spielen","1 vuruş sessizlik")}
+];
+function dursHTML(){ return `<div class="durs">${DURS().map((d,i)=>`<div class="dur">${durSVG(d.s)}<b>${d.n}</b><span class="muted small">${d.d}</span><button class="btn alt" data-dur="${i}" style="padding:6px 12px;font-size:.85rem">${X("Listen","Anhören","Dinle")}</button></div>`).join("")}</div>`; }
+function bindDurs(root,playFn){
+  root.querySelectorAll("[data-dur]").forEach(b=>b.onclick=()=>{
+    stopAll(); const d=DURS()[+b.dataset.dur], beat=.75, timers=[];
+    for(let k=0;k<4;k++) timers.push(setTimeout(()=>click(k===0),k*beat*1000));
+    if(d.s!=="rest"){ const reps=d.b<1?2:1; for(let r=0;r<reps;r++) timers.push(setTimeout(()=>playFn(d.b*beat*.92),r*d.b*beat*1000)); }
+    running.add(()=>timers.forEach(clearTimeout));
+  });
+}
+const fmtTime=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
+
+/** Checklist learning path, routine timer and troubleshooter are shared by both instruments. */
+function pathHTML(){ return `<div class="bar-prog"><i data-role="pbar"></i></div><p class="muted" data-role="ptxt" style="margin:0 0 12px"></p><div class="path" data-role="path"></div>`; }
+function bindPath(root,weeks,key){
+  const prog=store.get(key,{}), box=root.querySelector('[data-role="path"]');
+  const draw=()=>{ let all=0,dn=0; const open=[...box.querySelectorAll(".week")].map(d=>d.open);
+    box.innerHTML=weeks.map((w,wi)=>{ const c=w.items.filter((_,ii)=>prog[wi+"-"+ii]).length; all+=w.items.length; dn+=c; const full=c===w.items.length;
+      const auto=!full&&weeks.slice(0,wi).every((x,xi)=>x.items.every((_,ii)=>prog[xi+"-"+ii]));
+      return `<details class="week ${full?"full":""}" ${(open[wi]||(!open.length&&auto))?"open":""}><summary><span class="wk">${X("Week","Woche","Hafta")} ${wi+1}</span><span class="wt">${w.t}</span><span class="wp">${full?"✓ "+X("done","geschafft","tamam"):c+"/"+w.items.length}</span></summary><div class="body"><p class="why">${w.why}</p>${w.items.map((it,ii)=>`<label class="check"><input type="checkbox" id="${key}-${wi}-${ii}" data-k="${wi}-${ii}" ${prog[wi+"-"+ii]?"checked":""}><span>${it}</span></label>`).join("")}</div></details>`; }).join("");
+    root.querySelector('[data-role="pbar"]').style.width=(dn/all*100)+"%";
+    root.querySelector('[data-role="ptxt"]').textContent=fill(X("{a} of {b} steps done","{a} von {b} Schritten geschafft","{b} adımdan {a} tanesi tamam"),{a:dn,b:all}); };
+  box.addEventListener("change",e=>{ const k=e.target.dataset.k; if(!k) return; prog[k]=e.target.checked; store.set(key,prog); draw(); });
+  draw();
+}
+function routineHTML(){ return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><div class="clock" data-role="rclock"></div><div class="row"><button class="btn go" data-role="rstart">${X("Start","Start","Başla")}</button><button class="btn alt" data-role="rreset">${X("Reset","Zurück","Sıfırla")}</button></div></div><div class="routine" data-role="rlist"></div>`; }
+function bindRoutine(root,steps){
+  const total=steps.reduce((a,r)=>a+r.m,0)*60; let left=total, timer=null;
+  const btn=root.querySelector('[data-role="rstart"]');
+  const draw=()=>{ const el=total-left; let acc=0;
+    root.querySelector('[data-role="rlist"]').innerHTML=steps.map(r=>{ const st=acc; acc+=r.m*60; const cls=el>=acc?"past":el>=st&&timer?"cur":""; return `<div class="rstep ${cls}"><span class="min">${r.m}′</span><div><b>${r.t}</b><span>${r.d}</span></div></div>`; }).join("");
+    root.querySelector('[data-role="rclock"]').textContent=fmtTime(left); };
+  const stop=()=>{ if(timer){clearInterval(timer); timer=null;} };
+  btn.onclick=()=>{ if(timer){ stop(); btn.textContent=X("Resume","Weiter","Devam"); draw(); return; }
+    ctx(); let prev=-1;
+    timer=setInterval(()=>{ left--; const el=total-left; let acc=0,st=0; steps.forEach((r,i)=>{ if(el>=acc) st=i; acc+=r.m*60; });
+      if(st!==prev){ if(prev>=0) click(true); prev=st; }
+      if(left<=0){ stop(); left=0; btn.textContent=X("Start","Start","Başla"); click(true); click(true,.2); }
+      draw(); },1000);
+    running.add(stop); btn.textContent=X("Pause","Pause","Duraklat"); draw(); };
+  root.querySelector('[data-role="rreset"]').onclick=()=>{ stop(); left=total; btn.textContent=X("Start","Start","Başla"); draw(); };
+  draw();
+}
+function fixHTML(probs){ return `<div class="row"><label for="probSel">${X("What happens?","Was passiert?","Ne oluyor?")}</label><select id="probSel">${probs.map((p,i)=>`<option value="${i}">${p.p}</option>`).join("")}</select></div><div class="fix" data-role="fix"></div>`; }
+function bindFix(root,probs){ const s=root.querySelector("#probSel"), f=root.querySelector('[data-role="fix"]'); const draw=()=>f.innerHTML=probs[+s.value].f.map(([a,b])=>`<div><b>${a}</b><span>${b}</span></div>`).join(""); s.onchange=draw; draw(); }
+function meterHTML(id){ return `<div class="meter" aria-hidden="true"><div class="zone"></div><div class="mid"></div><div class="needle" id="${id}"></div></div><div class="scale"><span>${X("too low","zu tief","pes")}</span><span>${X("in tune","passt","doğru")}</span><span>${X("too high","zu hoch","tiz")}</span></div>`; }
+const setNeedle=(el,cents)=>{ if(el) el.style.left=`calc(${Math.max(2,Math.min(98,50+cents/2))}% - 2px)`; };
+
+/* =====================================================================
+   GUITAR
+   ===================================================================== */
+const G={};
+G.OPEN=[40,45,50,55,59,64];
+G.str=s=>[["E","A","D","G","B","e"],["E","A","D","G","H","e"],["E","A","D","G","B","e"]][lang==="de"?1:0][s];
+G.strLong=s=>[
+  X("low E string","tiefe E-Saite","kalın Mi (E) teli"),
+  X("A string","A-Saite","La (A) teli"),
+  X("D string","D-Saite","Re (D) teli"),
+  X("G string","G-Saite","Sol (G) teli"),
+  X("B string","H-Saite","Si (B) teli"),
+  X("high e string","hohe e-Saite","ince Mi (e) teli")][s];
+G.finger=f=>["",X("Index finger","Zeigefinger","İşaret parmağı"),X("Middle finger","Mittelfinger","Orta parmak"),X("Ring finger","Ringfinger","Yüzük parmağı"),X("Little finger","Kleiner Finger","Serçe parmak")][f];
+// frets low E → high e (-1 = do not play), fingers (0 = none), bass string, root pitch class
+G.CH=[
+ {id:"Em",r:4,q:"m",f:[0,2,2,0,0,0],g:[0,2,3,0,0,0],b:0,tip:()=>X("The easiest chord. All six strings ring.","Der leichteste Akkord. Alle 6 Saiten klingen.","En kolay akor. Altı telin hepsi çalar.")},
+ {id:"Am",r:9,q:"m",f:[-1,0,2,2,1,0],g:[0,0,2,3,1,0],b:1,tip:()=>X("Skip the low E string. Start on the A string.","Die tiefe E-Saite nicht anschlagen. Bei der A-Saite anfangen.","Kalın Mi telini çalma. La telinden başla.")},
+ {id:"E",r:4,q:"",f:[0,2,2,1,0,0],g:[0,2,3,1,0,0],b:0,tip:()=>X("Like Em, plus the index finger on the G string.","Wie Em, nur der Zeigefinger kommt auf die G-Saite dazu.","Em gibi, sadece işaret parmağı Sol teline eklenir.")},
+ {id:"Dm",r:2,q:"m",f:[-1,-1,0,2,3,1],g:[0,0,0,2,3,1],b:2,tip:()=>X("Only the four thin strings. Sad colour, very common in Turkish songs.","Nur die 4 dünnen Saiten. Klingt traurig, typisch für türkische Lieder.","Sadece dört ince tel. Hüzünlü renk, Türkçe şarkılarda çok sık.")},
+ {id:"D",r:2,q:"",f:[-1,-1,0,2,3,2],g:[0,0,0,1,3,2],b:2,tip:()=>X("Only the four thin strings. The fingers form a small triangle.","Nur die 4 dünnen Saiten. Die Finger bilden ein kleines Dreieck.","Sadece dört ince tel. Parmaklar küçük bir üçgen oluşturur.")},
+ {id:"A",r:9,q:"",f:[-1,0,2,2,2,0],g:[0,0,1,2,3,0],b:1,tip:()=>X("Three fingers side by side in the 2nd fret, close together.","Drei Finger nebeneinander im 2. Bund, eng zusammen.","2. perdede yan yana üç parmak, birbirine yakın.")},
+ {id:"G",r:7,q:"",f:[3,2,0,0,0,3],g:[2,1,0,0,0,3],b:0,tip:()=>X("All six strings. The three middle strings ring open.","Alle 6 Saiten. Die drei mittleren klingen leer.","Altı telin hepsi. Ortadaki üç tel boş çalar.")},
+ {id:"C",r:0,q:"",f:[-1,3,2,0,1,0],g:[0,3,2,0,1,0],b:1,tip:()=>X("Skip the low E. Place fingers steeply so the G and high e strings ring.","Tiefe E-Saite auslassen. Finger steil aufsetzen, damit G- und e-Saite frei klingen.","Kalın Mi'yi çalma. Sol ve ince Mi telleri çınlasın diye parmakları dik bas.")},
+ {id:"E7",r:4,q:"7",f:[0,2,0,1,0,0],g:[0,2,0,1,0,0],b:0,tip:()=>X("Like E without the ring finger. Leads beautifully to Am.","Wie E, nur ohne Ringfinger. Führt sehr schön nach Am.","Yüzük parmağı olmadan E gibi. Am'ye çok güzel bağlanır.")},
+ {id:"A7",r:9,q:"7",f:[-1,0,2,0,2,0],g:[0,0,2,0,3,0],b:1,tip:()=>X("Like A, but the G string stays open.","Wie A, aber die G-Saite bleibt leer.","A gibi, ama Sol teli boş kalır.")},
+ {id:"D7",r:2,q:"7",f:[-1,-1,0,2,1,2],g:[0,0,0,2,1,3],b:2,tip:()=>X("Likes to lead to G.","Führt gern nach G.","G'ye gitmeyi sever.")},
+ {id:"G7",r:7,q:"7",f:[3,2,0,0,0,1],g:[3,2,0,0,0,1],b:0,tip:()=>X("Likes to lead to C.","Führt gern nach C.","C'ye gitmeyi sever.")},
+ {id:"Fmaj7",r:5,q:"maj7",f:[-1,-1,3,2,1,0],g:[0,0,3,2,1,0],b:2,tip:()=>X("The easy version of F. The full F (barre) comes later.","Die leichte Version von F. Das echte F (Barré) kommt später.","F'nin kolay hali. Tam F (barre) daha sonra gelir.")}
+];
+G.byId=Object.fromEntries(G.CH.map(c=>[c.id,c]));
+G.name=c=>chordName(c.r,c.q);
+G.midi=(s,f,capo=0)=>G.OPEN[s]+f+capo;
+G.chordSVG=(c,hiStr=-1)=>{
+  const W=240,H=290,x0=40,dx=32,y0=60,dy=50, sx=s=>x0+s*dx;
+  let o=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${c.single?"":G.name(c)}">`;
+  o+=`<rect x="${x0-6}" y="${y0-8}" width="${dx*5+12}" height="9" rx="3" fill="var(--ink)"/>`;
+  for(let fr=1;fr<=4;fr++){ o+=`<line x1="${x0}" y1="${y0+fr*dy}" x2="${x0+dx*5}" y2="${y0+fr*dy}" stroke="var(--muted)" stroke-width="2"/><text x="${x0-14}" y="${y0+fr*dy-dy/2+5}" font-size="12" fill="var(--muted)" text-anchor="end">${fr}</text>`; }
+  for(let s=0;s<6;s++) o+=`<line x1="${sx(s)}" y1="${y0}" x2="${sx(s)}" y2="${y0+4*dy}" stroke="${s===hiStr?"var(--hi)":"var(--string)"}" stroke-width="${s===hiStr?4:(3.2-s*.35)}"/>`;
+  c.f.forEach((f,s)=>{ const x=sx(s);
+    if(f<0){ if(!c.single) o+=`<text x="${x}" y="${y0-18}" font-size="20" font-weight="700" fill="var(--warn)" text-anchor="middle">×</text>`; }
+    else if(f===0) o+=`<circle cx="${x}" cy="${y0-24}" r="8" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+    else { const y=y0+f*dy-dy/2; o+=`<circle cx="${x}" cy="${y}" r="14" fill="var(--ink)"/><text x="${x}" y="${y+5}" font-size="15" font-weight="700" fill="var(--bg)" text-anchor="middle">${c.g[s]}</text>`; }
+    o+=`<text x="${x}" y="${y0+4*dy+24}" font-size="14" font-weight="700" fill="var(--ink)" text-anchor="middle">${G.str(s)}</text>`; });
+  o+=`<text x="${x0}" y="${H-6}" font-size="11" fill="var(--muted)">${X("thick","dick","kalın")}</text><text x="${x0+dx*5}" y="${H-6}" font-size="11" fill="var(--muted)" text-anchor="end">${X("thin","dünn","ince")}</text>`;
+  return o+`</svg>`;
+};
+G.steps=c=>{
+  const pressed=c.f.map((f,s)=>({f,s,g:c.g[s]})).filter(x=>x.f>0).sort((a,b)=>a.g-b.g);
+  let h=pressed.map(x=>`<li><span class="n">${x.g}</span><span><b>${G.finger(x.g)}</b>: ${G.strLong(x.s)}, ${fill(X("fret {n}","{n}. Bund","{n}. perde"),{n:x.f})}</span></li>`).join("");
+  const open=c.f.map((f,s)=>f===0?G.str(s):null).filter(Boolean), mute=c.f.map((f,s)=>f<0?G.str(s):null).filter(Boolean);
+  if(open.length) h+=`<li><span class="n o">O</span><span>${X("Play open:","Leer mitklingen:","Boş çal:")} ${open.join(", ")}</span></li>`;
+  if(mute.length) h+=`<li><span class="n x">×</span><span>${X("Do not play:","Nicht anschlagen:","Çalma:")} ${mute.join(", ")}</span></li>`;
+  return h;
+};
+G.strum=(c,dir="D",when=0,vol=.5,capo=0,bassOnly=false)=>{
+  if(bassOnly){ pluck(G.midi(c.b,c.f[c.b],capo),when,vol*1.2); return; }
+  const idx=c.f.map((f,s)=>f>=0?s:-1).filter(s=>s>=0);
+  const order=dir==="U"?idx.filter(s=>s>=2).reverse():idx;
+  order.forEach((s,i)=>pluck(G.midi(s,c.f[s],capo),when+i*(dir==="U"?.012:.016),vol*(dir==="U"?.75:1)));
+};
+
+G.WEEKS=()=>[
+ {t:X("Sitting, tuning, Em and Am","Sitzen, stimmen, Em und Am","Oturuş, akort, Em ve Am"),why:X("The two easiest chords. Check every string: does it ring clean or buzz?","Die zwei leichtesten Akkorde. Prüf jede Saite einzeln: Klingt sie sauber oder schnarrt sie?","En kolay iki akor. Her teli tek tek kontrol et: temiz mi çalıyor, cızırdıyor mu?"),
+  items:[X("Sit correctly (see below)","Richtig sitzen (siehe unten)","Doğru otur (aşağıya bak)"),X("Tune with the reference tones","Mit den Vergleichstönen stimmen","Referans seslerle akort et"),X("Em: all six strings ring clean","Em: alle 6 Saiten klingen sauber","Em: altı tel de temiz çalıyor"),X("Am: skip the low E string","Am: tiefe E-Saite auslassen","Am: kalın Mi telini atla"),X("One-minute drill Em ↔ Am: 15 changes","1-Minuten-Übung Em ↔ Am: 15 Wechsel","Bir dakika çalışması Em ↔ Am: 15 geçiş"),X("Strum pattern 1 (four downstrokes) with Em and Am","Anschlag 1 (vier Abschläge) mit Em und Am","Ritim 1 (dört aşağı vuruş) Em ve Am ile")]},
+ {t:X("D and A, the train strum","D und A, Eisenbahn-Schlag","D ve A, tren ritmi"),why:X("D and A are the base of many songs. Practise the change, not only the shapes.","D und A sind die Grundlage für viele Lieder. Lerne den Wechsel, nicht nur die Griffe.","D ve A birçok şarkının temeli. Sadece akorları değil, geçişi çalış."),
+  items:[X("D clean, only four strings","D sauber, nur 4 Saiten","D temiz, sadece dört tel"),X("A clean, three fingers close","A sauber, drei Finger eng","A temiz, üç parmak yakın"),X("One-minute drill D ↔ A: 20 changes","1-Minuten-Übung D ↔ A: 20 Wechsel","Bir dakika çalışması D ↔ A: 20 geçiş"),X("Pattern 2 (train) evenly at tempo 60","Anschlag 2 (Eisenbahn) gleichmäßig bei Tempo 60","Ritim 2 (tren) tempo 60'ta düzenli")]},
+ {t:X("G and C, the western strum","G und C, Westernschlag","G ve C, western ritmi"),why:X("With G, C and D you can already accompany hundreds of songs.","Mit G, C und D kannst du schon hunderte Lieder begleiten.","G, C ve D ile yüzlerce şarkıya eşlik edebilirsin."),
+  items:[X("G clean","G sauber","G temiz"),X("C clean (G and e strings free)","C sauber (G- und e-Saite frei)","C temiz (Sol ve ince Mi açık)"),X("D – G – A – D without stopping","D – G – A – D ohne Stopp","D – G – A – D durmadan"),X("Pattern 3 (western) with G – C – D – G","Anschlag 3 (Westernschlag) mit G – C – D – G","Ritim 3 (western) G – C – D – G ile")]},
+ {t:X("Picking: p i m a","Picking: p i m a","Parmakla çalma: p i m a"),why:X("Now the right hand learns to pluck. The left hand only holds the chord.","Jetzt lernt die rechte Hand zupfen. Die linke hält nur den Akkord.","Şimdi sağ el teli tek tek çekmeyi öğreniyor. Sol el sadece akoru tutar."),
+  items:[X("Match p, i, m, a to their strings","p, i, m, a den Saiten zuordnen","p, i, m, a parmaklarını tellerine eşle"),X("Pattern 1 with Am, slow and even","Muster 1 mit Am, langsam und gleich laut","Am ile kalıp 1, yavaş ve eşit"),X("Pattern 1 with Em and C (thumb changes string)","Muster 1 mit Em und C (Daumen wechselt die Saite)","Em ve C ile kalıp 1 (başparmak tel değiştirir)"),X("Read a tab","Eine Tabulatur lesen können","Bir tab okuyabilmek")]},
+ {t:X("Minor colours: Dm, E, E7","Moll-Farben: Dm, E, E7","Minör renkler: Dm, E, E7"),why:X("Am – Dm – E is the typical sad sound of many Turkish songs.","Am – Dm – E ist der typische traurige Klang vieler türkischer Lieder.","Am – Dm – E birçok Türkçe şarkının tipik hüzünlü sesidir."),
+  items:[X("Dm clean","Dm sauber","Dm temiz"),X("E and E7","E und E7","E ve E7"),X("Am – Dm – E – Am with pattern 1","Am – Dm – E – Am mit Anschlag 1","Ritim 1 ile Am – Dm – E – Am"),X("Am – Dm – E – Am picked with pattern 2","Am – Dm – E – Am gezupft mit Muster 2","Kalıp 2 ile Am – Dm – E – Am")]},
+ {t:X("Reading notes in first position","Noten lesen in der 1. Lage","Birinci pozisyonda nota okuma"),why:X("From here you can play melodies, not only chords.","Ab hier kannst du Melodien spielen statt nur Akkorde.","Buradan itibaren sadece akor değil melodi de çalabilirsin."),
+  items:[X("Find E F G and B C D on the two thin strings","Töne auf e- und H-Saite (E F G, H C D) finden","İki ince telde Mi Fa Sol ve Si Do Re bul"),X("Note values: whole, half, quarter","Notenwerte: Ganze, Halbe, Viertel","Nota değerleri: birlik, ikilik, dörtlük"),X("Play a simple melody from notes","Eine einfache Melodie aus Noten spielen","Notadan basit bir melodi çal"),X("Add the G string (G, A)","Töne auf der G-Saite dazu (G, A)","Sol telini ekle (Sol, La)")]},
+ {t:X("Capo and your first song","Kapodaster und erstes Lied","Kapo ve ilk şarkın"),why:X("A real song from a chord sheet. Use a capo if the sheet says so.","Ein echtes Lied mit Akkordblatt. Kapo, wenn das Blatt es sagt.","Akor sayfasından gerçek bir şarkı. Sayfa diyorsa kapo kullan."),
+  items:[X("Clamp the capo and retune","Kapo richtig klemmen und nachstimmen","Kapoyu tak ve yeniden akort et"),X("Found a chord sheet for a song","Akkordblatt für ein Lied gefunden","Bir şarkının akor sayfasını buldun"),X("Verse with one strum pattern","Strophe mit einem Anschlagmuster","Bir ritimle kıta"),X("Whole song slowly without stopping","Ganzes Lied langsam ohne Stopp","Bütün şarkı yavaşça durmadan")]},
+ {t:X("Waltz and alternating bass","Walzer und Wechselbass","Vals ve değişen bas"),why:X("More variety for the right hand.","Mehr Abwechslung für die rechte Hand.","Sağ el için daha fazla çeşit."),
+  items:[X("Pattern 5 (waltz) with Am – Dm – E – Am","Anschlag 5 (Walzer) mit Am – Dm – E – Am","Ritim 5 (vals) Am – Dm – E – Am ile"),X("Picking 5 (p + chord) in 3/4","Picking 5 (p + Akkord) im 3er-Takt","3/4'te kalıp 5 (p + akor)"),X("Picking 6 (alternating bass) with C and G","Picking 6 (Wechselbass) mit C und G","C ve G ile kalıp 6 (değişen bas)"),X("Your song picked instead of strummed","Dein Lied gezupft statt geschlagen","Şarkını ritim yerine parmakla çal")]}
+];
+G.ROUTINE=()=>[
+ {m:2,t:X("Tune","Stimmen","Akort"),d:X("Check each string with its reference tone.","Jede Saite mit dem Vergleichston prüfen.","Her teli referans sesiyle kontrol et.")},
+ {m:4,t:X("Chords of the week","Akkorde der Woche","Haftanın akorları"),d:X("Press each chord and pluck every string: does it all ring clean?","Jeden Akkord greifen, jede Saite einzeln anzupfen: Klingt alles sauber?","Her akoru bas, her teli tek tek çal: hepsi temiz mi?")},
+ {m:4,t:X("One-minute changes","1-Minuten-Wechsel","Bir dakika geçiş"),d:X("Two rounds with your hardest pair.","Zwei Runden mit deinem schwierigsten Paar.","En zor çiftinle iki tur.")},
+ {m:5,t:X("Right hand","Rechte Hand","Sağ el"),d:X("A strum or picking pattern, slowly with the click.","Anschlag- oder Picking-Muster langsam mit Klick.","Bir ritim ya da parmak kalıbı, metronomla yavaşça.")},
+ {m:5,t:X("A song","Ein Lied","Bir şarkı"),d:X("Your song from start to end. Slow but without stopping.","Dein Lied von vorne bis hinten, lieber langsam ohne Stopp.","Şarkını baştan sona. Yavaş ama durmadan.")}
+];
+G.PROBS=()=>[
+ {p:X("A string buzzes","Eine Saite schnarrt","Bir tel cızırdıyor"),f:[[X("Finger too far from the fret","Finger zu weit weg vom Bundstäbchen","Parmak perde telinden çok uzak"),X("Press just behind the metal fret wire, not in the middle of the space.","Kurz vor dem Metallstäbchen drücken, nicht in der Mitte.","Metal perde telinin hemen arkasına bas, ortaya değil.")],[X("Not enough pressure","Zu wenig Druck","Yetersiz baskı"),X("Press a little harder. The thumb behind the neck gives counter-pressure.","Etwas fester drücken. Der Daumen hinten am Hals gibt Gegendruck.","Biraz daha sıkı bas. Sapın arkasındaki başparmak karşı baskı verir.")],[X("Out of tune or crooked capo","Verstimmt oder Kapo schief","Akort bozuk ya da kapo eğri"),X("Retune and set the capo straight.","Nachstimmen, Kapo gerade setzen.","Yeniden akort et, kapoyu düz tak.")]]},
+ {p:X("A string sounds dead","Eine Saite klingt dumpf","Bir tel ses vermiyor"),f:[[X("A finger touches the next string","Ein Finger berührt die Nachbarsaite","Bir parmak yan tele değiyor"),X("Place fingers more upright, only with the tip.","Finger steiler aufsetzen, nur mit der Fingerkuppe.","Parmakları daha dik, sadece uçlarıyla bas.")],[X("Left-hand nails too long","Linke Nägel zu lang","Sol el tırnakları çok uzun"),X("Cut them short.","Kurz schneiden.","Kısa kes.")],[X("Thumb wrapped around the neck","Daumen um den Hals","Başparmak sapın etrafında"),X("Put the thumb in the middle of the back of the neck.","Daumen hinten in die Mitte des Halses.","Başparmağı sapın arkasının ortasına koy.")]]},
+ {p:X("Fingertips hurt","Fingerkuppen tun weh","Parmak uçları acıyor"),f:[[X("Completely normal at first","Ganz normal am Anfang","Başta tamamen normal"),X("The skin gets harder within 2 to 4 weeks.","Die Haut wird in 2 bis 4 Wochen härter.","Deri 2-4 hafta içinde sertleşir.")],[X("Too long in one go","Zu lange am Stück","Tek seferde çok uzun"),X("Three times 10 minutes a day beats one hour.","Lieber 3 mal 10 Minuten am Tag als 1 Stunde.","Günde üç kez 10 dakika, bir saatten iyidir.")],[X("Pressing too hard","Zu fest gedrückt","Çok sert basmak"),X("Find the least pressure that still sounds clean.","Teste, wie wenig Druck gerade noch sauber klingt.","Temiz ses veren en az baskıyı bul.")]]},
+ {p:X("Chord changes too slow","Akkordwechsel zu langsam","Akor geçişleri çok yavaş"),f:[[X("Placing fingers one by one","Finger einzeln setzen","Parmakları tek tek koymak"),X("Move all fingers together as one shape. Practise the shape in the air.","Alle Finger gleichzeitig als Form bewegen. Übe die Form in der Luft.","Tüm parmakları tek bir şekil olarak birlikte hareket ettir. Şekli havada çalış.")],[X("Not using anchor fingers","Ankerfinger nicht genutzt","Sabit parmakları kullanmamak"),X("Fingers that stay the same remain on the string.","Finger, die gleich bleiben, liegen lassen.","Aynı kalan parmaklar telde kalsın.")],[X("Practising too fast","Zu schnell geübt","Çok hızlı çalışmak"),X("Slow tempo, but without pauses. Do the one-minute drill daily.","Langsames Tempo, dafür ohne Pause. Die 1-Minuten-Übung täglich.","Yavaş tempo ama durmadan. Bir dakika çalışmasını her gün yap.")]]},
+ {p:X("Rhythm is shaky","Rhythmus wackelt","Ritim düzensiz"),f:[[X("Hand stops between strokes","Hand stoppt zwischen den Schlägen","El vuruşlar arasında duruyor"),X("Keep the hand swinging, even through gaps.","Hand pendelt immer weiter, auch bei Lücken.","El boşluklarda bile sallanmaya devam etsin.")],[X("Not counting","Ohne Zählen","Saymadan çalmak"),X("Count out loud: 1 and 2 and.","Laut „1 und 2 und“ mitzählen.","Yüksek sesle say: 1 ve 2 ve.")],[X("Too fast","Zu schnell","Çok hızlı"),X("Lower the tempo, use the click. Five times clean, then faster.","Tempo runter, Klick an. 5 Mal fehlerfrei, dann schneller.","Tempoyu düşür, metronom aç. Beş kez temiz, sonra hızlan.")]]},
+ {p:X("Guitar keeps going out of tune","Gitarre verstimmt sich ständig","Gitarın akordu sürekli bozuluyor"),f:[[X("New nylon strings","Neue Nylonsaiten","Yeni naylon teller"),X("They stretch for 1 to 2 weeks. Retuning often is normal.","Die dehnen sich 1 bis 2 Wochen. Oft nachstimmen ist normal.","1-2 hafta esnerler. Sık akort etmek normaldir.")],[X("Temperature","Temperatur","Sıcaklık"),X("Tune every time before you practise.","Vor jedem Üben stimmen.","Her çalışmadan önce akort et.")]]}
+];
+G.PATS=()=>[
+ {n:X("1 · Four downstrokes","1 · Vier Abschläge","1 · Dört aşağı vuruş"),p:"D-D-D-D-",info:X("The start. One downstroke on every number. Stress beat 1 a little.","Der Anfang. Auf jede Zahl ein Schlag nach unten. Die 1 etwas betonen.","Başlangıç. Her sayıda bir aşağı vuruş. 1'i biraz vurgula.")},
+ {n:X("2 · Train","2 · Eisenbahn","2 · Tren"),p:"DUDUDUDU",info:X("Down on the number, up on the “and”. Even like a running train.","Runter auf der Zahl, hoch auf dem „und“. Gleichmäßig wie ein Zug.","Sayıda aşağı, “ve”de yukarı. Giden bir tren gibi düzenli.")},
+ {n:X("3 · Western","3 · Westernschlag","3 · Western"),p:"D-DUD-DU",info:X("“1 – 2 and 3 – 4 and”. In the gaps the hand moves up without hitting.","„1 – 2 und 3 – 4 und“. Bei den Lücken geht die Hand leer hoch.","“1 – 2 ve 3 – 4 ve”. Boşluklarda el tellere değmeden yukarı gider.")},
+ {n:X("4 · Campfire","4 · Lagerfeuer","4 · Kamp ateşi"),p:"D-DU-UDU",info:X("The best-known pop pattern. Skip beat 3, the hand still moves.","Das bekannteste Pop-Muster. Auf der 3 nichts treffen, Hand bewegt sich trotzdem.","En bilinen pop ritmi. 3'te tellere vurma, el yine de hareket eder.")},
+ {n:X("5 · Waltz (3/4)","5 · Walzer (3er-Takt)","5 · Vals (3/4)"),p:"B-D-D-",info:X("Three beats per bar: bass note first, then two chord strokes. “Boom – chick – chick”. ♪ = bass note only (thumb).","3 Schläge pro Takt: erst der Bass-Ton, dann zwei Akkord-Schläge. ♪ = nur der Bass-Ton (Daumen).","Ölçüde üç vuruş: önce bas notası, sonra iki akor vuruşu. ♪ = sadece bas notası (başparmak).")}
+];
+G.PROGS=[["Am","Dm","E","Am"],["Em","Am","D","G"],["D","A","D","A"],["G","C","D","G"],["Am","G","Fmaj7","E"],["Em","D","C","D"]];
+G.PPAT=()=>[
+ {n:"1 · p i m a",s:["p","i","m","a"],info:X("Thumb plays the bass, then index, middle, ring one after another. The basic pattern.","Daumen Bass, dann Zeige-, Mittel-, Ringfinger nacheinander. Das Grundmuster.","Başparmak bas, sonra işaret, orta, yüzük sırayla. Temel kalıp.")},
+ {n:"2 · p i m a m i",s:["p","i","m","a","m","i"],info:X("Up and back down. Flowing, good for calm songs.","Hoch und wieder runter. Klingt fließend, gut für ruhige Lieder.","Yukarı ve geri aşağı. Akıcı, sakin şarkılar için iyi.")},
+ {n:"3 · p i m i",s:["p","i","m","i"],info:X("Only three upper strings. Easy and even.","Nur drei Saiten oben. Sehr leicht und gleichmäßig.","Sadece üstteki üç tel. Kolay ve düzenli.")},
+ {n:"4 · p a m i",s:["p","a","m","i"],info:X("From top to bottom. Sounds like a falling arc.","Von oben nach unten. Klingt wie ein fallender Bogen.","Yukarıdan aşağıya. Düşen bir kavis gibi.")},
+ {n:X("5 · p + chord","5 · p + Akkord","5 · p + akor"),s:["p","ima","ima"],info:X("Bass first, then i, m and a together. Good for 3/4 (waltz).","Erst Bass, dann i, m und a gleichzeitig. Gut für 3er-Takt (Walzer).","Önce bas, sonra i, m ve a birlikte. 3/4 (vals) için iyi.")},
+ {n:X("6 · Alternating bass","6 · Wechselbass","6 · Değişen bas"),s:["p","i","m","i","p2","i","m","i"],info:X("The thumb alternates between two bass strings. Sounds like a walking bass.","Der Daumen wechselt zwischen zwei Bass-Saiten. Klingt wie ein laufender Bass.","Başparmak iki bas teli arasında gidip gelir. Yürüyen bas gibi.")}
+];
+G.STR_OF={i:3,m:4,a:5};
+G.NOTES=[[40,0,0],[41,0,1],[43,0,3],[45,1,0],[47,1,2],[48,1,3],[50,2,0],[52,2,2],[53,2,3],[55,3,0],[57,3,2],[59,4,0],[60,4,1],[62,4,3],[64,5,0],[65,5,1],[67,5,3]];
+
+G.state={view:"start",chord:"Am",pat:0,prog:0,bpm:70,metro:true,ppat:0,pchord:"Am",pbpm:70,capo:0,target:-1,note:0,pair:0};
+G.VIEWS=()=>[["start",X("Start here","Start hier","Buradan başla")],["chords",X("Chords","Akkorde","Akorlar")],["strum",X("Strumming","Anschlag","Ritim")],["pick",X("Picking","Picking","Parmakla çalma")],["capo",X("Capo","Kapodaster","Kapo")],["notes",X("Notes","Noten","Notalar")],["tune",X("Tuning","Stimmen","Akort")]];
+G.title=()=>X("Learn guitar","Gitarre lernen","Gitar öğren");
+G.intro=()=>X("Classical guitar from zero: reading chord diagrams, strumming, picking, capo and notes. Everything with sound.","Klassische Gitarre von null: Griffbilder lesen, Anschlag, Picking, Kapodaster und Noten. Alles mit Ton zum Anhören.","Sıfırdan klasik gitar: akor şeması okuma, ritim, parmakla çalma, kapo ve notalar. Hepsi sesli.");
+
+G.render={
+start:()=>`
+<div class="panel"><h2>${X("Your path in 8 weeks","Dein Weg in 8 Wochen","8 haftalık yolun")}</h2><p class="lead">${X("A little every day. Tick off what works. Move on only when a week feels solid. Your progress stays in this browser.","Jeden Tag ein bisschen. Hak ab, was klappt. Erst wenn eine Woche sitzt, weiter. Dein Fortschritt bleibt in diesem Browser gespeichert.","Her gün biraz. Olanları işaretle. Bir hafta oturunca devam et. İlerlemen bu tarayıcıda kalır.")}</p>${pathHTML()}</div>
+<div class="two">
+ <div class="panel"><h2>${X("Daily practice (20 min)","Tägliche Übe-Runde (20 Min.)","Günlük çalışma (20 dk)")}</h2><p class="lead">${X("Short and regular beats rare and long. Sore fingertips at the start are normal and get better after 2 to 4 weeks.","Kurz und regelmäßig bringt mehr als selten und lang. Am Anfang tun die Fingerkuppen weh. Das ist normal und wird nach 2 bis 4 Wochen besser.","Kısa ve düzenli, seyrek ve uzundan iyidir. Başta parmak uçlarının acıması normaldir, 2-4 haftada geçer.")}</p>${routineHTML()}</div>
+ <div class="panel"><h2>${X("How to sit (classical)","Richtig sitzen (klassisch)","Nasıl oturulur (klasik)")}</h2><ol class="plain">
+  <li>${X("Sit on the front half of a chair without armrests.","Auf die vordere Hälfte eines Stuhls ohne Armlehnen setzen.","Kolçaksız bir sandalyenin ön yarısına otur.")}</li>
+  <li>${X("Left foot on a small footstool (or a thick book).","Linker Fuß auf eine kleine Fußbank (oder ein dickes Buch).","Sol ayak küçük bir ayak taburesine (ya da kalın bir kitaba).")}</li>
+  <li>${X("The guitar rests on the left thigh, neck pointing up at an angle.","Gitarre liegt auf dem linken Oberschenkel, der Hals zeigt schräg nach oben.","Gitar sol uyluğun üstünde, sap yukarı doğru eğik.")}</li>
+  <li>${X("The right forearm rests on the edge, the hand hangs over the sound hole.","Rechter Unterarm liegt locker auf der Kante, die Hand hängt über dem Schallloch.","Sağ önkol kenarda durur, el ses deliğinin üstünde sarkar.")}</li>
+  <li>${X("Left thumb behind the neck, roughly behind the middle finger. Don't wrap it around.","Linker Daumen hinten am Hals, etwa hinter dem Mittelfinger. Nicht um den Hals greifen.","Sol başparmak sapın arkasında, orta parmağın arkasında. Sapı sarma.")}</li>
+  <li>${X("Cut left-hand nails short, otherwise you cannot press cleanly.","Linke Fingernägel kurz schneiden, sonst kannst du nicht sauber drücken.","Sol el tırnaklarını kısa kes, yoksa temiz basamazsın.")}</li></ol></div>
+</div>
+<div class="panel"><h2>${X("How to read a chord sheet","So liest du ein Akkordblatt","Akor sayfası nasıl okunur")}</h2><p class="lead">${X("Chord names stand above the lyrics. Change exactly on the word under the new chord. Your strum pattern keeps going. A bar usually has 4 beats. Example (made-up lyrics):","Die Akkordnamen stehen über dem Text. Du wechselst genau bei dem Wort, über dem der neue Akkord steht. Dein Anschlagmuster läuft weiter. Ein Takt hat meist 4 Schläge. Beispiel (ausgedachter Text):","Akor adları sözlerin üstünde durur. Yeni akorun altındaki kelimede tam olarak geç. Ritmin devam eder. Bir ölçü genelde 4 vuruştur. Örnek (uydurma sözler):")}</p>
+<div class="sheet">${L({en:`<b>Am</b>               <b>Dm</b>
+I play a quiet song tonight
+<b>E</b>                  <b>Am</b>
+Just for me, just for me`,de:`<b>Am</b>              <b>Dm</b>
+Ich spiel heut Abend leise
+<b>E</b>                 <b>Am</b>
+Ein Lied für mich allein`,tr:`<b>Am</b>               <b>Dm</b>
+Bu gece sessiz bir şarkı
+<b>E</b>                  <b>Am</b>
+Sadece benim için çalar`})}</div>
+<p class="lead" style="margin-top:10px">${X("“Capo 2” at the top means: clamp the capo at fret 2 and play the shapes exactly as written. More under “Capo”.","„Kapo 2“ ganz oben heißt: Kapodaster in den 2. Bund klemmen und die Griffe genau so spielen, wie sie dastehen. Mehr unter „Kapodaster“.","En üstte “Kapo 2” yazıyorsa: kapoyu 2. perdeye tak ve akorları yazıldığı gibi çal. Daha fazlası “Kapo” bölümünde.")}</p></div>
+<div class="panel"><h2>${X("Problem? Here's the fix","Problem? Hier die Lösung","Sorun mu var? Çözümü burada")}</h2>${fixHTML(G.PROBS())}</div>`,
+
+chords:()=>`
+<div class="panel"><h2>${X("How to read a chord diagram","Ein Griffbild lesen","Akor şeması nasıl okunur")}</h2><div class="two">
+ <div class="legend">
+  <span class="k" style="border-radius:4px">│</span><span><b>${X("Vertical lines = strings.","Senkrechte Linien = Saiten.","Dikey çizgiler = teller.")}</b> ${X("Left is the thick low E, right the thin high e. As if the guitar stands in front of you.","Links die dicke tiefe E-Saite, rechts die dünne hohe e-Saite. So, als stünde die Gitarre vor dir.","Solda kalın Mi, sağda ince Mi. Gitar önünde dik duruyormuş gibi.")}</span>
+  <span class="k" style="border-radius:4px">─</span><span><b>${X("Horizontal lines = frets.","Waagerechte Linien = Bundstäbchen.","Yatay çizgiler = perdeler.")}</b> ${X("The thick bar on top is the nut (end of the neck). Below are frets 1, 2, 3.","Der dicke Balken oben ist der Sattel. Darunter der 1., 2., 3. Bund.","Üstteki kalın çizgi eşiktir (sapın ucu). Altında 1., 2., 3. perde.")}</span>
+  <span class="k" style="background:var(--ink);color:var(--bg)">2</span><span><b>${X("Dot with number = which finger.","Punkt mit Zahl = welcher Finger.","Sayılı nokta = hangi parmak.")}</b> ${X("1 index, 2 middle, 3 ring, 4 little finger. Press just behind the fret.","1 Zeige-, 2 Mittel-, 3 Ring-, 4 kleiner Finger. Kurz vor dem Bundstäbchen drücken.","1 işaret, 2 orta, 3 yüzük, 4 serçe. Perde telinin hemen arkasına bas.")}</span>
+  <span class="k" style="color:var(--accent);border-color:var(--accent)">O</span><span><b>${X("O = play open.","O = leer spielen.","O = boş çal.")}</b> ${X("Strike the string without pressing.","Saite anschlagen, aber nicht drücken.","Tele basmadan çal.")}</span>
+  <span class="k" style="color:var(--warn);border-color:var(--warn)">×</span><span><b>${X("× = don't play.","× = nicht spielen.","× = çalma.")}</b> ${X("Leave this string out.","Diese Saite auslassen.","Bu teli atla.")}</span>
+ </div>
+ <div class="facts">
+  <div><b>${X("String names","Saitennamen","Tel adları")}</b><span>${L({en:"Thick to thin: E – A – D – G – B – e. “Eddie Ate Dynamite, Good Bye Eddie.”",de:"Von dick nach dünn: E – A – D – G – H – e. „Eine Alte Dame Geht Heute einkaufen.“",tr:"Kalından inceye: E – A – D – G – B – e (Mi – La – Re – Sol – Si – Mi)."})}</span></div>
+  <div><b>${X("Major and minor","Dur und Moll","Majör ve minör")}</b><span>${X("A letter alone (A) is major and sounds bright. With “m” (Am) it is minor and sounds sad. Turkish songs use a lot of minor.","Buchstabe allein (A) = Dur, klingt hell. Mit „m“ (Am) = Moll, klingt traurig. Türkische Lieder nutzen viel Moll.","Tek harf (A) majördür, parlak duyulur. “m” ile (Am) minördür, hüzünlü duyulur. Türkçe şarkılarda çok minör var.")}</span></div>
+  <div><b>${X("The 7","Die 7","7'li akorlar")}</b><span>${X("A7, E7 etc. sound “unfinished” and want to move on. E7 leads nicely to Am.","A7, E7 usw. klingen „unfertig“ und wollen weiter. E7 führt schön nach Am.","A7, E7 vb. “bitmemiş” duyulur ve ilerlemek ister. E7 güzelce Am'ye gider.")}</span></div>
+ </div></div></div>
+<div class="panel"><div class="chips" id="gChips">${G.CH.map(c=>`<button class="chip" data-c="${c.id}" aria-pressed="false">${G.name(c)}</button>`).join("")}</div>
+ <div class="tool" style="margin-top:16px"><div class="diagram" id="gChordDiag"></div><div>
+  <div class="row" style="justify-content:space-between;align-items:flex-end"><div><div class="big" id="gChordName"></div><div class="muted" id="gChordSub"></div></div>
+  <div class="row"><button class="btn go" id="gStrum">${X("Strum","Anschlagen","Çal")}</button><button class="btn alt" id="gSlow">${X("One by one","Einzeln","Tek tek")}</button></div></div>
+  <h3>${X("How to press it:","So greifst du:","Nasıl basılır:")}</h3><ol class="steps" id="gChordSteps"></ol><p class="muted" id="gChordTip" style="margin-top:10px"></p></div></div></div>
+<div class="panel"><h2>${X("Practise changes: the one-minute drill","Akkordwechsel üben: die 1-Minuten-Übung","Geçiş çalış: bir dakika çalışması")}</h2><p class="lead">${X("Chords are not the hard part, the change is. Pick two chords, start the timer and switch back and forth for one minute. Every clean change counts. Tomorrow, try to beat it.","Nicht die Akkorde sind schwer, sondern der Wechsel. Nimm zwei Akkorde, stell den Timer und wechsle eine Minute lang hin und her. Jeder saubere Wechsel zählt. Morgen versuchst du, mehr zu schaffen.","Zor olan akorlar değil, geçiştir. İki akor seç, sayacı başlat ve bir dakika boyunca gidip gel. Her temiz geçiş sayılır. Yarın daha fazlasını dene.")}</p>
+ <div class="row"><select id="gPair" aria-label="${X("Chord pair","Akkordpaar","Akor çifti")}"></select><button class="btn go" id="gMinStart">${X("Start 1 minute","1 Minute starten","1 dakika başlat")}</button><span class="clock" id="gMinClock" style="font-size:2rem">60</span></div>
+ <div class="row" style="margin-top:10px"><button class="btn alt" id="gMinPlus">${X("+1 change","+1 Wechsel","+1 geçiş")}</button><span class="muted" id="gMinCount"></span><span class="muted" id="gMinBest"></span></div>
+ <p class="muted" style="margin-top:10px">${X("Tip: fingers that stay the same in both chords (anchor fingers) stay down. Between Am and C, index and middle stay, only the ring finger moves.","Tipp: Finger, die in beiden Akkorden gleich bleiben (Ankerfinger), liegen lassen. Bei Am und C bleiben Zeige- und Mittelfinger liegen, nur der Ringfinger wandert.","İpucu: İki akorda da aynı kalan parmaklar (sabit parmaklar) yerinde kalsın. Am ile C arasında işaret ve orta kalır, sadece yüzük parmağı hareket eder.")}</p></div>`,
+
+strum:()=>`
+<div class="panel"><h2>${X("Understanding strum patterns","Anschlagmuster verstehen","Ritim kalıplarını anlamak")}</h2><p class="lead">${X("A bar has 4 beats with an “and” between each. Count aloud: “1 and 2 and 3 and 4 and”. Your hand moves down and up all the time like a pendulum: down (↓) on numbers, up (↑) on “and”. At a gap (·) the hand still moves but misses the strings.","Ein Takt hat 4 Schläge, dazwischen jeweils ein „und“. Zähl laut: „1 und 2 und 3 und 4 und“. Die Hand geht die ganze Zeit auf und ab wie ein Pendel: runter (↓) auf den Zahlen, hoch (↑) auf dem „und“. Bei einer Lücke (·) bewegt sie sich trotzdem, trifft aber die Saiten nicht.","Bir ölçüde 4 vuruş ve aralarında “ve” var. Yüksek sesle say: “1 ve 2 ve 3 ve 4 ve”. Elin sarkaç gibi sürekli aşağı yukarı gider: sayılarda aşağı (↓), “ve”de yukarı (↑). Boşlukta (·) el yine hareket eder ama tellere değmez.")}</p>
+ <div class="row"><label for="gPat">${X("Pattern","Muster","Kalıp")}</label><select id="gPat"></select><label for="gProg">${X("Chords","Akkorde","Akorlar")}</label><select id="gProg"></select></div>
+ <p class="muted" id="gPatInfo" style="margin:8px 0 0"></p><div class="beats" id="gBeats"></div><div class="prog" id="gProgView"></div>
+ <div class="row" style="margin-top:14px"><label for="gBpm">${X("Tempo","Tempo","Tempo")}</label><input type="range" id="gBpm" min="40" max="130"><span class="muted" id="gBpmVal"></span><label><input type="checkbox" id="gMetro"> ${X("Click","Klick","Metronom")}</label></div>
+ <div class="row" style="margin-top:10px"><button class="btn go" id="gSPlay">${X("Play","Abspielen","Çal")}</button><button class="btn alt" id="gSStop">${X("Stop","Stopp","Durdur")}</button></div></div>
+<div class="two"><div class="panel"><h3 style="margin-top:0">${X("Current chord","Aktueller Akkord","Şu anki akor")}</h3><div class="diagram" id="gSDiag"></div></div>
+ <div class="panel"><h3 style="margin-top:0">${X("How to practise a pattern","So übst du ein Muster","Bir kalıp nasıl çalışılır")}</h3><ol class="plain">
+  <li>${X("First play the rhythm on muted strings (left hand resting lightly on them).","Erst den Rhythmus auf gedämpften Saiten spielen (linke Hand liegt locker drauf).","Önce ritmi susturulmuş tellerde çal (sol el hafifçe üstünde).")}</li>
+  <li>${X("Then with one chord, without changing.","Dann mit einem Akkord, ohne zu wechseln.","Sonra tek akorla, değiştirmeden.")}</li>
+  <li>${X("Then with changes, very slowly. Change already on the last “and” so beat 1 lands on time.","Dann mit Wechsel, ganz langsam. Schon auf dem letzten „und“ wechseln, damit die 1 pünktlich kommt.","Sonra geçişle, çok yavaş. 1 zamanında gelsin diye son “ve”de geçmeye başla.")}</li>
+  <li>${X("Only when it works five times without stopping, raise the tempo by 5.","Erst wenn es 5 Mal ohne Stopp klappt, das Tempo um 5 erhöhen.","Beş kez durmadan olunca tempoyu 5 artır.")}</li>
+  <li>${X("On classical guitar: thumb strums down, index nail strums up, no pick.","Bei Klassikgitarre: Daumen schlägt runter, Zeigefinger-Nagel hoch, kein Plektrum.","Klasik gitarda: başparmak aşağı, işaret parmağı tırnağı yukarı, pena yok.")}</li></ol></div></div>`,
+
+pick:()=>`
+<div class="panel"><h2>${X("What does “pick a G” mean?","Was heißt „G picken“?","“G'yi parmakla çal” ne demek?")}</h2><p class="lead">${X("The left hand holds the chord (for example G) and simply stays. The right hand does not strike all strings at once, it plucks them one after another in a fixed pattern. That is picking. On classical guitar each finger has its own string:","Die linke Hand hält den Akkord (zum Beispiel G) und bleibt einfach liegen. Die rechte Hand schlägt nicht alle Saiten auf einmal an, sondern zupft sie einzeln nacheinander in einem festen Muster. Das ist Picking. Bei der klassischen Gitarre hat jeder Finger seine eigene Saite:","Sol el akoru (örneğin G) tutar ve öyle kalır. Sağ el tüm tellere birden vurmaz, belli bir kalıpla teker teker çeker. Buna parmakla çalma denir. Klasik gitarda her parmağın kendi teli vardır:")}</p>
+ <div class="fingers">
+  <div><i style="background:var(--p)">p</i><span><b>${X("Thumb","Daumen","Başparmak")}</b><br>${X("Bass string: E, A or D. Always the root of the chord.","Bass-Saite: E, A oder D. Immer der Grundton des Akkords.","Bas teli: E, A ya da D. Her zaman akorun kök sesi.")}</span></div>
+  <div><i style="background:var(--i)">i</i><span><b>${X("Index","Zeigefinger","İşaret")}</b><br>${G.strLong(3)}</span></div>
+  <div><i style="background:var(--m)">m</i><span><b>${X("Middle","Mittelfinger","Orta")}</b><br>${G.strLong(4)}</span></div>
+  <div><i style="background:var(--a)">a</i><span><b>${X("Ring","Ringfinger","Yüzük")}</b><br>${G.strLong(5)}</span></div></div>
+ <p class="muted" style="margin-top:10px">${X("The letters come from Spanish: pulgar, índice, medio, anular. Almost every guitar book uses them.","Die Buchstaben kommen aus dem Spanischen: pulgar, índice, medio, anular. Fast jedes Gitarrenbuch nutzt sie.","Harfler İspanyolcadan gelir: pulgar, índice, medio, anular. Neredeyse her gitar kitabı bunları kullanır.")}</p></div>
+<div class="panel"><div class="row"><label for="gPP">${X("Pattern","Muster","Kalıp")}</label><select id="gPP"></select><label for="gPC">${X("Chord","Akkord","Akor")}</label><select id="gPC"></select></div>
+ <p class="muted" id="gPInfo" style="margin:8px 0 10px"></p>
+ <h3>${X("As a tab","Als Tabulatur","Tab olarak")}</h3><p class="lead">${X("A tab shows the six strings as lines. The thin e string is on top, the thick E at the bottom, the opposite of a chord diagram. The number is the fret (0 = open). The coloured letter above tells which finger plucks. Read left to right.","Eine Tabulatur zeigt die 6 Saiten als Linien. Oben ist die dünne e-Saite, unten die dicke E-Saite, also umgekehrt wie im Griffbild. Die Zahl ist der Bund (0 = leer). Der farbige Buchstabe darüber sagt, welcher Finger zupft. Von links nach rechts lesen.","Tab altı teli çizgi olarak gösterir. İnce Mi üstte, kalın Mi altta, yani akor şemasının tersi. Sayı perdeyi gösterir (0 = boş). Üstteki renkli harf hangi parmağın çektiğini söyler. Soldan sağa oku.")}</p>
+ <div class="scroll-x" id="gTab"></div>
+ <div class="row" style="margin-top:12px"><label for="gPBpm">${X("Tempo","Tempo","Tempo")}</label><input type="range" id="gPBpm" min="40" max="140"><span class="muted" id="gPBpmVal"></span><button class="btn go" id="gPPlay">${X("Play","Abspielen","Çal")}</button><button class="btn alt" id="gPStop">${X("Stop","Stopp","Durdur")}</button></div></div>
+<div class="two"><div class="panel"><h3 style="margin-top:0">${X("Chord","Akkord","Akor")}</h3><div class="diagram" id="gPDiag"></div></div>
+ <div class="panel"><h3 style="margin-top:0">${X("Picking tips","Tipps fürs Zupfen","Parmakla çalma ipuçları")}</h3><ol class="plain">
+  <li>${X("i, m and a rest ready on “their” strings, the thumb a bit further left on the bass strings.","i, m, a liegen schon auf „ihren“ Saiten bereit, der Daumen etwas weiter links auf den Bass-Saiten.","i, m ve a kendi tellerinde hazır bekler, başparmak biraz solda bas tellerinde.")}</li>
+  <li>${X("Fingers pluck towards the palm, not upwards. The thumb pushes forward and down.","Die Finger zupfen zur Handfläche hin, nicht nach oben weg. Der Daumen drückt nach vorne-unten.","Parmaklar avuç içine doğru çeker, yukarı değil. Başparmak ileri-aşağı iter.")}</li>
+  <li>${X("The hand stays still, only the fingers move.","Die Hand bleibt ruhig, nur die Finger bewegen sich.","El sabit kalır, sadece parmaklar hareket eder.")}</li>
+  <li>${X("Very slow and even at first. Every note equally loud.","Erst ganz langsam und gleichmäßig. Jeder Ton gleich laut.","Önce çok yavaş ve düzenli. Her nota eşit yükseklikte.")}</li>
+  <li>${X("The thumb changes string with the chord: A string for Am and C, low E for Em and G, D string for D and Dm.","Der Daumen wechselt je nach Akkord: A-Saite bei Am und C, tiefe E-Saite bei Em und G, D-Saite bei D und Dm.","Başparmak akora göre tel değiştirir: Am ve C'de La teli, Em ve G'de kalın Mi, D ve Dm'de Re teli.")}</li></ol></div></div>`,
+
+capo:()=>`
+<div class="panel"><h2>${X("What does a capo do?","Was macht ein Kapodaster?","Kapo ne işe yarar?")}</h2><p class="lead">${X("A capo is a clamp you put across all strings at one fret. It works like a new nut: all strings sound higher. Each fret raises everything by a half step. You keep playing the same easy shapes, they just sound higher.","Ein Kapodaster (Kapo) ist eine Klemme, die du quer über alle Saiten an einen Bund klemmst. Er wirkt wie ein neuer Sattel: Alle Saiten klingen höher. Jeder Bund macht alles einen Halbton höher. Du greifst weiter die gleichen einfachen Griffe, sie klingen nur höher.","Kapo, tüm tellerin üzerine bir perdede takılan bir kıskaçtır. Yeni bir eşik gibi çalışır: tüm teller daha tiz çalar. Her perde her şeyi yarım ses yükseltir. Aynı kolay akorları basmaya devam edersin, sadece daha tiz duyulur.")}</p>
+ <div class="facts">
+  <div><b>${X("What for?","Wozu?","Ne için?")}</b><span>${X("So a song fits your voice or the original recording without learning hard shapes.","Damit ein Lied zu deiner Stimme oder zur Original-Aufnahme passt, ohne schwere Griffe zu lernen.","Zor akorlar öğrenmeden şarkı sesine ya da orijinal kayda uysun diye.")}</span></div>
+  <div><b>${X("Where to clamp?","Wo klemmen?","Nereye takılır?")}</b><span>${X("Just behind the fret wire, straight and firm enough that nothing buzzes. Retune afterwards.","Kurz vor dem Bundstäbchen, gerade und fest genug, dass nichts schnarrt. Danach kurz nachstimmen.","Perde telinin hemen arkasına, düz ve hiçbir şey cızırdamayacak kadar sıkı. Sonra akordu kontrol et.")}</span></div>
+  <div><b>${X("How to count?","Wie zählen?","Nasıl sayılır?")}</b><span>${X("With a capo, count frets from the capo. The capo is now “0”. Diagrams apply from there.","Mit Kapo die Bünde ab dem Kapo neu zählen. Der Kapo ist jetzt „0“.","Kapoyla perdeleri kapodan itibaren say. Kapo artık “0”dır.")}</span></div>
+  <div><b>${X("“Capo 3” on a sheet","„Kapo 3“ auf dem Blatt","Sayfada “Kapo 3”")}</b><span>${X("Capo at fret 3, then play the shapes shown above the lyrics. Don't convert anything.","Kapo in den 3. Bund, dann die Griffe spielen, die über dem Text stehen. Nicht umrechnen.","Kapo 3. perdeye, sonra sözlerin üstündeki akorları çal. Hiçbir şeyi dönüştürme.")}</span></div></div></div>
+<div class="panel"><h2>${X("Capo calculator","Kapo-Rechner","Kapo hesaplayıcı")}</h2><p class="lead">${X("Choose a fret. The table shows which chord really sounds when you play a shape.","Wähle den Bund. Die Tabelle zeigt, welcher Akkord wirklich erklingt, wenn du einen Griff spielst.","Perdeyi seç. Tablo, bir akor şeklini çaldığında gerçekte hangi akorun duyulduğunu gösterir.")}</p>
+ <div class="row"><label for="gCapo">${X("Capo at","Kapo im","Kapo")}</label><select id="gCapo"></select><button class="btn alt" id="gCapoPlay"></button></div>
+ <div class="scroll-x" style="margin-top:12px"><table><thead><tr><th>${X("You press","Du greifst","Bastığın")}</th><th>${X("It sounds","Es klingt","Duyulan")}</th></tr></thead><tbody id="gCapoTable"></tbody></table></div>
+ <h3>${X("The other way round: the song uses a hard chord","Andersrum: Das Lied hat einen schweren Akkord","Tersi: Şarkıda zor bir akor var")}</h3>
+ <div class="row"><label for="gTarget">${X("Wanted chord","Gesuchter Akkord","İstenen akor")}</label><select id="gTarget"></select></div><div class="fix" id="gCapoFind"></div></div>`,
+
+notes:()=>`
+<div class="panel"><h2>${X("Notes on the guitar (first position)","Noten auf der Gitarre (1. Lage)","Gitarda notalar (birinci pozisyon)")}</h2><p class="lead">${X("Every note on the staff has a fixed place on the fretboard. Tap a note to see the string and fret and to hear it. The small 8 under the clef means the guitar sounds an octave lower than written. Nothing changes for you.","Jede Note auf den Linien hat einen festen Platz auf dem Griffbrett. Tippe eine Note an: Du siehst Saite und Bund und hörst sie. Die kleine 8 unter dem Schlüssel heißt: Die Gitarre klingt eine Oktave tiefer als geschrieben. Für dich ändert sich nichts.","Portedeki her notanın klavyede sabit bir yeri vardır. Bir notaya dokun: teli ve perdeyi gör, sesini duy. Anahtarın altındaki küçük 8, gitarın yazılandan bir oktav pes çaldığı anlamına gelir. Senin için bir şey değişmez.")}</p>
+ <div class="scroll-x" id="gStaff"></div>
+ <div class="tool" style="margin-top:14px"><div class="diagram" id="gNoteDiag"></div><div><div class="big" id="gNoteName"></div><p id="gNoteWhere" style="margin:8px 0"></p><button class="btn alt" id="gNotePlay">${X("Listen","Anhören","Dinle")}</button></div></div></div>
+<div class="panel"><h2>${X("How long does a note last?","Wie lange klingt ein Ton?","Bir nota ne kadar sürer?")}</h2><p class="lead">${X("The shape of a note tells how many beats it lasts. Count evenly “1, 2, 3, 4”.","Die Form der Note sagt, wie viele Schläge sie dauert. Zähl gleichmäßig „1, 2, 3, 4“.","Notanın şekli kaç vuruş süreceğini söyler. Düzenli say: “1, 2, 3, 4”.")}</p>${dursHTML()}</div>`,
+
+tune:()=>`
+<div class="panel"><h2>${X("Tuning the guitar","Gitarre stimmen","Gitarı akort etmek")}</h2><p class="lead">${X("Tap a string, listen, and turn the tuning peg until your string sounds the same. If your string is lower, tighten it. New nylon strings stretch for days, so tune every day.","Tippe eine Saite an, hör den Ton und dreh am Wirbel, bis deine Saite gleich klingt. Klingt sie tiefer, straffer drehen. Neue Nylonsaiten dehnen sich tagelang, darum jeden Tag stimmen.","Bir tele dokun, dinle ve kendi telin aynı duyulana kadar burgu çevir. Telin daha pes ise gerginleştir. Yeni naylon teller günlerce esner, her gün akort et.")}</p>
+ <div class="strings" id="gStr">${G.OPEN.map((m,s)=>`<button data-s="${s}">${G.str(s)}<small>${s===0?X("thick","dick","kalın"):s===5?X("thin","dünn","ince"):"&nbsp;"}</small></button>`).join("")}</div>
+ <p class="muted small" style="margin:10px 0 0">${X("The tone repeats until you stop it or tap another string. Tapping the same string again stops it.","Der Ton wiederholt sich, bis du stoppst oder eine andere Saite antippst. Nochmal dieselbe Saite antippen stoppt auch.","Ses sen durdurana ya da başka bir tele dokunana kadar tekrar eder. Aynı tele tekrar dokunmak da durdurur.")}</p>
+ <button class="btn alt" id="gRefStop" hidden style="margin-top:10px">${X("Stop tone","Ton stoppen","Sesi durdur")}</button></div>
+<div class="panel"><h2>${X("Tuner (microphone)","Stimmgerät (Mikrofon)","Akort cihazı (mikrofon)")}</h2>
+ <div class="row" style="justify-content:space-between"><div class="big" id="gTunName">–</div><div class="muted" id="gTunSub">${X("Pluck a string","Zupf eine Saite","Bir teli çek")}</div></div>
+ ${meterHTML("gTunNeedle")}
+ <button class="btn go" id="gMic" style="margin-top:10px">${X("Start listening","Zuhören starten","Dinlemeye başla")}</button><div class="notice" id="gMicNote" hidden></div></div>`
+};
+
+G.bind={
+start(root){ bindPath(root,G.WEEKS(),"fn-g-path"); bindRoutine(root,G.ROUTINE()); bindFix(root,G.PROBS()); },
+chords(root){
+  const S=G.state, $=id=>root.querySelector("#"+id);
+  const show=id=>{ S.chord=id; const c=G.byId[id];
+    $("gChips").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===id));
+    $("gChordDiag").innerHTML=G.chordSVG(c); $("gChordName").textContent=G.name(c);
+    $("gChordSub").textContent=(c.q==="m"?X("Minor","Moll","Minör"):c.q==="7"?X("Seventh chord","Sept-Akkord","Yedili akor"):c.q==="maj7"?X("Major seventh","Major-Sept","Majör yedili"):X("Major","Dur","Majör"));
+    $("gChordSteps").innerHTML=G.steps(c); $("gChordTip").textContent=c.tip(); };
+  $("gChips").onclick=e=>{ const b=e.target.closest("button"); if(b){ show(b.dataset.c); G.strum(G.byId[b.dataset.c]); } };
+  $("gStrum").onclick=()=>G.strum(G.byId[S.chord]);
+  $("gSlow").onclick=()=>{ const c=G.byId[S.chord]; c.f.forEach((f,s)=>{ if(f>=0) pluck(G.midi(s,f),s*.45); }); };
+  show(S.chord);
+  const PAIRS=[["Em","Am"],["Am","E"],["Am","Dm"],["D","A"],["D","G"],["G","C"],["Am","C"],["Dm","E"]];
+  $("gPair").innerHTML=PAIRS.map((p,i)=>`<option value="${i}">${G.name(G.byId[p[0]])} ↔ ${G.name(G.byId[p[1]])}</option>`).join(""); $("gPair").value=S.pair;
+  let t=null,left=60,n=0;
+  const best=()=>{ const b=store.get("fn-g-min-"+$("gPair").value,0); $("gMinBest").textContent=b?"· "+X("Record:","Rekord:","Rekor:")+" "+b:""; };
+  const cnt=()=>$("gMinCount").textContent=fill(X("{n} changes","{n} Wechsel","{n} geçiş"),{n});
+  $("gPair").onchange=()=>{ S.pair=+$("gPair").value; best(); }; best(); cnt();
+  $("gMinStart").onclick=()=>{ if(t) return; left=60; n=0; cnt(); $("gMinClock").textContent="60"; ctx(); click(true);
+    t=setInterval(()=>{ left--; $("gMinClock").textContent=left; if(left<=0){ clearInterval(t); t=null; click(true); click(true,.2); const k="fn-g-min-"+$("gPair").value; if(n>store.get(k,0)) store.set(k,n); best(); } },1000);
+    running.add(()=>{ if(t){clearInterval(t); t=null;} }); };
+  $("gMinPlus").onclick=()=>{ if(!t) return; n++; cnt(); };
+},
+strum(root){
+  const S=G.state, $=id=>root.querySelector("#"+id), P=G.PATS();
+  $("gPat").innerHTML=P.map((p,i)=>`<option value="${i}">${p.n}</option>`).join(""); $("gPat").value=S.pat;
+  $("gProg").innerHTML=G.PROGS.map((p,i)=>`<option value="${i}">${p.map(id=>G.name(G.byId[id])).join(" – ")}</option>`).join(""); $("gProg").value=S.prog;
+  $("gBpm").value=S.bpm; $("gBpmVal").textContent=S.bpm; $("gMetro").checked=S.metro;
+  const cnt=(i,len)=>{ const a=X("and","und","ve"); return (len===6?["1",a,"2",a,"3",a]:["1",a,"2",a,"3",a,"4",a])[i]; };
+  const beats=(cur=-1)=>{ const p=P[S.pat].p; $("gBeats").style.setProperty("--n",p.length);
+    $("gBeats").innerHTML=[...p].map((c,i)=>`<div class="beat ${i%2===0?"main":""} ${i===cur?"cur":""}"><span class="ar">${c==="D"?"↓":c==="U"?"↑":c==="B"?"♪":"·"}</span><span class="ct">${cnt(i,p.length)}</span></div>`).join("");
+    $("gPatInfo").textContent=P[S.pat].info; };
+  const prog=(cur=0)=>{ const pr=G.PROGS[S.prog]; $("gProgView").innerHTML=pr.map((id,i)=>`<span class="${i===cur?"cur":""}">${G.name(G.byId[id])}</span>`).join(""); $("gSDiag").innerHTML=G.chordSVG(G.byId[pr[cur]]); };
+  let t=null; const stop=()=>{ if(t){clearInterval(t); t=null;} beats(); };
+  $("gPat").onchange=()=>{ S.pat=+$("gPat").value; stop(); }; $("gProg").onchange=()=>{ S.prog=+$("gProg").value; stop(); prog(); };
+  $("gBpm").oninput=()=>{ S.bpm=+$("gBpm").value; $("gBpmVal").textContent=S.bpm; }; $("gMetro").onchange=()=>S.metro=$("gMetro").checked;
+  $("gSPlay").onclick=()=>{ stop(); ctx(); const p=P[S.pat].p, pr=G.PROGS[S.prog]; let step=0;
+    const tick=()=>{ const i=step%p.length, bar=Math.floor(step/p.length)%pr.length, c=G.byId[pr[bar]];
+      if(i===0) prog(bar); beats(i); if(S.metro&&i%2===0) click(i===0);
+      const ch=p[i]; if(ch==="D"||ch==="U") G.strum(c,ch,0,.45); if(ch==="B") G.strum(c,"D",0,.5,0,true); step++; };
+    tick(); t=setInterval(tick,60/S.bpm/2*1000); running.add(stop); };
+  $("gSStop").onclick=stop; beats(); prog();
+},
+pick(root){
+  const S=G.state, $=id=>root.querySelector("#"+id), P=G.PPAT(), chords=["Am","Em","C","G","D","Dm","E","A"];
+  $("gPP").innerHTML=P.map((p,i)=>`<option value="${i}">${p.n}</option>`).join(""); $("gPP").value=S.ppat;
+  $("gPC").innerHTML=chords.map(id=>`<option value="${id}">${G.name(G.byId[id])}</option>`).join(""); $("gPC").value=S.pchord;
+  $("gPBpm").value=S.pbpm; $("gPBpmVal").textContent=S.pbpm;
+  const cols=()=>{ const c=G.byId[S.pchord], alt=c.b===0?2:3;
+    return P[S.ppat].s.map(tok=>tok==="p"?[{s:c.b,f:"p"}]:tok==="p2"?[{s:alt,f:"p"}]:[...tok].map(ch=>({s:G.STR_OF[ch],f:ch}))); };
+  const tab=(cur=-1)=>{ const c=G.byId[S.pchord], cs=cols(), x0=46, dx=52, W=x0+cs.length*dx+20, top=40, dy=24, H=top+5*dy+30;
+    let o=`<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="Tab">`;
+    for(let r=0;r<6;r++){ const s=5-r, y=top+r*dy; o+=`<line x1="${x0-10}" y1="${y}" x2="${W-10}" y2="${y}" stroke="var(--string)" stroke-width="1.5"/><text x="${x0-18}" y="${y+5}" font-size="13" font-weight="700" fill="var(--muted)" text-anchor="end">${G.str(s)}</text>`; }
+    cs.forEach((col,ci)=>{ const x=x0+ci*dx+dx/2;
+      if(ci===cur) o+=`<rect x="${x-dx/2+3}" y="4" width="${dx-6}" height="${H-8}" rx="8" fill="var(--hi-soft)" stroke="var(--hi)"/>`;
+      const fl=[...new Set(col.map(n=>n.f))].join("");
+      o+=`<text x="${x}" y="22" font-size="16" font-weight="700" text-anchor="middle" fill="var(--${col[0].f==="p"?"p":col.length>1?"ink":col[0].f})">${fl}</text>`;
+      col.forEach(n=>{ const y=top+(5-n.s)*dy, fr=Math.max(0,c.f[n.s]); o+=`<rect x="${x-11}" y="${y-11}" width="22" height="22" rx="5" fill="var(--surface)"/><text x="${x}" y="${y+5}" font-size="15" font-weight="700" fill="var(--ink)" text-anchor="middle">${fr}</text>`; });
+      o+=`<text x="${x}" y="${H-8}" font-size="11" fill="var(--muted)" text-anchor="middle">${ci+1}</text>`; });
+    $("gTab").innerHTML=o+`</svg>`; $("gPInfo").textContent=P[S.ppat].info; $("gPDiag").innerHTML=G.chordSVG(c); };
+  let t=null; const stop=()=>{ if(t){clearInterval(t); t=null;} tab(); };
+  $("gPP").onchange=()=>{ S.ppat=+$("gPP").value; stop(); }; $("gPC").onchange=()=>{ S.pchord=$("gPC").value; stop(); };
+  $("gPBpm").oninput=()=>{ S.pbpm=+$("gPBpm").value; $("gPBpmVal").textContent=S.pbpm; };
+  $("gPPlay").onclick=()=>{ stop(); ctx(); const c=G.byId[S.pchord], cs=cols(); let k=0;
+    const tick=()=>{ const ci=k%cs.length; tab(ci); cs[ci].forEach(n=>pluck(G.midi(n.s,Math.max(0,c.f[n.s])),0,n.f==="p"?.7:.5)); k++; };
+    tick(); t=setInterval(tick,60/S.pbpm/2*1000); running.add(stop); };
+  $("gPStop").onclick=stop; tab();
+},
+capo(root){
+  const S=G.state, $=id=>root.querySelector("#"+id);
+  const shapes=G.CH.filter(c=>["Em","Am","E","Dm","D","A","G","C"].includes(c.id));
+  $("gCapo").innerHTML=Array.from({length:8},(_,i)=>`<option value="${i}">${i===0?X("no capo","ohne Kapo","kapo yok"):fill(X("fret {n}","{n}. Bund","{n}. perde"),{n:i})}</option>`).join(""); $("gCapo").value=S.capo;
+  const draw=()=>{ const k=S.capo; $("gCapoTable").innerHTML=shapes.map(c=>`<tr><td>${G.name(c)}</td><td class="strong">${chordName(c.r+k,c.q)}</td></tr>`).join("");
+    $("gCapoPlay").textContent=fill(X("Hear Am with capo {n}","Am mit Kapo {n} anhören","Kapo {n} ile Am dinle"),{n:k}); };
+  $("gCapo").onchange=()=>{ S.capo=+$("gCapo").value; draw(); }; draw();
+  $("gCapoPlay").onclick=()=>G.strum(G.byId.Am,"D",0,.5,S.capo);
+  const targets=[]; for(let r=0;r<12;r++){ targets.push({r,q:""}); targets.push({r,q:"m"}); }
+  $("gTarget").innerHTML=targets.map((t,i)=>`<option value="${i}">${chordName(t.r,t.q)}</option>`).join("");
+  if(S.target<0) S.target=targets.findIndex(t=>t.r===11&&t.q==="m"); $("gTarget").value=S.target;
+  const find=()=>{ const t=targets[S.target], res=[];
+    shapes.filter(c=>c.q===t.q).forEach(c=>{ const k=pc(t.r-c.r); if(k<=7) res.push({c,k}); }); res.sort((a,b)=>a.k-b.k);
+    $("gCapoFind").innerHTML=res.length?res.map(r=>`<div><b>${r.k===0?X("No capo","Ohne Kapo","Kapo yok"):fill(X("Capo at fret {n}","Kapo im {n}. Bund","Kapo {n}. perdede"),{n:r.k})}, ${X("shape","Griff","şekil")} ${G.name(r.c)}</b><span>${fill(X("Sounds as {c}.","Klingt als {c}.","{c} olarak duyulur."),{c:chordName(t.r,t.q)})}</span></div>`).join(""):`<div><b>${X("No easy option","Keine einfache Lösung","Kolay bir yol yok")}</b><span>${X("No easy shape with a capo up to fret 7.","Mit Kapo bis Bund 7 gibt es keinen leichten Griff.","7. perdeye kadar kapoyla kolay bir şekil yok.")}</span></div>`; };
+  $("gTarget").onchange=()=>{ S.target=+$("gTarget").value; find(); }; find();
+},
+notes(root){
+  const S=G.state, $=id=>root.querySelector("#"+id);
+  const items=()=>G.NOTES.map(([m])=>({w:m+12,label:noteName(m)}));
+  const show=i=>{ S.note=i; const [m,s,f]=G.NOTES[i];
+    $("gStaff").innerHTML=staffSVG(items(),i,{octaveBelow:true,dx:40});
+    const one={single:true,f:[-1,-1,-1,-1,-1,-1],g:[0,0,0,0,0,0]}; one.f[s]=f; one.g[s]=f;
+    $("gNoteDiag").innerHTML=G.chordSVG(one,s); $("gNoteName").textContent=noteName(m);
+    $("gNoteWhere").innerHTML=`<b>${G.strLong(s)}</b>, ${f===0?X("open (don't press)","leer (nicht drücken)","boş (basma)"):fill(X("fret {n} with the {f}","{n}. Bund mit dem {f}","{n}. perde, {f} ile"),{n:f,f:G.finger(f).toLowerCase()})}.`; };
+  const act=e=>{ const g=e.target.closest(".staff-note"); if(!g) return; show(+g.dataset.i); pluck(G.NOTES[+g.dataset.i][0]); };
+  $("gStaff").onclick=act; $("gStaff").onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); act(e); } };
+  $("gNotePlay").onclick=()=>pluck(G.NOTES[S.note][0]); show(S.note);
+  bindDurs(root,d=>pluck(55,0,.6));
+},
+tune(root){
+  const $=id=>root.querySelector("#"+id); let src=null,t=null,on=-1;
+  const stopRef=()=>{ try{src&&src.stop();}catch(e){} src=null; if(t){clearInterval(t); t=null;} on=-1; $("gStr").querySelectorAll("button").forEach(b=>b.classList.remove("cur")); $("gRefStop").hidden=true; };
+  $("gStr").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; const s=+b.dataset.s, same=on===s; stopRef(); if(same) return;
+    on=s; b.classList.add("cur"); $("gRefStop").hidden=false; let n=0;
+    const hit=()=>{ try{src&&src.stop();}catch(e){} src=pluck(G.OPEN[s],0,.7); if(++n>=8) setTimeout(stopRef,1800); };
+    hit(); t=setInterval(()=>{ if(n<8) hit(); },2000); running.add(stopRef); };
+  $("gRefStop").onclick=stopRef;
+  $("gMic").onclick=async()=>{
+    if(mic.on){ mic.stop(); $("gMic").textContent=X("Start listening","Zuhören starten","Dinlemeye başla"); return; }
+    const ok=await mic.start(f=>{ if(f<0) return; const m=69+12*Math.log2(f/440); let bs=0; G.OPEN.forEach((o,s)=>{ if(Math.abs(m-o)<Math.abs(m-G.OPEN[bs])) bs=s; }); const cents=(m-G.OPEN[bs])*100;
+      $("gTunName").textContent=G.str(bs);
+      $("gTunSub").textContent=Math.abs(cents)<8?"✓ "+X("in tune","passt","doğru"):cents<0?fill(X("too low ({c} cents): tighten","zu tief ({c} Cent): straffer drehen","pes ({c} sent): ger"),{c:cents.toFixed(0)}):fill(X("too high (+{c} cents): loosen","zu hoch (+{c} Cent): lockerer drehen","tiz (+{c} sent): gevşet"),{c:cents.toFixed(0)});
+      setNeedle($("gTunNeedle"),cents); },70,500);
+    if(!ok){ $("gMicNote").textContent=micBlocked(); $("gMicNote").hidden=false; return; }
+    $("gMicNote").hidden=true; $("gMic").textContent=X("Stop listening","Zuhören stoppen","Dinlemeyi durdur"); }
+}};
+
+/* =====================================================================
+   CLARINET (Turkish G clarinet, Boehm system, written pitch)
+   ===================================================================== */
+const K={};
+K.SHIFT=-5; // G clarinet sounds a perfect fourth below written
+const LOW=["T","L1","L2","L3","R1","R2","R3"];
+K.N=[
+ {id:"E3",m:52,k:[...LOW,"E"]},{id:"F3",m:53,k:[...LOW,"F"]},{id:"G3",m:55,k:[...LOW]},
+ {id:"A3",m:57,k:["T","L1","L2","L3","R1","R2"]},{id:"B3",m:59,k:["T","L1","L2","L3","R1"]},
+ {id:"C4",m:60,k:["T","L1","L2","L3"]},{id:"D4",m:62,k:["T","L1","L2"]},{id:"E4",m:64,k:["T","L1"]},
+ {id:"F4",m:65,k:["T"]},{id:"G4",m:67,k:[]},{id:"Gs4",m:68,k:["Gs"]},{id:"A4",m:69,k:["A"]},{id:"Bb4",m:70,k:["A","R"]},
+ {id:"B4",m:71,k:[...LOW,"E","R"]},{id:"C5",m:72,k:[...LOW,"F","R"]},{id:"D5",m:74,k:[...LOW,"R"]},{id:"E5",m:76,k:["T","L1","L2","L3","R1","R2","R"]}
+];
+K.byId=Object.fromEntries(K.N.map(n=>[n.id,n]));
+K.byMidi=m=>K.N.find(n=>n.m===m);
+K.reg=m=>m<60?"low":m>=71?"high":"mid";
+K.arrow=m=>m<60?"↓":m>=71?"↑":"";
+K.nm=m=>noteName(m)+K.arrow(m);
+K.sub=m=>lang==="tr"?LETTER_EN[pc(m)]:SOLF[pc(m)];
+K.regName=m=>({low:X("low","tief","pes"),mid:X("middle","mittel","orta"),high:X("high","hoch","tiz")})[K.reg(m)];
+K.tone=(m,dur)=>windTone(m+K.SHIFT,dur);
+K.HAND={R:"lh",T:"lh",A:"lh",Gs:"lh",L1:"lh",L2:"lh",L3:"lh",R1:"rh",R2:"rh",R3:"rh",E:"rh",F:"rh"};
+K.ORDER=["T","R","A","Gs","L1","L2","L3","R1","R2","R3","F","E"];
+K.STEP=()=>({
+ T:X("Left thumb: cover the hole at the back","Linker Daumen: Loch hinten zudecken","Sol başparmak: arkadaki deliği kapat"),
+ R:X("Left thumb also presses the R key above the thumb hole","Linker Daumen drückt zusätzlich die R-Klappe über dem Daumenloch","Sol başparmak başparmak deliğinin üstündeki R anahtarına da basar"),
+ A:X("Left index: the A key at the very top front (roll up)","Linker Zeigefinger: die A-Klappe ganz oben vorne (nach oben rollen)","Sol işaret: en üstte öndeki A anahtarı (yukarı yuvarla)"),
+ Gs:X("Left index: the small G♯ key next to it, at the side","Linker Zeigefinger: die kleine G♯-Klappe daneben, seitlich","Sol işaret: yanındaki küçük G♯ anahtarı, yandan"),
+ L1:X("Left index: hole 1 closed","Linker Zeigefinger: 1. Loch vorne zu","Sol işaret: 1. delik kapalı"),
+ L2:X("Left middle: hole 2 closed","Linker Mittelfinger: 2. Loch vorne zu","Sol orta: 2. delik kapalı"),
+ L3:X("Left ring: hole 3 closed","Linker Ringfinger: 3. Loch vorne zu","Sol yüzük: 3. delik kapalı"),
+ R1:X("Right index: hole 4 closed","Rechter Zeigefinger: 4. Loch zu","Sağ işaret: 4. delik kapalı"),
+ R2:X("Right middle: hole 5 closed","Rechter Mittelfinger: 5. Loch zu","Sağ orta: 5. delik kapalı"),
+ R3:X("Right ring: hole 6 closed","Rechter Ringfinger: 6. Loch zu","Sağ yüzük: 6. delik kapalı"),
+ F:X("Right little finger: press key F/C","Rechter kleiner Finger: Taste F/C drücken","Sağ serçe: F/C anahtarına bas"),
+ E:X("Right little finger: press key E/B","Rechter kleiner Finger: Taste E/H drücken","Sağ serçe: E/B anahtarına bas")
+});
+K.steps=keys=>{
+  if(!keys.length) return `<li><span class="n o">O</span><span><b>${X("Press nothing.","Nichts drücken.","Hiçbir şeye basma.")}</b> ${X("All holes open. Hold the clarinet only with the right thumb under the thumb rest.","Alle Löcher offen. Die Klarinette nur mit dem rechten Daumen unter der Daumenstütze halten.","Tüm delikler açık. Klarneti sadece sağ başparmakla başparmak dayanağının altından tut.")}</span></li>`;
+  const st=K.STEP(); return K.ORDER.filter(k=>keys.includes(k)).map(k=>`<li><span class="n ${K.HAND[k]}">${K.HAND[k]==="lh"?"L":"R"}</span><span>${st[k]}</span></li>`).join("");
+};
+K.svg=keys=>{
+  const on=k=>keys.includes(k), f=k=>on(k)?`var(--${K.HAND[k]})`:"var(--surface)", st=k=>on(k)?`var(--${K.HAND[k]})`:"var(--key)";
+  const t=(x,y,s,a="start",sz=13,w=400)=>`<text x="${x}" y="${y}" font-size="${sz}" font-weight="${w}" fill="var(--muted)" text-anchor="${a}">${s}</text>`;
+  const hole=(k,cx,cy)=>`<circle cx="${cx}" cy="${cy}" r="15" fill="${f(k)}" stroke="${st(k)}" stroke-width="3"/>`;
+  const key=(k,x,y,w,h,lab)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${f(k)}" stroke="${st(k)}" stroke-width="3"/><text x="${x+w/2}" y="${y+h/2+5}" font-size="13" font-weight="700" fill="${on(k)?"var(--surface)":"var(--muted)"}" text-anchor="middle">${lab}</text>`;
+  const fi=[X("Index","Zeige","İşaret"),X("Middle","Mittel","Orta"),X("Ring","Ring","Yüzük")];
+  return `<svg viewBox="0 0 260 470" role="img" aria-label="${X("Fingering","Griffbild","Parmak pozisyonu")}">
+  <rect x="112" y="6" width="36" height="22" rx="6" fill="var(--body)"/>${t(130,20,X("mouthpiece","Mundstück","ağızlık"),"middle",9)}
+  <rect x="108" y="30" width="44" height="400" rx="18" fill="var(--body)"/><path d="M108 410 L92 455 L168 455 L152 410 Z" fill="var(--body)"/>
+  ${t(14,60,X("back:","hinten:","arka:"),"start",12,700)}${key("R",22,70,34,22,"R")}${hole("T",39,118)}${t(39,150,X("Thumb","Daumen","Başparmak"),"middle",11)}
+  ${key("A",176,48,40,22,"A")}${key("Gs",176,80,40,22,"G♯")}
+  ${hole("L1",130,140)}${t(156,145,fi[0])}${hole("L2",130,186)}${t(156,191,fi[1])}${hole("L3",130,232)}${t(156,237,fi[2])}
+  ${t(96,191,X("LEFT","LINKS","SOL"),"end",12,700)}<line x1="98" y1="262" x2="162" y2="262" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4"/>
+  ${hole("R1",130,292)}${t(156,297,fi[0])}${hole("R2",130,338)}${t(156,343,fi[1])}${hole("R3",130,384)}${t(156,389,fi[2])}
+  ${t(96,338,X("RIGHT","RECHTS","SAĞ"),"end",12,700)}${key("F",200,372,36,20,"F")}${key("E",200,398,36,20,"E")}${t(218,366,X("little finger","kleiner Finger","serçe"),"middle",10)}
+  ${t(130,468,X("bell","Becher","kalak"),"middle",11)}</svg>`;
+};
+K.LEVELS=()=>[
+ {n:X("1 · Left hand","1 · Linke Hand","1 · Sol el"),notes:["G4","F4","E4","D4","C4"]},
+ {n:X("2 · Right hand","2 · Rechte Hand","2 · Sağ el"),notes:["C4","B3","A3","G3"]},
+ {n:X("3 · Very low","3 · Ganz unten","3 · En pes"),notes:["G3","F3","E3"]},
+ {n:X("4 · Throat tones","4 · Kehltöne","4 · Boğaz sesleri"),notes:["G4","Gs4","A4","Bb4"]},
+ {n:X("5 · High (R key)","5 · Oben (R-Klappe)","5 · Tiz (R anahtarı)"),notes:["B4","C5","D5","E5"]}
+];
+K.WEEKS=()=>[
+ {t:X("First tone without the clarinet","Erster Ton ohne Klarinette","Klarnetsiz ilk ses"),why:X("The first days only mouthpiece and barrel. The mouth learns the embouchure without fingers getting in the way.","Die ersten Tage nur mit Mundstück und Birne. So lernt der Mund den Ansatz, ohne dass Finger stören.","İlk günler sadece ağızlık ve fıçı. Ağız, parmaklar karışmadan dudak pozisyonunu öğrenir."),
+  items:[X("Assemble and place the reed correctly","Zusammenbauen und Blatt richtig aufsetzen","Birleştir ve kamışı doğru tak"),X("Mouthpiece + barrel gives a steady tone","Mit Mundstück + Birne kommt ein gerader Ton","Ağızlık + fıçı ile düz bir ses çıkıyor"),X("Hold it calmly for 5 seconds","Den Ton 5 Sekunden ruhig halten","Sesi 5 saniye sakin tut"),X("Start the tone cleanly with the tongue (“dee”)","Mit der Zunge „dii“ den Ton sauber beginnen","Sesi dille temizce başlat (“dii”)"),X("Cheeks stay flat (check in a mirror)","Wangen bleiben flach (im Spiegel prüfen)","Yanaklar düz kalıyor (aynada kontrol et)")]},
+ {t:X("Left hand: G down to C","Linke Hand: Sol bis Do","Sol el: Sol'dan Do'ya"),why:X("Whole clarinet. Start with the open G (nothing pressed) and add at most one finger per day.","Ganze Klarinette. Fang mit Sol an (nichts drücken) und nimm pro Tag höchstens einen Finger dazu.","Bütün klarnet. Açık Sol ile başla (hiçbir şeye basmadan) ve günde en fazla bir parmak ekle."),
+  items:[X("Open G: calm tone, 4 beats","Sol: ruhiger Ton, 4 Schläge","Sol: sakin ses, 4 vuruş"),X("F: thumb hole closed","Fa: Daumenloch zu","Fa: başparmak deliği kapalı"),X("E and D: fingers flat, holes fully closed","Mi und Re: Finger flach, Loch ganz zu","Mi ve Re: parmaklar düz, delik tam kapalı"),X("C: three fingers of the left hand","Do: drei Finger links","Do: sol elin üç parmağı"),X("G – F – E – D – C slowly down and up","Sol–Fa–Mi–Re–Do langsam runter und rauf","Sol – Fa – Mi – Re – Do yavaşça aşağı ve yukarı")]},
+ {t:X("Right hand: low B to low G","Rechte Hand: Si↓ bis Sol↓","Sağ el: pes Si'den pes Sol'a"),why:X("Now the right hand joins. Every finger must seal its hole completely, or it squeaks.","Jetzt kommen die Finger der rechten Hand dazu. Jeder Finger muss das Loch ganz dicht machen, sonst quietscht es.","Şimdi sağ el katılıyor. Her parmak deliğini tamamen kapatmalı, yoksa ciyaklar."),
+  items:[X("Right thumb under the thumb rest","Rechter Daumen liegt unter der Daumenstütze","Sağ başparmak dayanağın altında"),X("Low B, A, G held one by one","Si↓, La↓, Sol↓ einzeln halten","Pes Si, La, Sol tek tek tut"),X("C – B – A – G without squeaking","Do–Si↓–La↓–Sol↓ ohne Quietschen","Do – Si – La – Sol ciyaklamadan"),X("Air challenge: 8 seconds","Luft-Challenge: 8 Sekunden","Nefes meydan okuması: 8 saniye")]},
+ {t:X("Reading notes and a first song","Noten lesen und erstes Lied","Nota okuma ve ilk şarkı"),why:X("Once you know where a note sits and how long it lasts, you can learn any song yourself.","Wenn du weißt, wo die Note steht und wie lange sie dauert, kannst du jedes Lied selbst lernen.","Notanın nerede durduğunu ve ne kadar sürdüğünü bilince her şarkıyı kendin öğrenebilirsin."),
+  items:[X("Find all notes so far under “Read music”","Unter „Noten lesen“ alle Töne bis jetzt finden","“Nota okuma” bölümünde şimdiye kadarki tüm notaları bul"),X("Clap whole, half and quarter notes","Ganze, Halbe, Viertel mitklatschen","Birlik, ikilik, dörtlük notaları alkışla"),X("Play the first example song at tempo 50","Das erste Beispiellied bei Tempo 50 spielen","İlk örnek şarkıyı tempo 50'de çal"),X("Then at tempo 70","Danach bei Tempo 70","Sonra tempo 70'te")]},
+ {t:X("Very low and the throat tones","Ganz tief und die Kehltöne","En pes ve boğaz sesleri"),why:X("The lowest notes need sealed fingers and the little finger. The throat tones often sound thin at first, that's normal.","Die tiefsten Töne brauchen dichte Finger und den kleinen Finger. Die Kehltöne klingen am Anfang oft dünn, das ist normal.","En pes sesler sıkı kapalı parmaklar ve serçe parmak ister. Boğaz sesleri başta ince çıkar, bu normal."),
+  items:[X("Low F with key F/C (right little finger)","Fa↓ mit Taste F/C (rechter kleiner Finger)","Pes Fa, F/C anahtarıyla (sağ serçe)"),X("Low E with key E/B, the lowest note","Mi↓ mit Taste E/H, der tiefste Ton","Pes Mi, E/B anahtarıyla, en pes ses"),X("G♯ and A with the left index","Sol♯ und La mit dem linken Zeigefinger","Sol işaretle Sol♯ ve La"),X("B♭ with A key + R","Si♭ mit A-Klappe + R","A anahtarı + R ile Si♭")]},
+ {t:X("Over the break: the R key","Über den Bruch: die R-Klappe","Kırılmanın üstü: R anahtarı"),why:X("With the R key the same fingering sounds twelve notes higher. That needs more air and a steady embouchure.","Mit der R-Klappe wird derselbe Griff zwölf Töne höher. Dafür braucht es mehr Luft und einen stabilen Ansatz.","R anahtarıyla aynı parmak pozisyonu on iki ses daha tiz çıkar. Bunun için daha fazla nefes ve sabit dudak gerekir."),
+  items:[X("Play low E, then add R: high B appears","Mi↓ spielen, dann R dazu: Si↑ kommt","Pes Mi çal, sonra R ekle: tiz Si gelir"),X("Low F → high C, low G → high D, low A → high E","Fa↓ → Do↑, Sol↓ → Re↑, La↓ → Mi↑","Pes Fa → tiz Do, pes Sol → tiz Re, pes La → tiz Mi"),X("Keep the lip steady during the change","Beim Wechsel Lippe nicht lockern","Geçişte dudağı gevşetme"),X("Hold high C cleanly for 4 beats","Do↑ 4 Schläge sauber halten","Tiz Do'yu 4 vuruş temiz tut")]},
+ {t:X("Your first own song","Dein erstes eigenes Lied","İlk kendi şarkın"),why:X("Find sheet music (search “sol klarnet nota”) and write it down note by note under “Songs”.","Such ein Notenblatt (z. B. „sol klarnet nota“) und schreib es Ton für Ton unter „Lieder“ auf.","Bir nota bul (“sol klarnet nota” diye ara) ve “Şarkılar” bölümüne nota nota yaz."),
+  items:[X("Found sheet music","Notenblatt gefunden","Nota bulundu"),X("Typed the song under “Songs”","Lied unter „Lieder“ eingetippt","Şarkı “Şarkılar”a yazıldı"),X("First line slowly without mistakes","Erste Zeile langsam ohne Fehler","İlk satır yavaşça hatasız"),X("Whole song slowly","Ganzes Lied langsam","Bütün şarkı yavaşça")]},
+ {t:X("First Turkish colour","Erste türkische Färbung","İlk Türk rengi"),why:X("Only now vibrato and sliding, very carefully. The core tone must stay calm.","Jetzt erst Vibrato und Gleiten, ganz vorsichtig. Der Grundton muss ruhig bleiben.","Ancak şimdi vibrato ve kaydırma, çok dikkatli. Ana ses sakin kalmalı."),
+  items:[X("Listen to a lot of Turkish clarinet","Viel türkische Klarinette anhören","Bolca Türk klarneti dinle"),X("Vibrato on G, slow and even","Vibrato auf Sol, langsam und gleichmäßig","Sol'da vibrato, yavaş ve düzenli"),X("Bend a tone slightly down and back","Einen Ton leicht nach unten ziehen und zurück","Bir sesi hafifçe aşağı kaydır ve geri getir"),X("Your song with some vibrato at the end of long notes","Dein Lied mit etwas Vibrato am Ende langer Töne","Uzun seslerin sonunda biraz vibratoyla şarkın")]}
+];
+K.ROUTINE=()=>[
+ {m:2,t:X("Arrive and breathe","Ankommen und atmen","Hazırlan ve nefes al"),d:X("Assemble, wet the reed. Three deep breaths into the belly, shoulders loose.","Zusammenbauen, Blatt anfeuchten. 3 tiefe Atemzüge in den Bauch, Schultern locker.","Birleştir, kamışı ıslat. Karına üç derin nefes, omuzlar gevşek.")},
+ {m:5,t:X("Long tones","Lange Töne","Uzun sesler"),d:X("G, F, E, D, C: hold each 4 beats, rest 4 beats. Straight and calm.","Sol, Fa, Mi, Re, Do: jeden Ton 4 Schläge halten, 4 Schläge Pause. Gerade und ruhig.","Sol, Fa, Mi, Re, Do: her birini 4 vuruş tut, 4 vuruş dinlen. Düz ve sakin.")},
+ {m:6,t:X("New notes of your week","Neue Töne aus deiner Woche","Haftanın yeni sesleri"),d:X("Your current level under “Practice”. Slowly, check with the tuner.","Die aktuelle Stufe unter „Üben“. Langsam, mit dem Stimmgerät prüfen.","“Pratik” bölümündeki seviyen. Yavaşça, akort cihazıyla kontrol et.")},
+ {m:6,t:X("A song","Ein Lied","Bir şarkı"),d:X("Your song under “Songs”, slowly. Slow and right beats fast and wrong.","Dein Lied unter „Lieder“, langsam. Lieber langsam richtig als schnell falsch.","“Şarkılar”daki şarkın, yavaşça. Yavaş ve doğru, hızlı ve yanlıştan iyidir.")},
+ {m:1,t:X("Care","Pflege","Bakım"),d:X("Reed off, swab through, parts into the case.","Blatt ab, Durchzieher durch, Teile in den Koffer.","Kamışı çıkar, temizleme bezini geçir, parçaları kutuya koy.")}
+];
+K.PROBS=()=>[
+ {p:X("Only air, no tone","Es kommt nur Luft, kein Ton","Sadece hava çıkıyor, ses yok"),f:[[X("Biting too hard","Zu fest gebissen","Çok sert ısırmak"),X("The soft reed gets closed. Barely rest the lip and give more air.","Das weiche Blatt wird zugedrückt. Lippe fast nur anlegen und mehr Luft geben.","Yumuşak kamış kapanıyor. Dudağı neredeyse sadece dayat ve daha çok hava ver.")],[X("Too little mouthpiece in the mouth","Zu wenig Mundstück im Mund","Ağızda çok az ağızlık"),X("Take a little more mouthpiece step by step until the tone starts.","Stück für Stück mehr Mundstück nehmen, bis der Ton anspringt.","Ses çıkana kadar adım adım biraz daha ağızlık al.")],[X("Reed crooked or too low","Blatt schief oder zu weit unten","Kamış eğri ya da çok aşağıda"),X("Reed tip exactly level with the mouthpiece tip, reed straight.","Blattspitze genau bündig mit der Mundstückspitze, Blatt gerade.","Kamış ucu tam ağızlık ucuyla aynı hizada, kamış düz.")],[X("Too little air","Zu wenig Luft","Çok az hava"),X("Blow fast and steady, like blowing out a candle far away.","Schnell und gleichmäßig blasen, wie eine Kerze weit weg auspusten.","Hızlı ve düzenli üfle, uzaktaki bir mumu söndürür gibi.")]]},
+ {p:X("It squeaks","Es quietscht","Ciyaklıyor"),f:[[X("Lip loosens or jaw drops","Lippe lockert sich oder Kiefer fällt","Dudak gevşiyor ya da çene düşüyor"),X("The most common cause. Keep the embouchure the same during the tone, especially going down.","Der häufigste Grund. Ansatz während des Tons gleich lassen, gerade bei Tönen nach unten.","En sık sebep. Ses boyunca dudak pozisyonunu aynı tut, özellikle aşağı inerken.")],[X("Too much mouthpiece","Zu viel Mundstück im Mund","Ağızda çok fazla ağızlık"),X("Take a few millimetres less.","Ein paar Millimeter weniger nehmen.","Birkaç milimetre daha az al.")],[X("A hole not fully closed","Ein Loch nicht ganz zu","Bir delik tam kapalı değil"),X("Lay the fingertip flat. The rings show by pressure whether it seals.","Fingerkuppe flach auflegen. Die Ringe zeigen mit Druck, ob es dicht ist.","Parmak ucunu düz koy. Halkalar baskıyla kapanıp kapanmadığını gösterir.")],[X("Hard attack with the tongue","Harter Einsatz mit der Zunge","Dille sert başlangıç"),X("Release the tongue gently (“dee”), don't slap the reed.","Zunge nur leicht wegnehmen („dii“), nicht gegen das Blatt schlagen.","Dili hafifçe çek (“dii”), kamışa vurma.")],[X("Blowing before the embouchure is set","Erst blasen, dann Ansatz","Dudak hazır olmadan üflemek"),X("Form the embouchure fully, then start the air.","Erst Ansatz fertig formen, dann die Luft starten.","Önce dudağı tam oluştur, sonra havayı başlat.")],[X("Broken reed or leaking pad","Blatt kaputt oder Polster undicht","Kamış bozuk ya da ped kaçırıyor"),X("Try another reed. If the same notes squeak with every reed, have a repair shop check it.","Anderes Blatt probieren. Quietscht es mit jedem Blatt bei denselben Tönen: Werkstatt prüfen lassen.","Başka kamış dene. Her kamışta aynı sesler ciyaklıyorsa tamirciye göster.")]]},
+ {p:X("Tone sounds thin or shaky","Ton klingt dünn oder zittert","Ses ince ya da titrek"),f:[[X("Puffed cheeks","Wangen dick","Şişik yanaklar"),X("Firm mouth corners like saying “ew”, cheeks flat.","Mundwinkel fest wie bei „ü“, Wangen flach.","Dudak kenarları “ü” der gibi sıkı, yanaklar düz.")],[X("Wobbly air","Luft wackelt","Hava titrek"),X("Support from the belly. Practise long tones with equal pressure.","Aus dem Bauch stützen. Lange Töne mit gleichem Druck üben.","Karından destekle. Eşit basınçla uzun sesler çalış.")],[X("Tired lips","Lippen müde","Yorgun dudaklar"),X("Take a break. Embouchure strength grows over weeks, not in a day.","Pause machen. Ansatz-Kraft kommt in Wochen, nicht an einem Tag.","Mola ver. Dudak gücü bir günde değil haftalar içinde gelişir.")]]},
+ {p:X("Tone too high or too low","Ton zu hoch oder zu tief","Ses çok tiz ya da çok pes"),f:[[X("Too high","Zu hoch","Çok tiz"),X("Loosen the lip a little, don't bite. Maybe pull the barrel out a millimetre.","Lippe etwas lockerer, nicht beißen. Birne evtl. einen Millimeter herausziehen.","Dudağı biraz gevşet, ısırma. Gerekirse fıçıyı bir milimetre dışarı çek.")],[X("Too low","Zu tief","Çok pes"),X("A bit more air, lip minimally firmer. Push the barrel all the way in.","Etwas mehr Luft, Lippe minimal fester. Birne ganz hineinschieben.","Biraz daha hava, dudak çok az daha sıkı. Fıçıyı tamamen it.")],[X("Cold clarinet","Klarinette ist kalt","Klarnet soğuk"),X("Play a few minutes to warm up first, then tune.","Erst ein paar Minuten warm spielen, dann stimmen.","Önce birkaç dakika ısın, sonra akort et.")]]},
+ {p:X("Only certain notes fail","Nur bestimmte Töne gehen nicht","Sadece bazı sesler çıkmıyor"),f:[[X("Low notes","Tiefe Töne","Pes sesler"),X("Usually a right-hand finger isn't sealing, or the little finger doesn't press fully.","Meist ein Finger rechts nicht ganz dicht, oder der kleine Finger drückt nicht ganz.","Genelde sağ elde bir parmak tam kapatmıyor ya da serçe tam basmıyor.")],[X("High notes with R","Hohe Töne mit R","R ile tiz sesler"),X("More air, hold the embouchure. The thumb must cover the hole and press R together.","Mehr Luft und Ansatz halten. Daumen muss Loch und R gleichzeitig drücken.","Daha çok hava, dudağı koru. Başparmak deliği kapatıp R'ye birlikte basmalı.")],[X("Always the same note","Immer derselbe Ton","Hep aynı ses"),X("A pad at that spot leaks or is bent. Ask a repair shop.","Polster an dieser Stelle undicht oder verbogen. Werkstatt fragen.","O noktadaki ped kaçırıyor ya da eğik. Tamirciye sor.")]]},
+ {p:X("Lip or teeth hurt","Lippe oder Zähne tun weh","Dudak ya da dişler acıyor"),f:[[X("Too much pressure","Zu viel Druck","Çok fazla baskı"),X("Bite less, hold more with the mouth corners.","Weniger beißen, mehr mit den Mundwinkeln halten.","Daha az ısır, daha çok dudak kenarlarıyla tut.")],[X("Lower lip presses on the teeth","Unterlippe drückt auf die Zähne","Alt dudak dişlere bastırıyor"),X("Pause briefly. Some players use a thin lip protector at first.","Kurz pausieren. Manche nutzen anfangs einen dünnen Lippenschutz.","Kısa mola ver. Bazıları başta ince bir dudak koruyucu kullanır.")],[X("Mouthpiece slips on top","Oben rutscht das Mundstück","Ağızlık üstte kayıyor"),X("A mouthpiece patch on top helps grip.","Ein Mundstückpflaster oben hilft beim Halten.","Üste yapıştırılan bir ağızlık bandı tutuşa yardım eder.")]]}
+];
+K.SONGS=[
+ {n:"Twinkle, Twinkle, Little Star",txt:"Do Do Sol Sol | La La Sol:2 | Fa Fa Mi Mi | Re Re Do:2"},
+ {n:"Alle meine Entchen",txt:"Do Re Mi Fa | Sol:2 Sol:2 | La La La La | Sol:4 |\nLa La La La | Sol:4 | Fa Fa Fa Fa | Mi:2 Mi:2 |\nRe Re Re Re | Do:4"},
+ {n:()=>X("Scale, middle (C to G)","Tonleiter mittel (Do bis Sol)","Orta gam (Do'dan Sol'a)"),txt:"Do:2 Re:2 | Mi:2 Fa:2 | Sol:4 |\nSol:2 Fa:2 | Mi:2 Re:2 | Do:4"},
+ {n:()=>X("Scale, low (low G to C)","Tonleiter tief (Sol↓ bis Do)","Pes gam (pes Sol'dan Do'ya)"),txt:"Sol,:2 La,:2 | Si,:2 Do:2 | P:4 |\nDo:2 Si,:2 | La,:2 Sol,:2"},
+ {n:()=>X("Long tones (embouchure)","Lange Töne (Ansatz-Übung)","Uzun sesler (dudak çalışması)"),txt:"Sol:4 | P:4 | Fa:4 | P:4 | Mi:4 | P:4 | Re:4 | P:4 | Do:4"}
+];
+K.PC={do:0,"do#":1,reb:1,re:2,"re#":3,mib:3,mi:4,fa:5,"fa#":6,solb:6,sol:7,"sol#":8,lab:8,la:9,"la#":10,sib:10,si:11,
+  c:0,"c#":1,cis:1,db:1,d:2,"d#":3,eb:3,es:3,dis:3,e:4,f:5,"f#":6,fis:6,gb:6,g:7,"g#":8,gis:8,ab:8,a:9,"a#":10,bb:10};
+K.parse=txt=>{
+  const bars=[]; let cur=[];
+  txt.replace(/\n/g," | ").split(/\s+/).filter(Boolean).forEach(tok=>{
+    if(tok==="|"){ if(cur.length){bars.push(cur);cur=[];} return; }
+    const m=tok.match(/^([^:]+?)(?::([\d.,/]+))?$/); if(!m) return;
+    let name=m[1], beats=1;
+    if(m[2]){ const v=m[2].includes("/")?m[2].split("/").reduce((a,b)=>a/b):parseFloat(m[2].replace(",",".")); if(v>0) beats=v; }
+    let reg="mid";
+    if(/[,↓]$/.test(name)){ reg="low"; name=name.replace(/[,↓]+$/,""); }
+    else if(/['’↑^]$/.test(name)){ reg="high"; name=name.replace(/['’↑^]+$/,""); }
+    let key=name.toLowerCase().replace("♯","#").replace("♭","b");
+    if(key==="p"||key==="pause"||key==="rest"||key==="r"||key==="sus"){ cur.push({rest:true,beats}); return; }
+    // letter "b": in German it means B-flat, in English it means B natural
+    let p=key==="b"?(lang==="de"?10:11):key==="h"?11:K.PC[key];
+    if(p===undefined){ cur.push({bad:true,beats,label:name}); return; }
+    const [lo,hi]=reg==="low"?[52,59]:reg==="high"?[71,76]:[60,70];
+    let midi=null; for(let x=lo;x<=hi;x++) if(pc(x)===p){ midi=x; break; }
+    if(midi===null||!K.byMidi(midi)){
+      // not available in that register: take the closest playable note with the same name
+      const centre=reg==="low"?56:reg==="high"?74:65, alt=K.N.filter(n=>pc(n.m)===p).sort((x,y)=>Math.abs(x.m-centre)-Math.abs(y.m-centre))[0];
+      if(!alt){ cur.push({bad:true,beats,label:tok}); return; } midi=alt.m; }
+    cur.push({m:midi,beats});
+  });
+  if(cur.length) bars.push(cur); return bars;
+};
+K.state={view:"start",level:store.get("fn-k-level",0),idx:0,done:new Set(),fing:"G4",read:"C4",song:-1,bpm:60};
+K.VIEWS=()=>[["start",X("Start here","Start hier","Buradan başla")],["practice",X("Practice","Üben","Pratik")],["fingers",X("Fingering chart","Grifftabelle","Parmak tablosu")],["read",X("Read music","Noten lesen","Nota okuma")],["songs",X("Songs","Lieder","Şarkılar")],["tuner",X("Tuner","Stimmgerät","Akort")],["tips",X("Embouchure tips","Ansatz-Tipps","Dudak ipuçları")]];
+K.title=()=>X("Learn the G clarinet","Sol-Klarinette lernen","Sol klarnet öğren");
+K.intro=()=>X("For the Turkish G clarinet (Sol klarnet, Boehm system). See the fingering, play the note, and the page listens and tells you whether it's right.","Für die türkische G-Klarinette (Sol klarnet, Böhm-System). Griff ansehen, Ton spielen, die Seite hört zu und sagt dir, ob er stimmt.","Türk Sol klarneti için (Böhm sistemi). Parmak pozisyonuna bak, sesi çal, sayfa dinler ve doğru olup olmadığını söyler.");
+K.keyFacts=()=>`<div class="facts">
+ <div><b>${X("You only need a few at first","Am Anfang brauchst du nur wenige","Başta sadece birkaçı lazım")}</b><span>${X("Thumb hole, six holes, R, A, G♯ and at the bottom E/B and F/C. Everything else is for fast runs later.","Daumenloch, 6 Löcher, R, A, G♯ und unten E/H und F/C. Alles andere ist für schnelle Läufe später.","Başparmak deliği, altı delik, R, A, G♯ ve altta E/B ile F/C. Gerisi sonradan hızlı pasajlar için.")}</span></div>
+ <div><b>${X("Some keys are doubled","Manche Tasten sind doppelt","Bazı anahtarlar çift")}</b><span>${X("E and F exist for both little fingers. Both move the same pad, so something moves when you press the other side. That's correct.","E und F gibt es für den linken und rechten kleinen Finger. Beide bewegen dasselbe Polster. Darum bewegt sich etwas, wenn du die andere Seite drückst. Das ist richtig so.","E ve F iki serçe parmak için de var. İkisi de aynı pedi hareket ettirir, bu yüzden diğer tarafa basınca bir şey oynar. Bu doğrudur.")}</span></div>
+ <div><b>${X("Rings move other pads","Die Ringe bewegen andere Polster","Halkalar başka pedleri hareket ettirir")}</b><span>${X("Covering a hole with a ring pushes the ring down. Via a rod it closes a pad somewhere else.","Deckst du ein Loch mit Ring zu, drückst du den Ring mit runter. Über eine Stange schließt er ein Polster an anderer Stelle.","Halkalı bir deliği kapatınca halka da iner. Bir çubuk üzerinden başka bir yerde bir pedi kapatır.")}</span></div>
+ <div><b>${X("Two names per key","Zwei Namen pro Taste","Her anahtara iki isim")}</b><span>${X("E/B means: without R you get E, with R the same fingering gives B (twelve notes higher). Same for F/C.","E/H heißt: ohne R kommt E, mit R derselbe Griff als H (zwölf Töne höher). Genauso F/C.","E/B şu demek: R olmadan Mi, R ile aynı pozisyon Si (on iki ses tiz). F/C de aynı.")}</span></div></div>`;
+
+K.render={
+start:()=>`
+<div class="panel"><h2>${X("Your path in 8 weeks","Dein Weg in 8 Wochen","8 haftalık yolun")}</h2><p class="lead">${X("Small goals, a little every day. Tick off what you managed. Move on only when a week feels solid. Progress stays in this browser.","Kleine Ziele, jeden Tag ein bisschen. Hak ab, was du geschafft hast. Erst wenn eine Woche sitzt, weiter. Dein Fortschritt bleibt in diesem Browser.","Küçük hedefler, her gün biraz. Başardıklarını işaretle. Bir hafta oturunca devam et. İlerlemen bu tarayıcıda kalır.")}</p>${pathHTML()}</div>
+<div class="two">
+ <div class="panel"><h2>${X("Daily practice (20 min)","Tägliche Übe-Runde (20 Min.)","Günlük çalışma (20 dk)")}</h2><p class="lead">${X("Better 20 minutes every day than two hours once a week. Lips tire quickly. When they shake: rest, don't push. Two short sessions beat one long one.","Lieber jeden Tag 20 Minuten als einmal pro Woche zwei Stunden. Die Lippen werden schnell müde. Wenn sie zittern: Pause. Zwei kurze Runden sind besser als eine lange.","Haftada bir iki saat yerine her gün 20 dakika. Dudaklar çabuk yorulur. Titrediğinde mola ver, zorlama. İki kısa seans, bir uzun seanstan iyidir.")}</p>${routineHTML()}</div>
+ <div class="panel"><h2>${X("Air challenge","Luft-Challenge","Nefes meydan okuması")}</h2><p class="lead">${X("Play a calm tone and press Start. When the tone ends, press Stop. How long can you hold it steady? Pros manage 20 to 30 seconds. At the start, 8 seconds is great.","Spiel einen ruhigen Ton und drück „Start“. Wenn der Ton aufhört, „Stopp“. Wie lange hältst du ihn gerade? Profis schaffen 20 bis 30 Sekunden. Für den Anfang sind 8 Sekunden super.","Sakin bir ses çal ve Başla'ya bas. Ses bitince Durdur'a bas. Ne kadar düz tutabiliyorsun? Profesyoneller 20-30 saniye tutar. Başta 8 saniye harika.")}</p>
+  <div class="row" style="justify-content:space-between"><div class="clock" id="kAirClock">0.0 s</div><button class="btn go" id="kAirBtn">${X("Start","Start","Başla")}</button></div><p class="muted" id="kAirBest" style="margin-top:8px"></p>
+  <h2 style="margin-top:22px">${X("Tongue: how a tone starts","Zunge: so beginnt ein Ton","Dil: ses nasıl başlar")}</h2><p class="lead" style="margin-bottom:0">${X("Rest the tongue tip lightly on the reed, build air pressure, then release the tongue as in “dee”. Don't slap the reed, that gives hard, squeaky starts.","Zungenspitze leicht ans Blatt legen, Luftdruck aufbauen, dann die Zunge wegnehmen wie bei „dii“. Nicht gegen das Blatt schlagen, das gibt harte, quietschige Einsätze.","Dil ucunu hafifçe kamışa koy, hava basıncı oluştur, sonra “dii” der gibi dili çek. Kamışa vurma, bu sert ve ciyaklı başlangıçlar yapar.")}</p></div>
+</div>
+<div class="panel"><h2>${X("Problem? Here's the fix","Problem? Hier die Lösung","Sorun mu var? Çözümü burada")}</h2>${fixHTML(K.PROBS())}</div>
+<div class="two">
+ <div class="panel"><h2>${X("Assembling","Zusammenbauen","Birleştirme")}</h2><ol class="plain">
+  <li>${X("If the corks are stiff, rub in a little cork grease first.","Korken vorher mit etwas Korkfett einreiben, wenn sie schwer gehen.","Mantarlar sıkıysa önce biraz mantar yağı sür.")}</li>
+  <li>${X("Twist the lower joint onto the bell. Hold parts by the body, not the keys.","Unteres Teil auf den Becher drehen. Teile am Körper anfassen, nicht an den Klappen.","Alt gövdeyi kalağa çevirerek tak. Parçaları gövdeden tut, anahtarlardan değil.")}</li>
+  <li>${X("Twist the upper joint on while pressing its rings, so the bridge key lifts and nothing bends. The levers must line up.","Oberes Teil aufdrehen und dabei die Ringe drücken, damit sich die Verbindungsklappe hebt und nichts verbiegt. Die Hebel müssen übereinander liegen.","Üst gövdeyi takarken halkalarına bas ki köprü anahtarı kalksın ve hiçbir şey eğilmesin. Kollar hizalanmalı.")}</li>
+  <li>${X("Add the barrel, then the mouthpiece.","Birne aufsetzen, dann das Mundstück.","Fıçıyı, sonra ağızlığı tak.")}</li>
+  <li>${X("Wet the reed briefly in the mouth. Flat side on the mouthpiece, tip level with the mouthpiece tip. Ligature over it, tighten only lightly.","Blatt kurz im Mund anfeuchten. Flache Seite aufs Mundstück, Spitze bündig mit der Mundstückspitze. Blattschraube darüber, nur leicht anziehen.","Kamışı ağızda kısaca ıslat. Düz tarafı ağızlığa, ucu ağızlık ucuyla aynı hizada. Bileziği üstüne tak, hafifçe sık.")}</li>
+  <li>${X("The reed faces down towards the lower lip, in line with the thumb hole at the back.","Das Blatt zeigt nach unten zur Unterlippe, in einer Linie mit dem Daumenloch hinten.","Kamış aşağıya, alt dudağa bakar, arkadaki başparmak deliğiyle aynı hizada.")}</li></ol></div>
+ <div class="panel"><h2>${X("After playing","Nach dem Spielen","Çaldıktan sonra")}</h2><ol class="plain">
+  <li>${X("Take the reed off, wipe it, let it dry flat in a reed case. Never leave it on the mouthpiece.","Blatt abnehmen, abwischen, flach im Blattetui trocknen lassen. Nie auf dem Mundstück lassen.","Kamışı çıkar, sil, kamış kutusunda düz kurut. Asla ağızlıkta bırakma.")}</li>
+  <li>${X("Pull the swab through each part 2 to 3 times, from the top end.","Jedes Teil 2 bis 3 Mal mit dem Durchzieher trocknen, vom oberen Ende her.","Her parçadan temizleme bezini 2-3 kez üstten geçir.")}</li>
+  <li>${X("Rinse the mouthpiece with lukewarm water and dry it with a lint-free cloth. No hot water.","Mundstück mit lauwarmem Wasser ausspülen und fusselfrei trocknen. Kein heißes Wasser.","Ağızlığı ılık suyla durula, tüy bırakmayan bezle kurula. Sıcak su yok.")}</li>
+  <li>${X("Lay the parts loosely in the case. Leave the case open briefly so it dries.","Teile locker in den Koffer legen. Koffer kurz offen lassen.","Parçaları kutuya gevşekçe koy. Kuruması için kutuyu biraz açık bırak.")}</li>
+  <li>${X("Rotate several reeds. Throw away a reed with a crack or frayed tip.","Mehrere Blätter abwechselnd spielen. Ein Blatt mit Riss sofort wegwerfen.","Birkaç kamışı sırayla kullan. Çatlak ya da ucu yıpranmış kamışı at.")}</li></ol></div>
+</div>
+<div class="panel"><h2>${X("The Turkish sound (from about week 8)","Der türkische Klang (ab etwa Woche 8)","Türk sesi (yaklaşık 8. haftadan itibaren)")}</h2><p class="lead">${X("Start these only once a calm, straight tone comes reliably. Otherwise you build in a wobble that is hard to remove.","Erst wenn ein ruhiger, gerader Ton sicher kommt. Sonst gewöhnst du dir ein Wackeln an, das schwer wieder weggeht.","Bunlara ancak sakin, düz bir ses güvenle çıkınca başla. Yoksa sonradan zor giden bir titreme alışkanlığı edinirsin.")}</p>
+ <div class="facts">
+  <div><b>${X("Listen a lot","Viel hören","Bolca dinle")}</b><span>${X("Listen to G clarinet in Turkish music every day. The ear learns the sound before the fingers can.","Hör dir Sol-Klarinette in türkischer Musik jeden Tag an. Das Ohr lernt den Klang vor den Fingern.","Her gün Türk müziğinde Sol klarnet dinle. Kulak sesi parmaklardan önce öğrenir.")}</span></div>
+  <div><b>${X("Vibrato","Vibrato","Vibrato")}</b><span>${X("A light, even wave in the tone, from the lower jaw with tiny movement. Practise slowly, e.g. 4 waves per beat at tempo 60.","Ein leichtes, gleichmäßiges Wellen im Ton, aus dem Unterkiefer, ganz wenig Bewegung. Erst langsam, z. B. 4 Wellen pro Schlag bei Tempo 60.","Seste hafif, düzenli bir dalga, alt çeneden çok az hareketle. Yavaş çalış, örneğin tempo 60'ta vuruş başına 4 dalga.")}</span></div>
+  <div><b>${X("Sliding","Gleiten","Kaydırma")}</b><span>${X("Bend the tone up or down by changing lip and jaw slightly or rolling a finger slowly off a hole. Open mouthpieces and soft reeds help.","Den Ton nach oben oder unten ziehen, indem du Lippe und Kiefer leicht veränderst oder einen Finger langsam vom Loch rollst. Offene Mundstücke und weiche Blätter helfen.","Dudağı ve çeneyi hafifçe değiştirerek ya da parmağı delikten yavaşça kaydırarak sesi yukarı ya da aşağı bük. Açık ağızlıklar ve yumuşak kamışlar yardımcı olur.")}</span></div>
+  <div><b>${X("Makam","Makam","Makam")}</b><span>${X("Turkish scales have notes between the piano keys. That comes much later. Learn the regular notes cleanly first.","Türkische Tonleitern haben Töne zwischen den Klaviertasten. Das kommt viel später. Erst die normalen Töne sauber lernen.","Türk makamlarında piyano tuşlarının arasında sesler vardır. Bu çok sonra gelir. Önce normal sesleri temiz öğren.")}</span></div></div></div>`,
+
+practice:()=>`
+<div class="tool"><div class="panel" style="display:flex;flex-direction:column;align-items:center;gap:8px">
+  <h3 style="margin:0;align-self:flex-start">${X("How to finger it:","So greifst du:","Nasıl basılır:")}</h3><ol class="steps" id="kSteps" style="align-self:stretch"></ol><div class="diagram" id="kDiag" style="width:100%"></div></div>
+ <div class="panel main"><div class="chips" id="kLevels"></div>
+  <div class="row" style="align-items:baseline;margin-top:14px"><div class="big" id="kName"></div><div class="muted" id="kSub"></div></div>
+  <div class="chips" id="kChips" style="margin:14px 0" aria-label="${X("Choose a note","Ton auswählen","Bir ses seç")}"></div>
+  ${meterHTML("kNeedle")}
+  <div class="status" id="kStatus"></div><div class="muted" id="kHeard">&nbsp;</div>
+  <div class="row" style="margin-top:14px"><button class="btn" id="kMic">${X("Start listening","Zuhören starten","Dinlemeye başla")}</button><button class="btn alt" id="kPlay">${X("Hear the note","Ton anhören","Sesi dinle")}</button></div>
+  <div class="notice" id="kMicNote" hidden></div></div></div>`,
+
+fingers:()=>`
+<div class="tool"><div class="panel" style="display:flex;flex-direction:column;align-items:center;gap:8px"><h3 style="margin:0;align-self:flex-start" id="kFTitle"></h3><ol class="steps" id="kFSteps" style="align-self:stretch"></ol><div class="diagram" id="kFDiag" style="width:100%"></div></div>
+ <div class="panel"><div class="scroll-x"><table><thead><tr><th>${X("Note","Ton","Ses")}</th><th>${lang==="tr"?"Harf":"Solfège"}</th><th>${X("Register","Lage","Bölge")}</th><th>${X("Sounds as","Klingt wie","Duyulan")}</th></tr></thead><tbody id="kChart"></tbody></table></div>
+  <p class="muted" style="margin-top:10px">${X("“Written” = what stands on G-clarinet sheet music. “Sounds as” = the real pitch on a piano.","„Geschrieben“ = was auf dem Notenblatt für Sol-Klarinette steht. „Klingt wie“ = echter Ton am Klavier.","“Yazılan” = Sol klarnet notasında yazan. “Duyulan” = piyanodaki gerçek ses.")}</p>
+  <h2 style="margin-top:18px">${X("Why so many keys?","Warum so viele Hebel?","Neden bu kadar çok anahtar?")}</h2>${K.keyFacts()}</div></div>`,
+
+read:()=>`
+<div class="panel"><h2>${X("Where is the note? (register)","Wo steht der Ton? (Lage)","Nota nerede? (bölge)")}</h2><p class="lead">${X("On sheet music the height of a note tells which note and register is meant. The higher on the lines, the higher you play. The same note name exists twice: once below the lines (middle) and once inside the lines (high). Tap a note.","Auf dem Notenblatt zeigt die Höhe der Note, welcher Ton und welche Lage gemeint ist. Je höher auf den Linien, desto höher spielst du. Den gleichen Namen gibt es zweimal: unter den Linien (mittel) und mitten in den Linien (hoch). Tippe eine Note an.","Notada notanın yüksekliği hangi ses ve bölge olduğunu gösterir. Çizgilerde ne kadar yukarıdaysa o kadar tiz çalarsın. Aynı ses adı iki kez vardır: çizgilerin altında (orta) ve çizgilerin içinde (tiz). Bir notaya dokun.")}</p>
+ <div class="scroll-x" id="kStaff"></div>
+ <div class="tool" style="margin-top:14px"><div class="diagram" id="kRDiag"></div><div><div class="row" style="align-items:baseline"><div class="big" id="kRName"></div><div class="muted" id="kRSub"></div></div><ol class="steps" id="kRSteps"></ol><div class="row" style="margin-top:12px"><button class="btn alt" id="kRPlay">${X("Hear the note","Ton anhören","Sesi dinle")}</button></div></div></div>
+ <p class="muted" style="margin-top:12px">${X("↓ = low register (below the lines, right hand joins) · no arrow = middle · ↑ = high register (thumb also presses R). Colours: orange low, blue middle, gold high.","↓ = tiefe Lage (unter den Linien, rechte Hand macht mit) · ohne Pfeil = mittlere Lage · ↑ = hohe Lage (Daumen drückt zusätzlich R). Farben: orange tief, blau mittel, gold hoch.","↓ = pes bölge (çizgilerin altında, sağ el de katılır) · ok yok = orta · ↑ = tiz bölge (başparmak R'ye de basar). Renkler: turuncu pes, mavi orta, altın tiz.")}</p></div>
+<div class="panel"><h2>${X("How long do I hold the note?","Wie lange halte ich den Ton?","Sesi ne kadar tutarım?")}</h2><p class="lead">${X("The shape of a note tells how many beats you hold it. Count evenly “1, 2, 3, 4” like a clock. A bar (between two vertical lines) usually has 4 beats.","Die Form der Note sagt, wie viele Schläge du den Ton hältst. Zähl gleichmäßig „1, 2, 3, 4“ wie eine Uhr. Ein Takt (zwischen zwei senkrechten Strichen) hat meist 4 Schläge.","Notanın şekli sesi kaç vuruş tutacağını söyler. Saat gibi düzenli say: “1, 2, 3, 4”. Bir ölçü (iki dikey çizgi arası) genelde 4 vuruştur.")}</p>${dursHTML()}</div>`,
+
+songs:()=>`
+<div class="panel"><h2>${X("Songs in simple notation","Lieder in einfacher Schreibweise","Basit yazımla şarkılar")}</h2><p class="lead">${X("Like guitar chord sheets: you write note names, how long they last and bar lines. The page shows bar by bar what to play and plays it for you.","Wie bei Gitarren-Akkordseiten: Du schreibst Tonnamen, wie lange sie dauern, und Taktstriche. Die Seite zeigt Takt für Takt, was du spielst, und spielt es vor.","Gitar akor sayfaları gibi: ses adlarını, ne kadar sürdüklerini ve ölçü çizgilerini yazarsın. Sayfa ölçü ölçü ne çalacağını gösterir ve çalar.")}</p>
+ <div class="howto"><code>Sol</code><span>${X("G (Sol), 1 beat. Solfège or letters both work.","Sol, 1 Schlag. Solfège oder Buchstaben gehen beide.","Sol, 1 vuruş. Solfej ya da harf, ikisi de olur.")}</span><code>Sol:2</code><span>${X("hold 2 beats","2 Schläge halten","2 vuruş tut")}</span><code>Mi,</code><span>${X("comma or ↓ = low register","Komma oder ↓ = tiefe Lage","virgül ya da ↓ = pes bölge")}</span><code>Do'</code><span>${X("apostrophe or ↑ = high register","Apostroph oder ↑ = hohe Lage","kesme işareti ya da ↑ = tiz bölge")}</span><code>P:2</code><span>${X("rest, 2 beats","Pause, 2 Schläge","sus, 2 vuruş")}</span><code>|</code><span>${X("bar line","Taktstrich","ölçü çizgisi")}</span></div>
+ <div class="row"><label for="kSongSel">${X("Example:","Beispiel:","Örnek:")}</label><select id="kSongSel"></select></div>
+ <textarea id="kSongText" aria-label="${X("Song in simple notation","Lied in einfacher Schreibweise","Basit yazımla şarkı")}" spellcheck="false" style="margin-top:8px"></textarea>
+ <div class="row" style="margin-top:10px"><label for="kBpm">${X("Tempo","Tempo","Tempo")}</label><input type="range" id="kBpm" min="40" max="120"><span class="muted" id="kBpmVal"></span></div>
+ <div class="row" style="margin-top:10px"><button class="btn go" id="kSPlay">${X("Play","Vorspielen","Çal")}</button><button class="btn alt" id="kSStop">${X("Stop","Stopp","Durdur")}</button></div>
+ <div class="song" id="kSong"></div></div>
+<div class="panel"><h2 id="kNpTitle">${X("Tap a note in the song","Tippe einen Ton im Lied an","Şarkıda bir sese dokun")}</h2><div class="tool"><div class="diagram" id="kNpDiag"></div><div><ol class="steps" id="kNpSteps"></ol><p class="muted" id="kNpNext"></p></div></div></div>
+<p class="muted">${X("Sheet music for G clarinet (search “sol klarnet nota”) can be copied note by note into this notation. Read the note height under “Read music”.","Notenblätter für Sol-Klarinette (z. B. „sol klarnet nota“) kannst du Ton für Ton in diese Schreibweise übertragen. Die Notenhöhe liest du unter „Noten lesen“ ab.","Sol klarnet notalarını (“sol klarnet nota” diye ara) bu yazıma nota nota aktarabilirsin. Nota yüksekliğini “Nota okuma” bölümünden oku.")}</p>`,
+
+tuner:()=>`
+<div class="panel"><div class="row" style="align-items:baseline"><div class="big" id="kTName">–</div><div class="muted" id="kTSub">${X("Play a note","Spiel einen Ton","Bir ses çal")}</div></div>
+ ${meterHTML("kTNeedle")}<div class="muted" id="kTHz">&nbsp;</div>
+ <button class="btn" id="kTMic" style="margin-top:12px">${X("Start listening","Zuhören starten","Dinlemeye başla")}</button><div class="notice" id="kTNote" hidden></div>
+ <p class="muted small" style="margin-top:12px">${X("Shows the written note for G clarinet. The microphone is only analysed in your browser, nothing is sent or stored.","Zeigt den geschriebenen Ton für Sol-Klarinette. Das Mikrofon wird nur im Browser ausgewertet, nichts wird gesendet oder gespeichert.","Sol klarnet için yazılan sesi gösterir. Mikrofon sadece tarayıcında işlenir, hiçbir şey gönderilmez ya da saklanmaz.")}</p></div>`,
+
+tips:()=>`<div class="facts">
+ <div><b>${X("1. Without the clarinet first","1. Erst ohne Klarinette","1. Önce klarnetsiz")}</b><span>${X("Put only mouthpiece and barrel together. Take the whole clarinet only when a steady tone comes here.","Nur Mundstück und Birne zusammenstecken. Erst wenn hier ein gerader Ton kommt, die ganze Klarinette nehmen.","Sadece ağızlık ve fıçıyı birleştir. Burada düz bir ses çıkınca bütün klarneti al.")}</span></div>
+ <div><b>${X("2. Lower lip","2. Unterlippe","2. Alt dudak")}</b><span>${X("Lower lip slightly over the lower teeth, the reed rests on it. Upper teeth gently on top of the mouthpiece.","Unterlippe leicht über die unteren Zähne, das Blatt liegt darauf. Obere Zähne sanft oben aufs Mundstück.","Alt dudak alt dişlerin üstüne hafifçe gelir, kamış onun üstünde durur. Üst dişler ağızlığın üstüne nazikçe.")}</span></div>
+ <div><b>${X("3. How far in?","3. Wie tief rein?","3. Ne kadar içeri?")}</b><span>${X("Start with little mouthpiece and take more bit by bit. Just before it squeaks is your spot, usually about 1 to 1.5 cm.","Mit wenig Mundstück starten und Stück für Stück mehr nehmen. Kurz bevor es quietscht, ist dein Punkt, meist etwa 1 bis 1,5 cm.","Az ağızlıkla başla ve azar azar artır. Ciyaklamadan hemen önceki nokta seninkidir, genelde yaklaşık 1-1,5 cm.")}</span></div>
+ <div><b>${X("4. Don't bite","4. Nicht beißen","4. Isırma")}</b><span>${X("Firm enough that the mouthpiece doesn't slip, but never squeeze the reed shut. With a soft reed and open mouthpiece barely press. Only air = pressing too hard.","Fest genug, dass das Mundstück nicht rutscht, aber das Blatt nie zudrücken. Bei weichem Blatt und offenem Mundstück kaum drücken. Nur Luft = zu fest gedrückt.","Ağızlık kaymayacak kadar sıkı, ama kamışı asla kapatma. Yumuşak kamış ve açık ağızlıkla neredeyse hiç bastırma. Sadece hava = çok sert basıyorsun.")}</span></div>
+ <div><b>${X("5. Air","5. Luft","5. Hava")}</b><span>${X("Fast and steady, like blowing out a candle far away. No puffed cheeks. Mouth corners firm.","Schnell und gleichmäßig, wie eine Kerze weit weg auspusten. Keine dicken Backen. Mundwinkel fest.","Hızlı ve düzenli, uzaktaki bir mumu söndürür gibi. Yanakları şişirme. Dudak kenarları sıkı.")}</span></div>
+ <div><b>${X("6. Holes fully closed","6. Löcher ganz zu","6. Delikler tam kapalı")}</b><span>${X("If only certain notes squeak, a finger isn't sealing a hole. Lay the fingertip flat.","Quietscht es nur bei bestimmten Tönen, deckt ein Finger ein Loch nicht ganz ab. Fingerkuppe flach drauf.","Sadece bazı seslerde ciyaklıyorsa bir parmak deliği tam kapatmıyor. Parmak ucunu düz koy.")}</span></div>
+ <div><b>${X("7. Breathing for long phrases","7. Atmen für lange Phrasen","7. Uzun cümleler için nefes")}</b><span>${X("At first 5 seconds is normal; it improves as the embouchure seals better. Players breathe in short gaps between phrases. Circular breathing (cheek air while inhaling through the nose) is for much later.","Am Anfang sind 5 Sekunden normal; es wird besser, wenn der Ansatz dichter wird. Profis atmen in kurzen Lücken zwischen den Phrasen. Zirkularatmung (Wangenluft, während man durch die Nase einatmet) kommt viel später.","Başta 5 saniye normaldir; dudak daha iyi kapattıkça gelişir. Müzisyenler cümleler arasındaki kısa boşluklarda nefes alır. Döngüsel nefes (burundan alırken yanaktaki havayı kullanmak) çok sonra gelir.")}</span></div></div>`
+};
+
+K.bind={
+start(root){
+  bindPath(root,K.WEEKS(),"fn-k-path"); bindRoutine(root,K.ROUTINE()); bindFix(root,K.PROBS());
+  const $=id=>root.querySelector("#"+id); let raf=null,t0=0,best=store.get("fn-k-air",0);
+  const fmt=s=>s.toFixed(1)+" s";
+  const showBest=()=>$("kAirBest").textContent=best?fill(X("Your record: {s} seconds","Dein Rekord: {s} Sekunden","Rekorun: {s} saniye"),{s:best.toFixed(1)}):X("No record yet.","Noch kein Rekord.","Henüz rekor yok.");
+  $("kAirBtn").onclick=()=>{ if(raf){ cancelAnimationFrame(raf); raf=null; const s=(performance.now()-t0)/1000; if(s>best){ best=s; store.set("fn-k-air",best); } showBest(); $("kAirBtn").textContent=X("Start","Start","Başla"); return; }
+    t0=performance.now(); $("kAirBtn").textContent=X("Stop","Stopp","Durdur");
+    const run=()=>{ $("kAirClock").textContent=fmt((performance.now()-t0)/1000); raf=requestAnimationFrame(run); }; run();
+    running.add(()=>{ if(raf){cancelAnimationFrame(raf); raf=null;} }); };
+  showBest();
+},
+practice(root){
+  const S=K.state, $=id=>root.querySelector("#"+id), LV=K.LEVELS(); if(S.level>=LV.length) S.level=0;
+  let hold=0, smooth=[];
+  const status=(txt,cls="")=>{ $("kStatus").textContent=txt; $("kStatus").className="status "+cls; };
+  const draw=()=>{ const n=K.byId[LV[S.level].notes[S.idx]];
+    $("kLevels").innerHTML=LV.map((l,i)=>`<button class="chip" data-l="${i}" aria-pressed="${i===S.level}" style="font-size:.85rem;padding:6px 11px">${l.n}</button>`).join("");
+    $("kDiag").innerHTML=K.svg(n.k); $("kSteps").innerHTML=K.steps(n.k);
+    $("kName").textContent=K.nm(n.m);
+    $("kSub").textContent=`(${K.sub(n.m)}) · ${K.regName(n.m)} · ${X("sounds","klingt","duyulan")} ${noteName(n.m+K.SHIFT)}`;
+    $("kChips").innerHTML=LV[S.level].notes.map((id,i)=>`<button class="chip ${S.done.has(i)&&i!==S.idx?"done":""}" data-i="${i}" aria-pressed="${i===S.idx}">${K.nm(K.byId[id].m)}</button>`).join(""); };
+  const next=()=>{ S.idx=(S.idx+1)%LV[S.level].notes.length; if(S.idx===0) S.done.clear(); hold=0; draw(); };
+  $("kLevels").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; S.level=+b.dataset.l; store.set("fn-k-level",S.level); S.idx=0; S.done.clear(); draw(); status(X("New level. Look at the fingering.","Neue Stufe. Schau dir den Griff an.","Yeni seviye. Parmak pozisyonuna bak.")); };
+  $("kChips").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; S.idx=+b.dataset.i; hold=0; draw(); status(X("Look at the fingering and play the note.","Schau dir den Griff an und spiel den Ton.","Parmak pozisyonuna bak ve sesi çal.")); };
+  $("kPlay").onclick=()=>K.tone(K.byId[LV[S.level].notes[S.idx]].m,1.4);
+  const onPitch=f=>{ if(f<0){ hold=0; smooth=[]; $("kHeard").innerHTML="&nbsp;"; return; }
+    smooth.push(f); if(smooth.length>5) smooth.shift(); const fs=[...smooth].sort((a,b)=>a-b)[smooth.length>>1];
+    const n=K.byId[LV[S.level].notes[S.idx]], w=69+12*Math.log2(fs/440)-K.SHIFT, diff=(w-n.m)*100, near=Math.round(w);
+    $("kHeard").textContent=fill(X("Heard: {n} · {h} Hz","Gehört: {n} · {h} Hz","Duyulan: {n} · {h} Hz"),{n:K.nm(near),h:fs.toFixed(0)});
+    if(Math.abs(diff)>250){ setNeedle($("kNeedle"),diff>0?100:-100); status(diff>0?X("Different note, too high. Check the fingering.","Anderer Ton, zu hoch. Griff prüfen.","Farklı ses, çok tiz. Parmakları kontrol et."):X("Different note, too low. Check the fingering.","Anderer Ton, zu tief. Griff prüfen.","Farklı ses, çok pes. Parmakları kontrol et."),"warn"); hold=0; return; }
+    setNeedle($("kNeedle"),diff*2);
+    if(Math.abs(diff)<=30){ if(!hold) hold=performance.now(); const held=(performance.now()-hold)/1000;
+      status(held>1.2?X("Correct! Well done.","Richtig! Weiter so.","Doğru! Aferin."):X("Good, hold it…","Gut, halten…","İyi, tut…"),"ok");
+      if(held>1.2){ S.done.add(S.idx); hold=performance.now()+1e9; const t=setTimeout(next,600); running.add(()=>clearTimeout(t)); } }
+    else { hold=0; status(diff>0?X("A bit high: relax the lip.","Etwas zu hoch: Lippe lockerer.","Biraz tiz: dudağı gevşet."):X("A bit low: lip slightly firmer, more air.","Etwas zu tief: Lippe etwas fester, mehr Luft.","Biraz pes: dudak biraz sıkı, daha çok hava."),"warn"); } };
+  $("kMic").onclick=async()=>{ if(mic.on){ mic.stop(); $("kMic").textContent=X("Start listening","Zuhören starten","Dinlemeye başla"); return; }
+    const ok=await mic.start(onPitch,90,1100); if(!ok){ $("kMicNote").textContent=micBlocked(); $("kMicNote").hidden=false; return; }
+    $("kMicNote").hidden=true; $("kMic").textContent=X("Stop listening","Zuhören stoppen","Dinlemeyi durdur"); status(X("Listening. Play the note.","Ich höre zu. Spiel den Ton.","Dinliyorum. Sesi çal.")); };
+  draw(); setNeedle($("kNeedle"),0); status(X("Press “Start listening”","Drück auf „Zuhören starten“","“Dinlemeye başla”ya bas"));
+},
+fingers(root){
+  const S=K.state, $=id=>root.querySelector("#"+id);
+  const draw=()=>{ const n=K.byId[S.fing];
+    $("kChart").innerHTML=K.N.map(x=>`<tr class="click" data-id="${x.id}" tabindex="0" aria-selected="${x.id===S.fing}"><td class="strong">${K.nm(x.m)}</td><td>${K.sub(x.m)}</td><td>${K.regName(x.m)}${x.k.includes("R")?" (R)":""}</td><td>${noteName(x.m+K.SHIFT)}</td></tr>`).join("");
+    $("kFDiag").innerHTML=K.svg(n.k); $("kFSteps").innerHTML=K.steps(n.k); $("kFTitle").textContent=fill(X("How to finger {n}:","So greifst du {n}:","{n} nasıl basılır:"),{n:K.nm(n.m)}); };
+  const act=e=>{ const r=e.target.closest("tr[data-id]"); if(!r) return; S.fing=r.dataset.id; draw(); K.tone(K.byId[S.fing].m,1.2); };
+  $("kChart").onclick=act; $("kChart").onkeydown=e=>{ if(e.key==="Enter") act(e); }; draw();
+},
+read(root){
+  const S=K.state, $=id=>root.querySelector("#"+id);
+  const col=m=>m<60?"var(--rh)":m>=71?"var(--hi)":"var(--lh)";
+  const show=id=>{ S.read=id; const n=K.byId[id], i=K.N.indexOf(n);
+    $("kStaff").innerHTML=staffSVG(K.N.map(x=>({w:x.m,label:K.nm(x.m),color:col(x.m)})),i,{dx:44});
+    $("kRDiag").innerHTML=K.svg(n.k); $("kRSteps").innerHTML=K.steps(n.k); $("kRName").textContent=K.nm(n.m);
+    $("kRSub").textContent=`(${K.sub(n.m)}) · ${K.regName(n.m)} · ${X("sounds","klingt","duyulan")} ${noteName(n.m+K.SHIFT)}`; };
+  const act=e=>{ const g=e.target.closest(".staff-note"); if(!g) return; const id=K.N[+g.dataset.i].id; show(id); K.tone(K.byId[id].m,1.2); };
+  $("kStaff").onclick=act; $("kStaff").onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); act(e); } };
+  $("kRPlay").onclick=()=>K.tone(K.byId[S.read].m,1.2); show(S.read);
+  bindDurs(root,d=>K.tone(67,d));
+},
+songs(root){
+  const S=K.state, $=id=>root.querySelector("#"+id); let flat=[], timers=[];
+  $("kSongSel").innerHTML=`<option value="-1">–</option>`+K.SONGS.map((s,i)=>`<option value="${i}">${typeof s.n==="function"?s.n():s.n}</option>`).join("");
+  $("kSongSel").value=S.song; $("kBpm").value=S.bpm; $("kBpmVal").textContent=S.bpm;
+  const label=n=>n.rest?X("Rest","Pause","Sus"):n.bad?n.label:K.nm(n.m);
+  const beatsTxt=b=>b===1?X("1 beat","1 Schlag","1 vuruş"):b<1?X("½ beat","½ Schlag","½ vuruş"):fill(X("{n} beats","{n} Schläge","{n} vuruş"),{n:b});
+  const render=()=>{ const bars=K.parse($("kSongText").value); flat=[];
+    $("kSong").innerHTML=bars.map((bar,bi)=>`<div class="sbar"><span class="num">${bi+1}</span>${bar.map(n=>{ const i=flat.push(n)-1;
+      return `<button class="nb ${n.rest?"rest":n.bad?"bad":""}" style="--b:${Math.max(.5,n.beats)}" data-i="${i}"><b>${label(n)}</b><span class="muted small">${n.bad?X("unknown","unbekannt","bilinmiyor"):beatsTxt(n.beats)}</span></button>`; }).join("")}</div>`).join("")||`<p class="muted">${X("No notes yet. Type for example: Do Re Mi","Noch keine Töne. Schreib z. B.: Do Re Mi","Henüz ses yok. Örneğin yaz: Do Re Mi")}</p>`; };
+  const now=i=>{ root.querySelectorAll(".nb.cur").forEach(b=>b.classList.remove("cur")); const b=root.querySelector(`.nb[data-i="${i}"]`); if(b) b.classList.add("cur");
+    const n=flat[i]; if(!n) return;
+    if(n.rest||n.bad){ $("kNpTitle").textContent=n.rest?X("Rest: don't play, take a quick breath","Pause: nichts spielen, kurz atmen","Sus: çalma, kısa nefes al"):X("I don't know this note","Diesen Ton kenne ich nicht","Bu sesi tanımıyorum"); $("kNpDiag").innerHTML=""; $("kNpSteps").innerHTML=""; }
+    else { const k=K.byMidi(n.m).k; $("kNpTitle").textContent=`${K.nm(n.m)} · ${beatsTxt(n.beats)}`; $("kNpDiag").innerHTML=K.svg(k); $("kNpSteps").innerHTML=K.steps(k); }
+    const nx=flat.slice(i+1).find(x=>!x.rest&&!x.bad); $("kNpNext").textContent=nx?X("Next:","Danach:","Sonra:")+" "+label(nx):X("End of song","Ende des Lieds","Şarkının sonu"); };
+  const stop=()=>{ timers.forEach(clearTimeout); timers=[]; $("kSPlay").textContent=X("Play","Vorspielen","Çal"); };
+  $("kSPlay").onclick=()=>{ stop(); ctx(); const beat=60/S.bpm; let t=0;
+    for(let k=0;k<4;k++){ timers.push(setTimeout(()=>click(k===0),t*1000)); t+=beat; }
+    flat.forEach((n,i)=>{ const at=t; timers.push(setTimeout(()=>{ now(i); if(!n.rest&&!n.bad) K.tone(n.m,n.beats*beat*.9); },at*1000)); t+=n.beats*beat; });
+    timers.push(setTimeout(stop,t*1000)); $("kSPlay").textContent=X("Playing…","Läuft…","Çalıyor…"); running.add(stop); };
+  $("kSStop").onclick=stop;
+  $("kSong").onclick=e=>{ const b=e.target.closest(".nb"); if(!b) return; const i=+b.dataset.i; now(i); const n=flat[i]; if(n&&!n.rest&&!n.bad) K.tone(n.m,1.1); };
+  $("kBpm").oninput=()=>{ S.bpm=+$("kBpm").value; $("kBpmVal").textContent=S.bpm; };
+  $("kSongSel").onchange=()=>{ S.song=+$("kSongSel").value; if(S.song>=0){ $("kSongText").value=K.SONGS[S.song].txt; store.set("fn-k-song",$("kSongText").value); } stop(); render(); now(0); };
+  let typing; $("kSongText").oninput=()=>{ clearTimeout(typing); typing=setTimeout(()=>{ store.set("fn-k-song",$("kSongText").value); render(); },250); };
+  $("kSongText").value=store.get("fn-k-song",K.SONGS[0].txt); render(); now(0);
+},
+tuner(root){
+  const $=id=>root.querySelector("#"+id);
+  $("kTMic").onclick=async()=>{ if(mic.on){ mic.stop(); $("kTMic").textContent=X("Start listening","Zuhören starten","Dinlemeye başla"); return; }
+    const ok=await mic.start(f=>{ if(f<0){ $("kTHz").innerHTML="&nbsp;"; return; } const w=69+12*Math.log2(f/440)-K.SHIFT, near=Math.round(w), cents=(w-near)*100;
+      $("kTName").textContent=K.nm(near); $("kTSub").textContent=`${X("written","geschrieben","yazılan")} ${noteName(near)} · ${cents>0?"+":""}${cents.toFixed(0)} cent`;
+      $("kTHz").textContent=`${f.toFixed(1)} Hz · ${X("sounds","klingt","duyulan")} ${noteName(near+K.SHIFT)}`; setNeedle($("kTNeedle"),cents); },90,1100);
+    if(!ok){ $("kTNote").textContent=micBlocked(); $("kTNote").hidden=false; return; }
+    $("kTNote").hidden=true; $("kTMic").textContent=X("Stop listening","Zuhören stoppen","Dinlemeyi durdur"); };
+  setNeedle($("kTNeedle"),0);
+},
+tips(){}
+};
+
+/* =====================================================================
+   APP SHELL
+   ===================================================================== */
+const INST={g:G,k:K};
+let inst="g"; // guitar is the default instrument on every visit
+const hash=(location.hash||"").replace("#","");
+if(hash==="clarinet"||hash==="klarinette"||hash==="klarnet") inst="k";
+if(hash==="guitar"||hash==="gitarre"||hash==="gitar") inst="g";
+const app=document.getElementById("app");
+function render(){
+  stopAll();
+  const M=INST[inst], views=M.VIEWS();
+  document.documentElement.lang=lang;
+  document.getElementById("instSeg").innerHTML=[["g",X("Guitar","Gitarre","Gitar")],["k",X("Clarinet","Klarinette","Klarnet")]].map(([id,n])=>`<button data-inst="${id}" aria-pressed="${id===inst}">${n}</button>`).join("");
+  document.getElementById("langSeg").innerHTML=LANGS.map(([id,n])=>`<button data-lang="${id}" aria-pressed="${id===lang}" lang="${id}">${n}</button>`).join("");
+  app.innerHTML=`<header><h1>${M.title()}</h1><p class="intro">${M.intro()}</p></header>
+    <nav class="tabs" role="tablist">${views.map(([id,n])=>`<button role="tab" data-view="${id}" aria-selected="${id===M.state.view}">${n}</button>`).join("")}</nav>
+    <section id="view" class="wrap">${M.render[M.state.view]()}</section>`;
+  M.bind[M.state.view](app.querySelector("#view"));
+  document.getElementById("foot").textContent=X("First Notes · free and open source. Sounds are generated in your browser. The microphone is analysed locally only; nothing is sent or stored.","First Notes · frei und Open Source. Töne werden im Browser erzeugt. Das Mikrofon wird nur lokal ausgewertet, nichts wird gesendet oder gespeichert.","First Notes · ücretsiz ve açık kaynak. Sesler tarayıcında üretilir. Mikrofon sadece yerel olarak işlenir; hiçbir şey gönderilmez ya da saklanmaz.");
+}
+app.addEventListener("click",e=>{ const b=e.target.closest(".tabs button"); if(!b) return; INST[inst].state.view=b.dataset.view; render(); });
+document.getElementById("instSeg").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b||b.dataset.inst===inst) return; inst=b.dataset.inst; render(); window.scrollTo(0,0); });
+document.getElementById("langSeg").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b||b.dataset.lang===lang) return; lang=b.dataset.lang; store.set("fn-lang",lang); render(); });
+render();
+})();
+</script>
+
+</body>
+</html>
