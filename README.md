@@ -15,7 +15,7 @@ Every instrument has the same structure, so nothing is left out:
 - **Start here** – an 8-week learning path with a **step coach**: each step has its own instructions, a diagram where useful, ← → arrows, a “done, next step” button and a shortcut that opens the matching tool with the right settings. Plus a 20-minute practice timer and a troubleshooter.
 - **Instrument tools** – see below.
 - **Read music** – notes on the staff, tap to see where to play them and to hear them; note values.
-- **Tuner** – microphone tuner (needs HTTPS hosting, e.g. GitHub Pages).
+- **Tuner / Note finder** – guitar and saz get a tuner with their own reference tones per string/course; clarinet and ney, which aren't tuned note by note, get a note finder that names the note you play and shows how close it is (microphone, needs HTTPS hosting, e.g. GitHub Pages).
 - **Tips** – technique basics.
 
 ### Guitar
@@ -63,6 +63,10 @@ Everything lives in `index.html`:
 - Sounds are synthesised in the browser (Web Audio): Karplus-Strong for nylon strings, a simple odd-harmonic tone for the clarinet.
 
 Clarinet fingerings are for the Boehm system; ney fingerings follow the common Mansur chart (first register). Corrections from teachers and players are very welcome.
+
+## Credits
+
+Created by **Sinan** ([@SinanDmrr](https://github.com/SinanDmrr)) with the help of **Claude** (Anthropic).
 
 ## License
 
