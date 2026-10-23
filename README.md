@@ -1,6 +1,6 @@
 # First Notes
 
-Free, open-source beginner lessons for **classical guitar** and the **Turkish G clarinet** (Sol klarnet, Boehm system). One HTML file, no build step, no tracking, works on phones and desktops.
+Free, open-source beginner lessons for **classical guitar**, the **Turkish G clarinet** (Sol klarnet, Boehm system) and the **Turkish ney**. One HTML file, no build step, no tracking, works on phones and desktops.
 
 **▶ Use it now: https://sinandmrr.github.io/first-notes/**
 
@@ -10,19 +10,22 @@ Languages: **English** (default), **Deutsch**, **Türkçe**. The chosen language
 
 ## What's inside
 
+Every instrument has the same structure, so nothing is left out:
+
+- **Start here** – an 8-week learning path with a **step coach**: each step has its own instructions, a diagram where useful, ← → arrows, a “done, next step” button and a shortcut that opens the matching tool with the right settings. Plus a 20-minute practice timer and a troubleshooter.
+- **Instrument tools** – see below.
+- **Read music** – notes on the staff, tap to see where to play them and to hear them; note values.
+- **Tuner** – microphone tuner (needs HTTPS hosting, e.g. GitHub Pages).
+- **Tips** – technique basics.
+
 ### Guitar
-- **Start here** – an 8-week learning path with a step coach: every step has its own instructions, a chord diagram where useful, ← → arrows, a “done, next step” button and a shortcut that opens the matching tool with the right settings. Plus a 20-minute practice timer, how to read a chord sheet, and a troubleshooter.
-- **Chords** – how to read a chord diagram, 13 beginner chords with diagrams, step-by-step finger instructions and sound, plus a one-minute chord-change drill with a personal record.
-- **Strumming** – patterns shown as ↓ ↑ on “1 and 2 and…”, played back with a chord progression and click.
-- **Picking** – what p i m a means, six patterns shown as tabs and played back.
-- **Capo** – what a capo does, a calculator (shape → sounding chord) and the reverse (which capo for a hard chord).
-- **Notes** – first-position notes on the staff with string/fret and sound, plus note values.
-- **Tuning** – reference tones per string and a microphone tuner.
+Chords (how to read diagrams, 13 beginner chords, one-minute change drill) · Strumming (↓ ↑ patterns with playback) · Picking (p i m a, tabs) · Capo (calculator both ways) · reference tones for tuning.
 
 ### Clarinet (G / Sol, written pitch)
-- **Start here** – 8-week path with the same step coach (instructions and fingering diagram per step), practice timer, air challenge, tonguing, troubleshooter, assembly and care, the Turkish sound (vibrato, sliding, makam).
-- **Practice** – five levels; the page shows the fingering and listens through the microphone to check the note.
-- **Fingering chart**, **Read music** (staff with registers), **Songs** (simple text notation with playback), **Tuner**, **Embouchure tips**.
+Practice (5 levels, the page listens and checks the note) · Fingering chart · Songs (simple text notation with playback) · air challenge, tonguing, assembly and care, the Turkish sound.
+
+### Ney (Mansur ney, Rast = G)
+Practice (5 levels incl. low register and octave jumps) · Fingering chart for Rast, Dügah, Kürdi, Segah, Çargah, Nim Hicaz, Neva in two registers · Songs with perde names · holding, embouchure, care, angle and makam. The tuner expects Segah and Kürdi slightly below the piano note.
 
 ## Run it
 
@@ -32,7 +35,7 @@ Open `index.html` in any modern browser. For the microphone features (tuner, not
 2. **Settings → Pages → Deploy from a branch → `main` / root → Save.**
 3. Open `https://<user>.github.io/<repo>/`.
 
-## Song notation (clarinet)
+## Song notation (clarinet and ney)
 
 ```
 Do Re Mi Fa | Sol:2 Sol:2 | La La La La | Sol:4
@@ -42,6 +45,7 @@ Do Re Mi Fa | Sol:2 Sol:2 | La La La La | Sol:4
 - `:2` = 2 beats, `:1/2` = half a beat.
 - `,` or `↓` after a note = low register, `'` or `↑` = high register.
 - `P:2` = rest for 2 beats, `|` = bar line.
+- Ney: perde names work too (`Rast Dügah Kürdi Segah Çargah Neva`), `Rast,` = low register.
 
 ## Contributing
 
@@ -50,9 +54,11 @@ Everything lives in `index.html`:
 - Translations are inline: `X("English", "Deutsch", "Türkçe")`. To add a language, add it to `LANGS`, `NAMES` and `CHORD_ROOT`, then extend `X()` calls (missing entries fall back to English).
 - Guitar data: `G.CH` (chords), `G.PATS` (strumming), `G.PPAT` (picking), `G.WEEKS`.
 - Clarinet data: `K.N` (fingerings, written MIDI pitch), `K.LEVELS`, `K.WEEKS`, `K.SONGS`.
+- Ney data: `N.N` / `NF` (fingerings), `N.LEVELS`, `N.WEEKS`, `N.SONGS`.
+- Clarinet and ney share one UI (`windUI(M)`); instrument text comes from hooks such as `M.care()`, `M.tips()`, `M.readLead()`.
 - Sounds are synthesised in the browser (Web Audio): Karplus-Strong for nylon strings, a simple odd-harmonic tone for the clarinet.
 
-Fingerings are for the Boehm system. Corrections from teachers and players are very welcome.
+Clarinet fingerings are for the Boehm system; ney fingerings follow the common Mansur chart (first register). Corrections from teachers and players are very welcome.
 
 ## License
 
