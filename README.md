@@ -1,6 +1,6 @@
 # First Notes
 
-Free, open-source beginner lessons for **classical guitar**, the **Turkish G clarinet** (Sol klarnet, Boehm system) and the **Turkish ney**. One HTML file, no build step, no tracking, works on phones and desktops.
+Free, open-source beginner lessons for **classical guitar**, the **saz** (kısa sap bağlama), the **Turkish G clarinet** (Sol klarnet, Boehm system) and the **Turkish ney**. One HTML file, no build step, no tracking, works on phones and desktops.
 
 **▶ Use it now: https://sinandmrr.github.io/first-notes/**
 
@@ -21,6 +21,9 @@ Every instrument has the same structure, so nothing is left out:
 ### Guitar
 Chords (how to read diagrams, 13 beginner chords, one-minute change drill) · Strumming (↓ ↑ patterns with playback) · Picking (p i m a, tabs) · Capo (calculator both ways) · reference tones for tuning.
 
+### Saz (kısa sap bağlama, bağlama düzeni La – Re – Mi)
+Frets (all 17 frets per octave on all three courses, koma frets marked, tap to hear) · Mızrap (down/up, folk rhythm, aksak 9/8, tremolo with playback) · Practice (5 levels on the alt course, incl. Si♭²) · Note chart · Songs · tuning reference tones for the three courses.
+
 ### Clarinet (G / Sol, written pitch)
 Practice (5 levels, the page listens and checks the note) · Fingering chart · Songs (simple text notation with playback) · air challenge, tonguing, assembly and care, the Turkish sound.
 
@@ -35,7 +38,7 @@ Open `index.html` in any modern browser. For the microphone features (tuner, not
 2. **Settings → Pages → Deploy from a branch → `main` / root → Save.**
 3. Open `https://<user>.github.io/<repo>/`.
 
-## Song notation (clarinet and ney)
+## Song notation (saz, clarinet and ney)
 
 ```
 Do Re Mi Fa | Sol:2 Sol:2 | La La La La | Sol:4
@@ -54,8 +57,9 @@ Everything lives in `index.html`:
 - Translations are inline: `X("English", "Deutsch", "Türkçe")`. To add a language, add it to `LANGS`, `NAMES` and `CHORD_ROOT`, then extend `X()` calls (missing entries fall back to English).
 - Guitar data: `G.CH` (chords), `G.PATS` (strumming), `G.PPAT` (picking), `G.WEEKS`.
 - Clarinet data: `K.N` (fingerings, written MIDI pitch), `K.LEVELS`, `K.WEEKS`, `K.SONGS`.
+- Saz data: `S.RATIOS` (fret ratios), `S.COURSES`, `S.N`, `S.PATS` (mızrap), `S.WEEKS`, `S.SONGS`.
 - Ney data: `N.N` / `NF` (fingerings), `N.LEVELS`, `N.WEEKS`, `N.SONGS`.
-- Clarinet and ney share one UI (`windUI(M)`); instrument text comes from hooks such as `M.care()`, `M.tips()`, `M.readLead()`.
+- Saz, clarinet and ney share one UI (`windUI(M)`); instrument text comes from hooks such as `M.care()`, `M.tips()`, `M.readLead()`.
 - Sounds are synthesised in the browser (Web Audio): Karplus-Strong for nylon strings, a simple odd-harmonic tone for the clarinet.
 
 Clarinet fingerings are for the Boehm system; ney fingerings follow the common Mansur chart (first register). Corrections from teachers and players are very welcome.
