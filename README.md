@@ -2,6 +2,10 @@
 
 Free, open-source beginner lessons for **classical guitar** and the **Turkish G clarinet** (Sol klarnet, Boehm system). One HTML file, no build step, no tracking, works on phones and desktops.
 
+**▶ Use it now: https://sinandmrr.github.io/first-notes/**
+
+Privacy: the page loads nothing from third parties (no external fonts, scripts, cookies or analytics). Progress is stored only in your own browser, and the microphone is analysed locally.
+
 Languages: **English** (default), **Deutsch**, **Türkçe**. The chosen language is remembered in the browser.
 
 ## What's inside
