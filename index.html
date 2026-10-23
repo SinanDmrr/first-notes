@@ -20,8 +20,6 @@
 </head>
 <body>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Music&display=swap">
 <style>
 /* Layout: sticky top bar (instrument + language), then one column of panels; tools put a diagram beside the controls on wide screens */
 :root{
@@ -288,6 +286,8 @@ const running=new Set();
 function stopAll(){ running.forEach(f=>{ try{f();}catch(e){} }); running.clear(); mic.stop(); }
 
 // ---------- shared drawing ----------
+// Treble clef outline (from GNU FreeFont, GPL with font exception), drawn as a path so no music font is needed.
+const CLEF="M434 2Q464 -103 464 -170Q464 -223 427.0 -257.0Q390 -291 337 -291Q287 -291 250.0 -261.5Q213 -232 213 -190Q213 -160 233.5 -133.5Q254 -107 283.5 -107.0Q313 -107 331.5 -128.5Q350 -150 350 -178Q350 -240 280 -240Q298 -268 338 -268Q353 -268 368.5 -263.5Q384 -259 401.0 -248.0Q418 -237 428.5 -213.5Q439 -190 439 -157Q439 -136 411 -6Q389 -12 356 -12Q259 -12 189.5 60.0Q120 132 120 232Q120 267 131.5 303.0Q143 339 157.5 366.5Q172 394 200.5 428.5Q229 463 248.5 483.5Q268 504 303 539Q280 621 280 689Q280 779 313.0 839.5Q346 900 379 900Q389 900 401.5 887.0Q414 874 426.0 851.0Q438 828 446.5 790.5Q455 753 455 710Q455 551 342 447L368 329Q384 332 397 332Q458 332 500.0 282.5Q542 233 542 162Q542 44 434 2ZM426 746Q426 801 394 801Q358 801 333.0 748.0Q308 695 308 630Q308 588 321 557Q359 580 392.5 639.5Q426 699 426 746ZM498 128Q498 183 466.0 216.0Q434 249 383 249L428 23Q498 52 498 128ZM407 17 361 247Q334 241 311.5 214.0Q289 187 289 158Q289 143 295.0 128.5Q301 114 309.5 104.0Q318 94 327.0 86.0Q336 78 342.0 74.5Q348 71 348 71L340 66Q307 75 277.5 106.0Q248 137 248 184Q248 231 277.5 270.5Q307 310 343 323L325 430Q168 299 168 177Q168 104 223.0 55.0Q278 6 348 6Q365 6 407 17Z";
 const DIA={0:0,1:0,2:1,3:2,4:2,5:3,6:3,7:4,8:4,9:5,10:6,11:6};
 const ACC={1:"♯",6:"♯",8:"♯",3:"♭",10:"♭"};
 /** Treble staff. items: [{w: written midi, label, color}] */
@@ -296,7 +296,7 @@ function staffSVG(items,sel,opts={}){
   const yOf=d=>bottom-(d-30)*hs;
   let o=`<svg viewBox="0 0 ${W} 200" width="${W}" role="img" aria-label="${X("Staff","Notenlinien","Porte")}">`;
   for(let i=0;i<5;i++){ const y=bottom-i*2*hs; o+=`<line x1="6" y1="${y}" x2="${W-6}" y2="${y}" stroke="var(--muted)" stroke-width="1.3"/>`; }
-  o+=`<text x="8" y="${bottom+10}" font-size="78" fill="var(--ink)" font-family="'Noto Music',serif">𝄞</text>`;
+  o+=`<path d="${CLEF}" transform="translate(-1.88 115.07) scale(0.0823 -0.0823)" fill="var(--ink)"/>`;
   if(opts.octaveBelow) o+=`<text x="30" y="${bottom+34}" font-size="13" fill="var(--ink)">8</text>`;
   items.forEach((it,i)=>{
     const p=pc(it.w), oct=Math.floor(it.w/12)-1, d=DIA[p]+7*oct, x=x0+i*dx+16, y=yOf(d), on=i===sel;
