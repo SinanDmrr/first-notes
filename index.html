@@ -130,6 +130,13 @@ tr.click{cursor:pointer} tr.click:hover,tr.click[aria-selected="true"]{backgroun
 .week.full .wp{color:var(--ok);font-weight:700}
 .week .body{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
 .week .why{color:var(--muted);font-size:.93rem;margin:0}
+.eyebrow{font:700 .75rem var(--text);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.coach{border:2px solid var(--accent)}
+.btn.arrow{padding:8px 14px;font-size:1.1rem;line-height:1}
+.btn:disabled{opacity:.35;cursor:default}
+.stepbtn{font:inherit;color:var(--ink);background:none;border:none;padding:0;text-align:left;cursor:pointer;line-height:1.4}
+.stepbtn:hover{text-decoration:underline}
+.check.sel{background:var(--accent-soft);border-radius:8px;margin:0 -8px;padding:4px 8px}
 .check{display:flex;gap:10px;align-items:flex-start;cursor:pointer;line-height:1.4}
 .check input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--ok)}
 .bar-prog{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 2px}
@@ -341,16 +348,43 @@ function bindDurs(root,playFn){
 const fmtTime=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")}`;
 
 /** Checklist learning path, routine timer and troubleshooter are shared by both instruments. */
+/** Learning path (checklist) + step coach. weeks: [{t,why,items:[{t,d:[...],go,set,show}]}] (all text already translated) */
 function pathHTML(){ return `<div class="bar-prog"><i data-role="pbar"></i></div><p class="muted" data-role="ptxt" style="margin:0 0 12px"></p><div class="path" data-role="path"></div>`; }
-function bindPath(root,weeks,key){
-  const prog=store.get(key,{}), box=root.querySelector('[data-role="path"]');
-  const draw=()=>{ let all=0,dn=0; const open=[...box.querySelectorAll(".week")].map(d=>d.open);
+function coachHTML(){ return `<div class="panel coach" data-role="coach" aria-live="polite"></div>`; }
+function bindPath(root,weeks,key,M,visual){
+  const prog=store.get(key,{}), box=root.querySelector('[data-role="path"]'), coach=root.querySelector('[data-role="coach"]');
+  const flat=[]; weeks.forEach((w,wi)=>w.items.forEach((it,ii)=>flat.push({wi,ii,it,k:wi+"-"+ii})));
+  const firstOpen=()=>{ const i=flat.findIndex(f=>!prog[f.k]); return i<0?flat.length-1:i; };
+  let sel=store.get(key+"-sel",-1); if(sel<0||sel>=flat.length) sel=firstOpen();
+  const select=(i,scroll)=>{ sel=Math.max(0,Math.min(flat.length-1,i)); store.set(key+"-sel",sel); draw(); if(scroll) coach.scrollIntoView({behavior:"smooth",block:"start"}); };
+  function draw(){
+    let all=0,dn=0; const open=[...box.querySelectorAll(".week")].map(d=>d.open), cur=flat[sel];
     box.innerHTML=weeks.map((w,wi)=>{ const c=w.items.filter((_,ii)=>prog[wi+"-"+ii]).length; all+=w.items.length; dn+=c; const full=c===w.items.length;
-      const auto=!full&&weeks.slice(0,wi).every((x,xi)=>x.items.every((_,ii)=>prog[xi+"-"+ii]));
-      return `<details class="week ${full?"full":""}" ${(open[wi]||(!open.length&&auto))?"open":""}><summary><span class="wk">${X("Week","Woche","Hafta")} ${wi+1}</span><span class="wt">${w.t}</span><span class="wp">${full?"✓ "+X("done","geschafft","tamam"):c+"/"+w.items.length}</span></summary><div class="body"><p class="why">${w.why}</p>${w.items.map((it,ii)=>`<label class="check"><input type="checkbox" id="${key}-${wi}-${ii}" data-k="${wi}-${ii}" ${prog[wi+"-"+ii]?"checked":""}><span>${it}</span></label>`).join("")}</div></details>`; }).join("");
+      const isOpen=open.length?(open[wi]||cur.wi===wi):cur.wi===wi;
+      return `<details class="week ${full?"full":""}" ${isOpen?"open":""}><summary data-w="${wi}"><span class="wk">${X("Week","Woche","Hafta")} ${wi+1}</span><span class="wt">${w.t}</span><span class="wp">${full?"✓ "+X("done","geschafft","tamam"):c+"/"+w.items.length}</span></summary><div class="body"><p class="why">${w.why}</p>${w.items.map((it,ii)=>{ const fi=flat.findIndex(f=>f.wi===wi&&f.ii===ii);
+        return `<div class="check ${fi===sel?"sel":""}"><input type="checkbox" id="${key}-${wi}-${ii}" data-k="${wi}-${ii}" ${prog[wi+"-"+ii]?"checked":""} aria-label="${X("Done","Erledigt","Tamam")}"><button class="stepbtn" data-f="${fi}">${it.t}</button></div>`; }).join("")}</div></details>`; }).join("");
     root.querySelector('[data-role="pbar"]').style.width=(dn/all*100)+"%";
-    root.querySelector('[data-role="ptxt"]').textContent=fill(X("{a} of {b} steps done","{a} von {b} Schritten geschafft","{b} adımdan {a} tanesi tamam"),{a:dn,b:all}); };
+    root.querySelector('[data-role="ptxt"]').textContent=fill(X("{a} of {b} steps done","{a} von {b} Schritten geschafft","{b} adımdan {a} tanesi tamam"),{a:dn,b:all});
+    // coach
+    const it=cur.it, w=weeks[cur.wi], done=!!prog[cur.k], vis=visual(it.show);
+    coach.innerHTML=`<div class="row" style="justify-content:space-between">
+        <span class="eyebrow">${X("Week","Woche","Hafta")} ${cur.wi+1} · ${fill(X("step {a} of {b}","Schritt {a} von {b}","adım {a} / {b}"),{a:cur.ii+1,b:w.items.length})}</span>
+        <div class="row" style="gap:6px"><button class="btn alt arrow" data-nav="-1" ${sel===0?"disabled":""} aria-label="${X("Previous step","Vorheriger Schritt","Önceki adım")}">←</button><button class="btn alt arrow" data-nav="1" ${sel===flat.length-1?"disabled":""} aria-label="${X("Next step","Nächster Schritt","Sonraki adım")}">→</button></div></div>
+      <h2 style="margin-top:6px">${done?"✓ ":""}${it.t}</h2>
+      <div class="${vis?"tool":""}" style="margin-top:8px">${vis?`<div class="diagram">${vis.svg}</div>`:""}<div>
+        <ol class="plain">${it.d.map(x=>`<li>${x}</li>`).join("")}</ol>${vis&&vis.steps?`<h3>${X("Fingering:","Griff:","Parmaklar:")}</h3><ol class="steps">${vis.steps}</ol>`:""}</div></div>
+      <div class="row" style="margin-top:16px">
+        ${it.go?`<button class="btn alt" data-go="1">${X("Open:","Öffnen:","Aç:")} ${M.VIEWS().find(v=>v[0]===it.go)[1]} ↗</button>`:""}
+        <button class="btn go" data-done="1">${done?X("Mark as not done","Als offen markieren","Yapılmadı olarak işaretle"):X("✓ Done, next step","✓ Geschafft, nächster Schritt","✓ Tamam, sonraki adım")}</button></div>`;
+  }
   box.addEventListener("change",e=>{ const k=e.target.dataset.k; if(!k) return; prog[k]=e.target.checked; store.set(key,prog); draw(); });
+  box.addEventListener("click",e=>{ const b=e.target.closest(".stepbtn"); if(b){ select(+b.dataset.f,true); return; }
+    const s=e.target.closest("summary"); if(s){ const wi=+s.dataset.w; const i=flat.findIndex(f=>f.wi===wi&&!prog[f.k]); const j=i<0?flat.findIndex(f=>f.wi===wi):i; setTimeout(()=>{ sel=j; store.set(key+"-sel",sel); draw(); },0); } });
+  coach.addEventListener("click",e=>{
+    const n=e.target.closest("[data-nav]"); if(n){ select(sel+ +n.dataset.nav); return; }
+    if(e.target.closest("[data-done]")){ const c=flat[sel]; prog[c.k]=!prog[c.k]; store.set(key,prog); if(prog[c.k]&&sel<flat.length-1){ const nx=flat.findIndex((f,i)=>i>sel&&!prog[f.k]); select(nx<0?sel+1:nx); } else draw(); return; }
+    if(e.target.closest("[data-go]")){ const it=flat[sel].it; Object.assign(M.state,it.set||{}); M.state.view=it.go; render(); window.scrollTo(0,0); }
+  });
   draw();
 }
 function routineHTML(){ return `<div class="row" style="justify-content:space-between;margin-bottom:10px"><div class="clock" data-role="rclock"></div><div class="row"><button class="btn go" data-role="rstart">${X("Start","Start","Başla")}</button><button class="btn alt" data-role="rreset">${X("Reset","Zurück","Sıfırla")}</button></div></div><div class="routine" data-role="rlist"></div>`; }
@@ -410,7 +444,7 @@ G.byId=Object.fromEntries(G.CH.map(c=>[c.id,c]));
 G.name=c=>chordName(c.r,c.q);
 G.midi=(s,f,capo=0)=>G.OPEN[s]+f+capo;
 G.chordSVG=(c,hiStr=-1)=>{
-  const W=240,H=290,x0=40,dx=32,y0=60,dy=50, sx=s=>x0+s*dx;
+  const W=240,H=308,x0=40,dx=32,y0=60,dy=50, sx=s=>x0+s*dx;
   let o=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${c.single?"":G.name(c)}">`;
   o+=`<rect x="${x0-6}" y="${y0-8}" width="${dx*5+12}" height="9" rx="3" fill="var(--ink)"/>`;
   for(let fr=1;fr<=4;fr++){ o+=`<line x1="${x0}" y1="${y0+fr*dy}" x2="${x0+dx*5}" y2="${y0+fr*dy}" stroke="var(--muted)" stroke-width="2"/><text x="${x0-14}" y="${y0+fr*dy-dy/2+5}" font-size="12" fill="var(--muted)" text-anchor="end">${fr}</text>`; }
@@ -439,22 +473,147 @@ G.strum=(c,dir="D",when=0,vol=.5,capo=0,bassOnly=false)=>{
 };
 
 G.WEEKS=()=>[
- {t:X("Sitting, tuning, Em and Am","Sitzen, stimmen, Em und Am","Oturuş, akort, Em ve Am"),why:X("The two easiest chords. Check every string: does it ring clean or buzz?","Die zwei leichtesten Akkorde. Prüf jede Saite einzeln: Klingt sie sauber oder schnarrt sie?","En kolay iki akor. Her teli tek tek kontrol et: temiz mi çalıyor, cızırdıyor mu?"),
-  items:[X("Sit correctly (see below)","Richtig sitzen (siehe unten)","Doğru otur (aşağıya bak)"),X("Tune with the reference tones","Mit den Vergleichstönen stimmen","Referans seslerle akort et"),X("Em: all six strings ring clean","Em: alle 6 Saiten klingen sauber","Em: altı tel de temiz çalıyor"),X("Am: skip the low E string","Am: tiefe E-Saite auslassen","Am: kalın Mi telini atla"),X("One-minute drill Em ↔ Am: 15 changes","1-Minuten-Übung Em ↔ Am: 15 Wechsel","Bir dakika çalışması Em ↔ Am: 15 geçiş"),X("Strum pattern 1 (four downstrokes) with Em and Am","Anschlag 1 (vier Abschläge) mit Em und Am","Ritim 1 (dört aşağı vuruş) Em ve Am ile")]},
- {t:X("D and A, the train strum","D und A, Eisenbahn-Schlag","D ve A, tren ritmi"),why:X("D and A are the base of many songs. Practise the change, not only the shapes.","D und A sind die Grundlage für viele Lieder. Lerne den Wechsel, nicht nur die Griffe.","D ve A birçok şarkının temeli. Sadece akorları değil, geçişi çalış."),
-  items:[X("D clean, only four strings","D sauber, nur 4 Saiten","D temiz, sadece dört tel"),X("A clean, three fingers close","A sauber, drei Finger eng","A temiz, üç parmak yakın"),X("One-minute drill D ↔ A: 20 changes","1-Minuten-Übung D ↔ A: 20 Wechsel","Bir dakika çalışması D ↔ A: 20 geçiş"),X("Pattern 2 (train) evenly at tempo 60","Anschlag 2 (Eisenbahn) gleichmäßig bei Tempo 60","Ritim 2 (tren) tempo 60'ta düzenli")]},
- {t:X("G and C, the western strum","G und C, Westernschlag","G ve C, western ritmi"),why:X("With G, C and D you can already accompany hundreds of songs.","Mit G, C und D kannst du schon hunderte Lieder begleiten.","G, C ve D ile yüzlerce şarkıya eşlik edebilirsin."),
-  items:[X("G clean","G sauber","G temiz"),X("C clean (G and e strings free)","C sauber (G- und e-Saite frei)","C temiz (Sol ve ince Mi açık)"),X("D – G – A – D without stopping","D – G – A – D ohne Stopp","D – G – A – D durmadan"),X("Pattern 3 (western) with G – C – D – G","Anschlag 3 (Westernschlag) mit G – C – D – G","Ritim 3 (western) G – C – D – G ile")]},
- {t:X("Picking: p i m a","Picking: p i m a","Parmakla çalma: p i m a"),why:X("Now the right hand learns to pluck. The left hand only holds the chord.","Jetzt lernt die rechte Hand zupfen. Die linke hält nur den Akkord.","Şimdi sağ el teli tek tek çekmeyi öğreniyor. Sol el sadece akoru tutar."),
-  items:[X("Match p, i, m, a to their strings","p, i, m, a den Saiten zuordnen","p, i, m, a parmaklarını tellerine eşle"),X("Pattern 1 with Am, slow and even","Muster 1 mit Am, langsam und gleich laut","Am ile kalıp 1, yavaş ve eşit"),X("Pattern 1 with Em and C (thumb changes string)","Muster 1 mit Em und C (Daumen wechselt die Saite)","Em ve C ile kalıp 1 (başparmak tel değiştirir)"),X("Read a tab","Eine Tabulatur lesen können","Bir tab okuyabilmek")]},
- {t:X("Minor colours: Dm, E, E7","Moll-Farben: Dm, E, E7","Minör renkler: Dm, E, E7"),why:X("Am – Dm – E is the typical sad sound of many Turkish songs.","Am – Dm – E ist der typische traurige Klang vieler türkischer Lieder.","Am – Dm – E birçok Türkçe şarkının tipik hüzünlü sesidir."),
-  items:[X("Dm clean","Dm sauber","Dm temiz"),X("E and E7","E und E7","E ve E7"),X("Am – Dm – E – Am with pattern 1","Am – Dm – E – Am mit Anschlag 1","Ritim 1 ile Am – Dm – E – Am"),X("Am – Dm – E – Am picked with pattern 2","Am – Dm – E – Am gezupft mit Muster 2","Kalıp 2 ile Am – Dm – E – Am")]},
- {t:X("Reading notes in first position","Noten lesen in der 1. Lage","Birinci pozisyonda nota okuma"),why:X("From here you can play melodies, not only chords.","Ab hier kannst du Melodien spielen statt nur Akkorde.","Buradan itibaren sadece akor değil melodi de çalabilirsin."),
-  items:[X("Find E F G and B C D on the two thin strings","Töne auf e- und H-Saite (E F G, H C D) finden","İki ince telde Mi Fa Sol ve Si Do Re bul"),X("Note values: whole, half, quarter","Notenwerte: Ganze, Halbe, Viertel","Nota değerleri: birlik, ikilik, dörtlük"),X("Play a simple melody from notes","Eine einfache Melodie aus Noten spielen","Notadan basit bir melodi çal"),X("Add the G string (G, A)","Töne auf der G-Saite dazu (G, A)","Sol telini ekle (Sol, La)")]},
- {t:X("Capo and your first song","Kapodaster und erstes Lied","Kapo ve ilk şarkın"),why:X("A real song from a chord sheet. Use a capo if the sheet says so.","Ein echtes Lied mit Akkordblatt. Kapo, wenn das Blatt es sagt.","Akor sayfasından gerçek bir şarkı. Sayfa diyorsa kapo kullan."),
-  items:[X("Clamp the capo and retune","Kapo richtig klemmen und nachstimmen","Kapoyu tak ve yeniden akort et"),X("Found a chord sheet for a song","Akkordblatt für ein Lied gefunden","Bir şarkının akor sayfasını buldun"),X("Verse with one strum pattern","Strophe mit einem Anschlagmuster","Bir ritimle kıta"),X("Whole song slowly without stopping","Ganzes Lied langsam ohne Stopp","Bütün şarkı yavaşça durmadan")]},
- {t:X("Waltz and alternating bass","Walzer und Wechselbass","Vals ve değişen bas"),why:X("More variety for the right hand.","Mehr Abwechslung für die rechte Hand.","Sağ el için daha fazla çeşit."),
-  items:[X("Pattern 5 (waltz) with Am – Dm – E – Am","Anschlag 5 (Walzer) mit Am – Dm – E – Am","Ritim 5 (vals) Am – Dm – E – Am ile"),X("Picking 5 (p + chord) in 3/4","Picking 5 (p + Akkord) im 3er-Takt","3/4'te kalıp 5 (p + akor)"),X("Picking 6 (alternating bass) with C and G","Picking 6 (Wechselbass) mit C und G","C ve G ile kalıp 6 (değişen bas)"),X("Your song picked instead of strummed","Dein Lied gezupft statt geschlagen","Şarkını ritim yerine parmakla çal")]}
+ {t:X("Sitting, tuning, Em and Am","Sitzen, stimmen, Em und Am","Oturuş, akort, Em ve Am"),why:X("The two easiest chords. Check every string: does it ring clean or buzz?","Die zwei leichtesten Akkorde. Prüf jede Saite einzeln: Klingt sie sauber oder schnarrt sie?","En kolay iki akor. Her teli tek tek kontrol et: temiz mi çalıyor, cızırdıyor mu?"),items:[
+  {t:X("Sit correctly","Richtig sitzen","Doğru otur"),d:[
+    X("Sit on the front half of a chair without armrests.","Auf die vordere Hälfte eines Stuhls ohne Armlehnen setzen.","Kolçaksız bir sandalyenin ön yarısına otur."),
+    X("Left foot on a small footstool (or a thick book).","Linker Fuß auf eine kleine Fußbank (oder ein dickes Buch).","Sol ayak küçük bir ayak taburesine (ya da kalın bir kitaba)."),
+    X("The guitar rests on the left thigh, the neck points up at an angle.","Die Gitarre liegt auf dem linken Oberschenkel, der Hals zeigt schräg nach oben.","Gitar sol uyluğun üstünde, sap yukarı doğru eğik."),
+    X("Right forearm rests on the edge, the hand hangs over the sound hole.","Rechter Unterarm liegt locker auf der Kante, die Hand hängt über dem Schallloch.","Sağ önkol kenarda durur, el ses deliğinin üstünde sarkar."),
+    X("Left thumb behind the neck, roughly behind the middle finger. Don't wrap it around.","Linker Daumen hinten am Hals, etwa hinter dem Mittelfinger. Nicht um den Hals greifen.","Sol başparmak sapın arkasında, orta parmağın arkasında. Sapı sarma."),
+    X("Cut left-hand nails short, otherwise you cannot press cleanly.","Linke Fingernägel kurz schneiden, sonst kannst du nicht sauber drücken.","Sol el tırnaklarını kısa kes, yoksa temiz basamazsın.")]},
+  {t:X("Tune with the reference tones","Mit den Vergleichstönen stimmen","Referans seslerle akort et"),go:"tune",d:[
+    X("Open “Tuning” and tap the low E. Pluck your own low E string at the same time.","„Stimmen“ öffnen und die tiefe E antippen. Gleichzeitig deine tiefe E-Saite zupfen.","“Akort” bölümünü aç ve kalın Mi'ye dokun. Aynı anda kendi kalın Mi telini çek."),
+    X("Your string sounds lower: turn the peg so the string gets tighter. Higher: looser.","Klingt deine Saite tiefer: Wirbel so drehen, dass sie straffer wird. Höher: lockerer.","Telin daha pes: teli gerecek yöne çevir. Daha tiz: gevşet."),
+    X("Turn in small steps and listen again after each turn.","In kleinen Schritten drehen und nach jedem Dreh neu hören.","Küçük adımlarla çevir ve her seferinde tekrar dinle."),
+    X("Then A, D, G, B and high e. At the end check all six once more.","Dann A, D, G, H und hohe e. Zum Schluss alle 6 noch einmal prüfen.","Sonra La, Re, Sol, Si ve ince Mi. Sonunda altısını bir kez daha kontrol et.")]},
+  {t:X("Em: all six strings ring clean","Em: alle 6 Saiten klingen sauber","Em: altı tel de temiz çalıyor"),go:"chords",set:{chord:"Em"},show:{chord:"Em"},d:[
+    X("Middle finger on the A string, ring finger on the D string, both in fret 2.","Mittelfinger auf die A-Saite, Ringfinger auf die D-Saite, beide im 2. Bund.","Orta parmak La teline, yüzük parmağı Re teline, ikisi de 2. perdede."),
+    X("Strum all six strings from thick to thin.","Alle 6 Saiten von dick nach dünn anschlagen.","Altı teli kalından inceye çal."),
+    X("Now pluck each string on its own. Every string should ring, nothing buzzes.","Jetzt jede Saite einzeln zupfen. Jede soll klingen, nichts schnarrt.","Şimdi her teli tek tek çek. Her tel çalmalı, cızırtı olmamalı."),
+    X("A string buzzes or sounds dead? Look at “Problem? Here's the fix” below.","Schnarrt eine Saite oder klingt dumpf? Unten bei „Problem? Hier die Lösung“ nachsehen.","Bir tel cızırdıyor ya da ses vermiyor mu? Aşağıdaki “Sorun mu var?” bölümüne bak.")]},
+  {t:X("Am: skip the low E string","Am: tiefe E-Saite auslassen","Am: kalın Mi telini atla"),go:"chords",set:{chord:"Am"},show:{chord:"Am"},d:[
+    X("Index on the B string fret 1, middle on the D string fret 2, ring on the G string fret 2.","Zeigefinger H-Saite 1. Bund, Mittelfinger D-Saite 2. Bund, Ringfinger G-Saite 2. Bund.","İşaret Si teli 1. perde, orta Re teli 2. perde, yüzük Sol teli 2. perde."),
+    X("Start the strum on the A string, the low E stays silent.","Den Anschlag bei der A-Saite beginnen, die tiefe E bleibt stumm.","Ritmi La telinden başlat, kalın Mi sessiz kalır."),
+    X("Pluck the five strings one by one and check each.","Die 5 Saiten einzeln zupfen und jede prüfen.","Beş teli tek tek çek ve her birini kontrol et.")]},
+  {t:X("One-minute drill Em ↔ Am: 15 changes","1-Minuten-Übung Em ↔ Am: 15 Wechsel","Bir dakika çalışması Em ↔ Am: 15 geçiş"),go:"chords",set:{pair:0},d:[
+    X("Under “Chords” at the bottom choose Em ↔ Am and start the minute.","Unter „Akkorde“ ganz unten Em ↔ Am wählen und die Minute starten.","“Akorlar” bölümünün en altında Em ↔ Am seç ve dakikayı başlat."),
+    X("Trick: the Em shape moves down one string each, then the index finger joins.","Trick: Die Em-Form rutscht je eine Saite tiefer, dann kommt der Zeigefinger dazu.","Püf noktası: Em şekli birer tel aşağı kayar, sonra işaret parmağı eklenir."),
+    X("Tap “+1 change” for every clean change. Goal: 15 in one minute.","Für jeden sauberen Wechsel „+1 Wechsel“ tippen. Ziel: 15 in einer Minute.","Her temiz geçişte “+1 geçiş”e dokun. Hedef: bir dakikada 15.")]},
+  {t:X("Strum pattern 1 with Em and Am","Anschlag 1 mit Em und Am","Em ve Am ile ritim 1"),go:"strum",set:{pat:0,prog:6,bpm:60},d:[
+    X("Four even downstrokes per bar: “1, 2, 3, 4”.","Vier gleichmäßige Abschläge pro Takt: „1, 2, 3, 4“.","Ölçü başına dört düzenli aşağı vuruş: “1, 2, 3, 4”."),
+    X("Change the chord every bar: Em – Am – Em – Am.","Jeden Takt den Akkord wechseln: Em – Am – Em – Am.","Her ölçüde akor değiştir: Em – Am – Em – Am."),
+    X("Press “Play”, listen once, then play along.","„Abspielen“ drücken, einmal zuhören, dann mitspielen.","“Çal”a bas, bir kez dinle, sonra birlikte çal.")]}]},
+ {t:X("D and A, the train strum","D und A, Eisenbahn-Schlag","D ve A, tren ritmi"),why:X("D and A are the base of many songs. Practise the change, not only the shapes.","D und A sind die Grundlage für viele Lieder. Lerne den Wechsel, nicht nur die Griffe.","D ve A birçok şarkının temeli. Sadece akorları değil, geçişi çalış."),items:[
+  {t:X("D clean, only four strings","D sauber, nur 4 Saiten","D temiz, sadece dört tel"),go:"chords",set:{chord:"D"},show:{chord:"D"},d:[
+    X("Index G string fret 2, ring B string fret 3, middle high e fret 2.","Zeigefinger G-Saite 2. Bund, Ringfinger H-Saite 3. Bund, Mittelfinger e-Saite 2. Bund.","İşaret Sol teli 2. perde, yüzük Si teli 3. perde, orta ince Mi 2. perde."),
+    X("Strum from the D string only. The two thick strings stay silent.","Erst ab der D-Saite anschlagen. Die zwei dicken Saiten bleiben stumm.","Sadece Re telinden itibaren çal. İki kalın tel sessiz kalır."),
+    X("Keep the fingers steep so the high e rings.","Finger steil halten, damit die hohe e-Saite klingt.","İnce Mi çalsın diye parmakları dik tut.")]},
+  {t:X("A clean, three fingers close","A sauber, drei Finger eng","A temiz, üç parmak yakın"),go:"chords",set:{chord:"A"},show:{chord:"A"},d:[
+    X("Index D string, middle G string, ring B string, all in fret 2.","Zeigefinger D-Saite, Mittelfinger G-Saite, Ringfinger H-Saite, alle im 2. Bund.","İşaret Re, orta Sol, yüzük Si teli, hepsi 2. perdede."),
+    X("The fingers sit slightly staggered, close together.","Die Finger sitzen leicht versetzt, eng zusammen.","Parmaklar hafif kademeli, birbirine yakın."),
+    X("Strum from the A string, the high e rings open.","Ab der A-Saite anschlagen, die hohe e klingt leer.","La telinden çal, ince Mi boş çalar.")]},
+  {t:X("One-minute drill D ↔ A: 20 changes","1-Minuten-Übung D ↔ A: 20 Wechsel","Bir dakika çalışması D ↔ A: 20 geçiş"),go:"chords",set:{pair:3},d:[
+    X("From D to A: place index, middle, ring in this order.","Von D nach A: Zeige-, Mittel-, Ringfinger in dieser Reihenfolge setzen.","D'den A'ya: işaret, orta, yüzük sırasıyla koy."),
+    X("Back to A → D: reverse order.","Zurück A → D: umgekehrte Reihenfolge.","Geri A → D: ters sıra."),
+    X("Goal: 20 clean changes in one minute.","Ziel: 20 saubere Wechsel in einer Minute.","Hedef: bir dakikada 20 temiz geçiş.")]},
+  {t:X("Pattern 2 (train) evenly at tempo 60","Anschlag 2 (Eisenbahn) gleichmäßig bei Tempo 60","Tempo 60'ta düzenli ritim 2 (tren)"),go:"strum",set:{pat:1,prog:2,bpm:60},d:[
+    X("Down on the number, up on the “and”, without pause.","Runter auf der Zahl, hoch auf dem „und“, ohne Pause.","Sayıda aşağı, “ve”de yukarı, durmadan."),
+    X("Upstrokes only hit the thin strings and are a bit softer.","Aufschläge treffen nur die dünnen Saiten und sind etwas leiser.","Yukarı vuruşlar sadece ince tellere değer ve biraz daha yumuşaktır."),
+    X("Play D – A – D – A at tempo 60 with the click.","D – A – D – A bei Tempo 60 mit Klick spielen.","Metronomla tempo 60'ta D – A – D – A çal.")]}]},
+ {t:X("G and C, the western strum","G und C, Westernschlag","G ve C, western ritmi"),why:X("With G, C and D you can already accompany hundreds of songs.","Mit G, C und D kannst du schon hunderte Lieder begleiten.","G, C ve D ile yüzlerce şarkıya eşlik edebilirsin."),items:[
+  {t:X("G clean","G sauber","G temiz"),go:"chords",set:{chord:"G"},show:{chord:"G"},d:[
+    X("Middle low E fret 3, index A fret 2, ring high e fret 3.","Mittelfinger tiefe E 3. Bund, Zeigefinger A 2. Bund, Ringfinger hohe e 3. Bund.","Orta kalın Mi 3. perde, işaret La 2. perde, yüzük ince Mi 3. perde."),
+    X("All six strings ring, the three middle ones open.","Alle 6 Saiten klingen, die drei mittleren leer.","Altı tel de çalar, ortadaki üçü boş."),
+    X("Arch the fingers so they don't touch the open strings.","Finger wölben, damit sie die leeren Saiten nicht berühren.","Parmakları kavisli tut ki boş tellere değmesin.")]},
+  {t:X("C clean (G and e strings free)","C sauber (G- und e-Saite frei)","C temiz (Sol ve ince Mi açık)"),go:"chords",set:{chord:"C"},show:{chord:"C"},d:[
+    X("Ring A fret 3, middle D fret 2, index B fret 1.","Ringfinger A 3. Bund, Mittelfinger D 2. Bund, Zeigefinger H 1. Bund.","Yüzük La 3. perde, orta Re 2. perde, işaret Si 1. perde."),
+    X("The G string and the high e must ring open.","Die G-Saite und die hohe e müssen leer klingen.","Sol teli ve ince Mi boş çalmalı."),
+    X("Skip the low E.","Tiefe E-Saite auslassen.","Kalın Mi'yi atla.")]},
+  {t:X("D – G – A – D without stopping","D – G – A – D ohne Stopp","D – G – A – D durmadan"),go:"strum",set:{pat:0,prog:7,bpm:60},d:[
+    X("Pattern 1 (four downstrokes), one chord per bar.","Anschlag 1 (vier Abschläge), ein Akkord pro Takt.","Ritim 1 (dört aşağı vuruş), ölçü başına bir akor."),
+    X("Change already on beat 4 so beat 1 comes on time.","Schon auf Schlag 4 wechseln, damit die 1 pünktlich kommt.","1 zamanında gelsin diye 4. vuruşta geçmeye başla."),
+    X("A small gap is fine, stopping is not.","Eine kleine Lücke ist okay, Anhalten nicht.","Küçük bir boşluk olur, durmak olmaz.")]},
+  {t:X("Pattern 3 (western) with G – C – D – G","Anschlag 3 (Westernschlag) mit G – C – D – G","G – C – D – G ile ritim 3 (western)"),go:"strum",set:{pat:2,prog:3,bpm:60},d:[
+    X("Count “1 – 2 and 3 – 4 and”.","Zählen: „1 – 2 und 3 – 4 und“.","Say: “1 – 2 ve 3 – 4 ve”."),
+    X("In the gaps the hand moves up without hitting the strings.","In den Lücken geht die Hand leer hoch.","Boşluklarda el tellere değmeden yukarı gider."),
+    X("First on muted strings, then with chords.","Erst auf gedämpften Saiten, dann mit Akkorden.","Önce susturulmuş tellerde, sonra akorlarla.")]}]},
+ {t:X("Picking: p i m a","Picking: p i m a","Parmakla çalma: p i m a"),why:X("Now the right hand learns to pluck. The left hand only holds the chord.","Jetzt lernt die rechte Hand zupfen. Die linke hält nur den Akkord.","Şimdi sağ el teli tek tek çekmeyi öğreniyor. Sol el sadece akoru tutar."),items:[
+  {t:X("Match p, i, m, a to their strings","p, i, m, a den Saiten zuordnen","p, i, m, a parmaklarını tellerine eşle"),go:"pick",d:[
+    X("p = thumb on the bass string (E, A or D).","p = Daumen auf der Bass-Saite (E, A oder D).","p = başparmak bas telinde (E, A ya da D)."),
+    X("i = index on G, m = middle on B, a = ring on high e.","i = Zeigefinger auf G, m = Mittelfinger auf H, a = Ringfinger auf hoher e.","i = işaret Sol'da, m = orta Si'de, a = yüzük ince Mi'de."),
+    X("Rest the fingers on their strings before you start.","Finger vor dem Start auf „ihre“ Saiten legen.","Başlamadan önce parmakları tellerine koy.")]},
+  {t:X("Pattern 1 with Am, slow and even","Muster 1 mit Am, langsam und gleich laut","Am ile kalıp 1, yavaş ve eşit"),go:"pick",set:{ppat:0,pchord:"Am",pbpm:50},show:{chord:"Am"},d:[
+    X("Hold Am. Play p – i – m – a, then repeat.","Am halten. p – i – m – a spielen, dann wiederholen.","Am tut. p – i – m – a çal, sonra tekrarla."),
+    X("Every note equally loud and evenly spaced.","Jeder Ton gleich laut und gleichmäßig.","Her nota eşit güçte ve eşit aralıkla."),
+    X("Tempo 50 first. Only when it flows, go faster.","Erst Tempo 50. Erst wenn es fließt, schneller.","Önce tempo 50. Akınca hızlan.")]},
+  {t:X("Pattern 1 with Em and C (thumb changes string)","Muster 1 mit Em und C (Daumen wechselt die Saite)","Em ve C ile kalıp 1 (başparmak tel değiştirir)"),go:"pick",set:{ppat:0,pchord:"Em",pbpm:50},d:[
+    X("Em: the thumb plays the low E.","Em: Der Daumen spielt die tiefe E-Saite.","Em: başparmak kalın Mi'yi çalar."),
+    X("C: the thumb plays the A string (the root C).","C: Der Daumen spielt die A-Saite (Grundton C).","C: başparmak La telini çalar (kök ses C)."),
+    X("Alternate: two times Em, two times C.","Abwechseln: zweimal Em, zweimal C.","Sırayla: iki kez Em, iki kez C.")]},
+  {t:X("Read a tab","Eine Tabulatur lesen","Bir tab oku"),go:"pick",d:[
+    X("Six lines = six strings. Top line = thin high e.","Sechs Linien = sechs Saiten. Oberste Linie = dünne hohe e.","Altı çizgi = altı tel. En üst çizgi = ince Mi."),
+    X("The number is the fret. 0 means open.","Die Zahl ist der Bund. 0 heißt leer.","Sayı perdedir. 0 boş demek."),
+    X("Read from left to right, one column after another.","Von links nach rechts lesen, Spalte für Spalte.","Soldan sağa, sütun sütun oku.")]}]},
+ {t:X("Minor colours: Dm, E, E7","Moll-Farben: Dm, E, E7","Minör renkler: Dm, E, E7"),why:X("Am – Dm – E is the typical sad sound of many Turkish songs.","Am – Dm – E ist der typische traurige Klang vieler türkischer Lieder.","Am – Dm – E birçok Türkçe şarkının tipik hüzünlü sesidir."),items:[
+  {t:X("Dm clean","Dm sauber","Dm temiz"),go:"chords",set:{chord:"Dm"},show:{chord:"Dm"},d:[
+    X("Middle G fret 2, ring B fret 3, index high e fret 1.","Mittelfinger G 2. Bund, Ringfinger H 3. Bund, Zeigefinger hohe e 1. Bund.","Orta Sol 2. perde, yüzük Si 3. perde, işaret ince Mi 1. perde."),
+    X("Strum from the D string only.","Erst ab der D-Saite anschlagen.","Sadece Re telinden itibaren çal.")]},
+  {t:X("E and E7","E und E7","E ve E7"),go:"chords",set:{chord:"E7"},show:{chord:"E7"},d:[
+    X("E: like Em plus the index finger on the G string fret 1.","E: wie Em plus Zeigefinger auf G-Saite 1. Bund.","E: Em gibi, artı işaret parmağı Sol teli 1. perdede."),
+    X("E7: lift the ring finger off E. The D string rings open.","E7: Bei E den Ringfinger weglassen. Die D-Saite klingt leer.","E7: E'den yüzük parmağını kaldır. Re teli boş çalar."),
+    X("Listen: E7 wants to move on to Am.","Hör hin: E7 will weiter nach Am.","Dinle: E7 Am'ye gitmek ister.")]},
+  {t:X("Am – Dm – E – Am with pattern 1","Am – Dm – E – Am mit Anschlag 1","Ritim 1 ile Am – Dm – E – Am"),go:"strum",set:{pat:0,prog:0,bpm:60},d:[
+    X("One chord per bar, four downstrokes each.","Ein Akkord pro Takt, je vier Abschläge.","Ölçü başına bir akor, dörder aşağı vuruş."),
+    X("Am → Dm: the index stays close, the shape moves up.","Am → Dm: Zeigefinger bleibt nah, die Form rutscht hoch.","Am → Dm: işaret yakın kalır, şekil yukarı kayar."),
+    X("Dm → E: whole hand moves, practise it alone first.","Dm → E: ganze Hand wandert, zuerst einzeln üben.","Dm → E: bütün el hareket eder, önce ayrı çalış.")]},
+  {t:X("Am – Dm – E – Am picked with pattern 2","Am – Dm – E – Am gezupft mit Muster 2","Kalıp 2 ile Am – Dm – E – Am"),go:"pick",set:{ppat:1,pchord:"Am",pbpm:60},d:[
+    X("Pattern p i m a m i, once per chord.","Muster p i m a m i, einmal pro Akkord.","Akor başına bir kez p i m a m i."),
+    X("Thumb: A string for Am, D string for Dm, low E for E.","Daumen: A-Saite bei Am, D-Saite bei Dm, tiefe E bei E.","Başparmak: Am'de La, Dm'de Re, E'de kalın Mi."),
+    X("This already sounds like a real Turkish ballad intro.","Das klingt schon wie das Intro einer echten türkischen Ballade.","Bu şimdiden gerçek bir Türk baladının girişi gibi duyulur.")]}]},
+ {t:X("Reading notes in first position","Noten lesen in der 1. Lage","Birinci pozisyonda nota okuma"),why:X("From here you can play melodies, not only chords.","Ab hier kannst du Melodien spielen statt nur Akkorde.","Buradan itibaren sadece akor değil melodi de çalabilirsin."),items:[
+  {t:X("Find E F G and B C D on the two thin strings","E F G und H C D auf den zwei dünnen Saiten finden","İki ince telde Mi Fa Sol ve Si Do Re bul"),go:"notes",d:[
+    X("High e string: E open, F fret 1, G fret 3.","Hohe e-Saite: E leer, F 1. Bund, G 3. Bund.","İnce Mi teli: Mi boş, Fa 1. perde, Sol 3. perde."),
+    X("B string: B open, C fret 1, D fret 3.","H-Saite: H leer, C 1. Bund, D 3. Bund.","Si teli: Si boş, Do 1. perde, Re 3. perde."),
+    X("Tap each note under “Notes” and play it after the sound.","Jede Note unter „Noten“ antippen und nach dem Ton nachspielen.","“Notalar”da her notaya dokun ve sesten sonra çal.")]},
+  {t:X("Note values: whole, half, quarter","Notenwerte: Ganze, Halbe, Viertel","Nota değerleri: birlik, ikilik, dörtlük"),go:"notes",d:[
+    X("Whole = 4 beats, half = 2, quarter = 1.","Ganze = 4 Schläge, Halbe = 2, Viertel = 1.","Birlik = 4 vuruş, ikilik = 2, dörtlük = 1."),
+    X("Use the “Listen” buttons and clap along.","Die „Anhören“-Knöpfe nutzen und mitklatschen.","“Dinle” düğmelerini kullan ve alkışla.")]},
+  {t:X("Play a simple melody from notes","Eine einfache Melodie aus Noten spielen","Notadan basit bir melodi çal"),go:"notes",d:[
+    X("“Ode to Joy” (Beethoven), quarter notes: E E F G | G F E D | C C D E | E D D.","„Ode an die Freude“ (Beethoven), in Vierteln: E E F G | G F E D | C C D E | E D D.","“Neşeye Övgü” (Beethoven), dörtlükler: Mi Mi Fa Sol | Sol Fa Mi Re | Do Do Re Mi | Mi Re Re."),
+    X("All these notes are on the e and B strings.","Alle Töne liegen auf der e- und H-Saite.","Bu notaların hepsi ince Mi ve Si telinde."),
+    X("Slow and even. Count “1, 2, 3, 4” per bar.","Langsam und gleichmäßig. Pro Takt „1, 2, 3, 4“ zählen.","Yavaş ve düzenli. Ölçü başına “1, 2, 3, 4” say.")]},
+  {t:X("Add the G string (G, A)","Töne auf der G-Saite dazu (G, A)","Sol telini ekle (Sol, La)"),go:"notes",d:[
+    X("G string: G open, A fret 2.","G-Saite: G leer, A 2. Bund.","Sol teli: Sol boş, La 2. perde."),
+    X("Play the scale G A B C D E F G up and down.","Die Tonleiter G A H C D E F G rauf und runter.","Sol La Si Do Re Mi Fa Sol gamını yukarı ve aşağı çal.")]}]},
+ {t:X("Capo and your first song","Kapodaster und erstes Lied","Kapo ve ilk şarkın"),why:X("A real song from a chord sheet. Use a capo if the sheet says so.","Ein echtes Lied mit Akkordblatt. Kapo, wenn das Blatt es sagt.","Akor sayfasından gerçek bir şarkı. Sayfa diyorsa kapo kullan."),items:[
+  {t:X("Clamp the capo and retune","Kapo richtig klemmen und nachstimmen","Kapoyu tak ve yeniden akort et"),go:"capo",d:[
+    X("Just behind the fret wire, straight across all strings.","Kurz vor dem Bundstäbchen, gerade über alle Saiten.","Perde telinin hemen arkasına, tüm tellerin üstüne düz."),
+    X("Firm enough that nothing buzzes, not tighter.","So fest, dass nichts schnarrt, nicht fester.","Hiçbir şey cızırdamayacak kadar sıkı, daha fazla değil."),
+    X("Check the tuning again afterwards.","Danach die Stimmung nochmal prüfen.","Sonra akordu tekrar kontrol et.")]},
+  {t:X("Find a chord sheet for a song","Akkordblatt für ein Lied finden","Bir şarkının akor sayfasını bul"),d:[
+    X("Search for “song name chords” or “şarkı adı akor”.","Suche nach „Liedname chords“ oder „şarkı adı akor“.","“şarkı adı akor” ya da “song name chords” diye ara."),
+    X("Choose a version with chords you know (Am, Dm, E, C, G, D).","Nimm eine Version mit Akkorden, die du kennst (Am, Dm, E, C, G, D).","Bildiğin akorlarla bir versiyon seç (Am, Dm, E, C, G, D)."),
+    X("Note the capo fret if one is given.","Den Kapo-Bund merken, falls einer angegeben ist.","Varsa kapo perdesini not et.")]},
+  {t:X("Verse with one strum pattern","Strophe mit einem Anschlagmuster","Bir ritimle kıta"),go:"strum",d:[
+    X("Pick pattern 1 or 3 and keep it the whole verse.","Muster 1 oder 3 wählen und die ganze Strophe beibehalten.","Ritim 1 ya da 3'ü seç ve bütün kıta boyunca koru."),
+    X("Change on the word under the new chord.","Beim Wort unter dem neuen Akkord wechseln.","Yeni akorun altındaki kelimede geç."),
+    X("Sing or hum along quietly, it helps the timing.","Leise mitsingen oder summen, das hilft beim Timing.","Sessizce eşlik et ya da mırıldan, zamanlamaya yardım eder.")]},
+  {t:X("Whole song slowly without stopping","Ganzes Lied langsam ohne Stopp","Bütün şarkı yavaşça durmadan"),d:[
+    X("Slow tempo, but never stop. Skip a chord rather than stop.","Langsames Tempo, aber nie anhalten. Lieber einen Akkord auslassen.","Yavaş tempo ama asla durma. Durmak yerine bir akoru atla."),
+    X("Record yourself on the phone and listen back.","Nimm dich mit dem Handy auf und hör es dir an.","Kendini telefonla kaydet ve dinle.")]}]},
+ {t:X("Waltz and alternating bass","Walzer und Wechselbass","Vals ve değişen bas"),why:X("More variety for the right hand.","Mehr Abwechslung für die rechte Hand.","Sağ el için daha fazla çeşit."),items:[
+  {t:X("Pattern 5 (waltz) with Am – Dm – E – Am","Anschlag 5 (Walzer) mit Am – Dm – E – Am","Am – Dm – E – Am ile ritim 5 (vals)"),go:"strum",set:{pat:4,prog:0,bpm:70},d:[
+    X("Count in threes: “1 2 3, 1 2 3”.","In Dreiern zählen: „1 2 3, 1 2 3“.","Üçlü say: “1 2 3, 1 2 3”."),
+    X("1 = bass note with the thumb, 2 and 3 = chord strokes.","1 = Bass-Ton mit dem Daumen, 2 und 3 = Akkord-Schläge.","1 = başparmakla bas, 2 ve 3 = akor vuruşları.")]},
+  {t:X("Picking 5 (p + chord) in 3/4","Picking 5 (p + Akkord) im 3er-Takt","3/4'te kalıp 5 (p + akor)"),go:"pick",set:{ppat:4,pchord:"Am",pbpm:70},d:[
+    X("Thumb first, then i, m and a pluck together twice.","Erst Daumen, dann i, m und a zweimal gleichzeitig.","Önce başparmak, sonra i, m ve a iki kez birlikte."),
+    X("The three fingers sound like one.","Die drei Finger klingen wie einer.","Üç parmak tek ses gibi duyulsun.")]},
+  {t:X("Picking 6 (alternating bass) with C and G","Picking 6 (Wechselbass) mit C und G","C ve G ile kalıp 6 (değişen bas)"),go:"pick",set:{ppat:5,pchord:"C",pbpm:60},d:[
+    X("The thumb alternates between two bass strings.","Der Daumen wechselt zwischen zwei Bass-Saiten.","Başparmak iki bas teli arasında gidip gelir."),
+    X("Keep the thumb steady like a clock, the fingers fill the gaps.","Daumen gleichmäßig wie eine Uhr, die Finger füllen die Lücken.","Başparmak saat gibi düzenli, parmaklar boşlukları doldurur.")]},
+  {t:X("Your song picked instead of strummed","Dein Lied gezupft statt geschlagen","Şarkını ritim yerine parmakla çal"),d:[
+    X("Take your song from week 7 and replace the strumming with pattern 1 or 2.","Nimm dein Lied aus Woche 7 und ersetze den Anschlag durch Muster 1 oder 2.","7. haftadaki şarkını al ve ritmi kalıp 1 ya da 2 ile değiştir."),
+    X("One pattern per chord. Slow first.","Ein Muster pro Akkord. Erst langsam.","Akor başına bir kalıp. Önce yavaş.")]}]}
 ];
 G.ROUTINE=()=>[
  {m:2,t:X("Tune","Stimmen","Akort"),d:X("Check each string with its reference tone.","Jede Saite mit dem Vergleichston prüfen.","Her teli referans sesiyle kontrol et.")},
@@ -478,7 +637,7 @@ G.PATS=()=>[
  {n:X("4 · Campfire","4 · Lagerfeuer","4 · Kamp ateşi"),p:"D-DU-UDU",info:X("The best-known pop pattern. Skip beat 3, the hand still moves.","Das bekannteste Pop-Muster. Auf der 3 nichts treffen, Hand bewegt sich trotzdem.","En bilinen pop ritmi. 3'te tellere vurma, el yine de hareket eder.")},
  {n:X("5 · Waltz (3/4)","5 · Walzer (3er-Takt)","5 · Vals (3/4)"),p:"B-D-D-",info:X("Three beats per bar: bass note first, then two chord strokes. “Boom – chick – chick”. ♪ = bass note only (thumb).","3 Schläge pro Takt: erst der Bass-Ton, dann zwei Akkord-Schläge. ♪ = nur der Bass-Ton (Daumen).","Ölçüde üç vuruş: önce bas notası, sonra iki akor vuruşu. ♪ = sadece bas notası (başparmak).")}
 ];
-G.PROGS=[["Am","Dm","E","Am"],["Em","Am","D","G"],["D","A","D","A"],["G","C","D","G"],["Am","G","Fmaj7","E"],["Em","D","C","D"]];
+G.PROGS=[["Am","Dm","E","Am"],["Em","Am","D","G"],["D","A","D","A"],["G","C","D","G"],["Am","G","Fmaj7","E"],["Em","D","C","D"],["Em","Am","Em","Am"],["D","G","A","D"]];
 G.PPAT=()=>[
  {n:"1 · p i m a",s:["p","i","m","a"],info:X("Thumb plays the bass, then index, middle, ring one after another. The basic pattern.","Daumen Bass, dann Zeige-, Mittel-, Ringfinger nacheinander. Das Grundmuster.","Başparmak bas, sonra işaret, orta, yüzük sırayla. Temel kalıp.")},
  {n:"2 · p i m a m i",s:["p","i","m","a","m","i"],info:X("Up and back down. Flowing, good for calm songs.","Hoch und wieder runter. Klingt fließend, gut für ruhige Lieder.","Yukarı ve geri aşağı. Akıcı, sakin şarkılar için iyi.")},
@@ -498,16 +657,8 @@ G.intro=()=>X("Classical guitar from zero: reading chord diagrams, strumming, pi
 G.render={
 start:()=>`
 <div class="panel"><h2>${X("Your path in 8 weeks","Dein Weg in 8 Wochen","8 haftalık yolun")}</h2><p class="lead">${X("A little every day. Tick off what works. Move on only when a week feels solid. Your progress stays in this browser.","Jeden Tag ein bisschen. Hak ab, was klappt. Erst wenn eine Woche sitzt, weiter. Dein Fortschritt bleibt in diesem Browser gespeichert.","Her gün biraz. Olanları işaretle. Bir hafta oturunca devam et. İlerlemen bu tarayıcıda kalır.")}</p>${pathHTML()}</div>
-<div class="two">
- <div class="panel"><h2>${X("Daily practice (20 min)","Tägliche Übe-Runde (20 Min.)","Günlük çalışma (20 dk)")}</h2><p class="lead">${X("Short and regular beats rare and long. Sore fingertips at the start are normal and get better after 2 to 4 weeks.","Kurz und regelmäßig bringt mehr als selten und lang. Am Anfang tun die Fingerkuppen weh. Das ist normal und wird nach 2 bis 4 Wochen besser.","Kısa ve düzenli, seyrek ve uzundan iyidir. Başta parmak uçlarının acıması normaldir, 2-4 haftada geçer.")}</p>${routineHTML()}</div>
- <div class="panel"><h2>${X("How to sit (classical)","Richtig sitzen (klassisch)","Nasıl oturulur (klasik)")}</h2><ol class="plain">
-  <li>${X("Sit on the front half of a chair without armrests.","Auf die vordere Hälfte eines Stuhls ohne Armlehnen setzen.","Kolçaksız bir sandalyenin ön yarısına otur.")}</li>
-  <li>${X("Left foot on a small footstool (or a thick book).","Linker Fuß auf eine kleine Fußbank (oder ein dickes Buch).","Sol ayak küçük bir ayak taburesine (ya da kalın bir kitaba).")}</li>
-  <li>${X("The guitar rests on the left thigh, neck pointing up at an angle.","Gitarre liegt auf dem linken Oberschenkel, der Hals zeigt schräg nach oben.","Gitar sol uyluğun üstünde, sap yukarı doğru eğik.")}</li>
-  <li>${X("The right forearm rests on the edge, the hand hangs over the sound hole.","Rechter Unterarm liegt locker auf der Kante, die Hand hängt über dem Schallloch.","Sağ önkol kenarda durur, el ses deliğinin üstünde sarkar.")}</li>
-  <li>${X("Left thumb behind the neck, roughly behind the middle finger. Don't wrap it around.","Linker Daumen hinten am Hals, etwa hinter dem Mittelfinger. Nicht um den Hals greifen.","Sol başparmak sapın arkasında, orta parmağın arkasında. Sapı sarma.")}</li>
-  <li>${X("Cut left-hand nails short, otherwise you cannot press cleanly.","Linke Fingernägel kurz schneiden, sonst kannst du nicht sauber drücken.","Sol el tırnaklarını kısa kes, yoksa temiz basamazsın.")}</li></ol></div>
-</div>
+${coachHTML()}
+<div class="panel"><h2>${X("Daily practice (20 min)","Tägliche Übe-Runde (20 Min.)","Günlük çalışma (20 dk)")}</h2><p class="lead">${X("Short and regular beats rare and long. Sore fingertips at the start are normal and get better after 2 to 4 weeks.","Kurz und regelmäßig bringt mehr als selten und lang. Am Anfang tun die Fingerkuppen weh. Das ist normal und wird nach 2 bis 4 Wochen besser.","Kısa ve düzenli, seyrek ve uzundan iyidir. Başta parmak uçlarının acıması normaldir, 2-4 haftada geçer.")}</p>${routineHTML()}</div>
 <div class="panel"><h2>${X("How to read a chord sheet","So liest du ein Akkordblatt","Akor sayfası nasıl okunur")}</h2><p class="lead">${X("Chord names stand above the lyrics. Change exactly on the word under the new chord. Your strum pattern keeps going. A bar usually has 4 beats. Example (made-up lyrics):","Die Akkordnamen stehen über dem Text. Du wechselst genau bei dem Wort, über dem der neue Akkord steht. Dein Anschlagmuster läuft weiter. Ein Takt hat meist 4 Schläge. Beispiel (ausgedachter Text):","Akor adları sözlerin üstünde durur. Yeni akorun altındaki kelimede tam olarak geç. Ritmin devam eder. Bir ölçü genelde 4 vuruştur. Örnek (uydurma sözler):")}</p>
 <div class="sheet">${L({en:`<b>Am</b>               <b>Dm</b>
 I play a quiet song tonight
@@ -612,7 +763,7 @@ tune:()=>`
 };
 
 G.bind={
-start(root){ bindPath(root,G.WEEKS(),"fn-g-path"); bindRoutine(root,G.ROUTINE()); bindFix(root,G.PROBS()); },
+start(root){ bindPath(root,G.WEEKS(),"fn-g-path",G,v=>v&&v.chord?{svg:G.chordSVG(G.byId[v.chord])}:null); bindRoutine(root,G.ROUTINE()); bindFix(root,G.PROBS()); },
 chords(root){
   const S=G.state, $=id=>root.querySelector("#"+id);
   const show=id=>{ S.chord=id; const c=G.byId[id];
@@ -793,22 +944,120 @@ K.LEVELS=()=>[
  {n:X("5 · High (R key)","5 · Oben (R-Klappe)","5 · Tiz (R anahtarı)"),notes:["B4","C5","D5","E5"]}
 ];
 K.WEEKS=()=>[
- {t:X("First tone without the clarinet","Erster Ton ohne Klarinette","Klarnetsiz ilk ses"),why:X("The first days only mouthpiece and barrel. The mouth learns the embouchure without fingers getting in the way.","Die ersten Tage nur mit Mundstück und Birne. So lernt der Mund den Ansatz, ohne dass Finger stören.","İlk günler sadece ağızlık ve fıçı. Ağız, parmaklar karışmadan dudak pozisyonunu öğrenir."),
-  items:[X("Assemble and place the reed correctly","Zusammenbauen und Blatt richtig aufsetzen","Birleştir ve kamışı doğru tak"),X("Mouthpiece + barrel gives a steady tone","Mit Mundstück + Birne kommt ein gerader Ton","Ağızlık + fıçı ile düz bir ses çıkıyor"),X("Hold it calmly for 5 seconds","Den Ton 5 Sekunden ruhig halten","Sesi 5 saniye sakin tut"),X("Start the tone cleanly with the tongue (“dee”)","Mit der Zunge „dii“ den Ton sauber beginnen","Sesi dille temizce başlat (“dii”)"),X("Cheeks stay flat (check in a mirror)","Wangen bleiben flach (im Spiegel prüfen)","Yanaklar düz kalıyor (aynada kontrol et)")]},
- {t:X("Left hand: G down to C","Linke Hand: Sol bis Do","Sol el: Sol'dan Do'ya"),why:X("Whole clarinet. Start with the open G (nothing pressed) and add at most one finger per day.","Ganze Klarinette. Fang mit Sol an (nichts drücken) und nimm pro Tag höchstens einen Finger dazu.","Bütün klarnet. Açık Sol ile başla (hiçbir şeye basmadan) ve günde en fazla bir parmak ekle."),
-  items:[X("Open G: calm tone, 4 beats","Sol: ruhiger Ton, 4 Schläge","Sol: sakin ses, 4 vuruş"),X("F: thumb hole closed","Fa: Daumenloch zu","Fa: başparmak deliği kapalı"),X("E and D: fingers flat, holes fully closed","Mi und Re: Finger flach, Loch ganz zu","Mi ve Re: parmaklar düz, delik tam kapalı"),X("C: three fingers of the left hand","Do: drei Finger links","Do: sol elin üç parmağı"),X("G – F – E – D – C slowly down and up","Sol–Fa–Mi–Re–Do langsam runter und rauf","Sol – Fa – Mi – Re – Do yavaşça aşağı ve yukarı")]},
- {t:X("Right hand: low B to low G","Rechte Hand: Si↓ bis Sol↓","Sağ el: pes Si'den pes Sol'a"),why:X("Now the right hand joins. Every finger must seal its hole completely, or it squeaks.","Jetzt kommen die Finger der rechten Hand dazu. Jeder Finger muss das Loch ganz dicht machen, sonst quietscht es.","Şimdi sağ el katılıyor. Her parmak deliğini tamamen kapatmalı, yoksa ciyaklar."),
-  items:[X("Right thumb under the thumb rest","Rechter Daumen liegt unter der Daumenstütze","Sağ başparmak dayanağın altında"),X("Low B, A, G held one by one","Si↓, La↓, Sol↓ einzeln halten","Pes Si, La, Sol tek tek tut"),X("C – B – A – G without squeaking","Do–Si↓–La↓–Sol↓ ohne Quietschen","Do – Si – La – Sol ciyaklamadan"),X("Air challenge: 8 seconds","Luft-Challenge: 8 Sekunden","Nefes meydan okuması: 8 saniye")]},
- {t:X("Reading notes and a first song","Noten lesen und erstes Lied","Nota okuma ve ilk şarkı"),why:X("Once you know where a note sits and how long it lasts, you can learn any song yourself.","Wenn du weißt, wo die Note steht und wie lange sie dauert, kannst du jedes Lied selbst lernen.","Notanın nerede durduğunu ve ne kadar sürdüğünü bilince her şarkıyı kendin öğrenebilirsin."),
-  items:[X("Find all notes so far under “Read music”","Unter „Noten lesen“ alle Töne bis jetzt finden","“Nota okuma” bölümünde şimdiye kadarki tüm notaları bul"),X("Clap whole, half and quarter notes","Ganze, Halbe, Viertel mitklatschen","Birlik, ikilik, dörtlük notaları alkışla"),X("Play the first example song at tempo 50","Das erste Beispiellied bei Tempo 50 spielen","İlk örnek şarkıyı tempo 50'de çal"),X("Then at tempo 70","Danach bei Tempo 70","Sonra tempo 70'te")]},
- {t:X("Very low and the throat tones","Ganz tief und die Kehltöne","En pes ve boğaz sesleri"),why:X("The lowest notes need sealed fingers and the little finger. The throat tones often sound thin at first, that's normal.","Die tiefsten Töne brauchen dichte Finger und den kleinen Finger. Die Kehltöne klingen am Anfang oft dünn, das ist normal.","En pes sesler sıkı kapalı parmaklar ve serçe parmak ister. Boğaz sesleri başta ince çıkar, bu normal."),
-  items:[X("Low F with key F/C (right little finger)","Fa↓ mit Taste F/C (rechter kleiner Finger)","Pes Fa, F/C anahtarıyla (sağ serçe)"),X("Low E with key E/B, the lowest note","Mi↓ mit Taste E/H, der tiefste Ton","Pes Mi, E/B anahtarıyla, en pes ses"),X("G♯ and A with the left index","Sol♯ und La mit dem linken Zeigefinger","Sol işaretle Sol♯ ve La"),X("B♭ with A key + R","Si♭ mit A-Klappe + R","A anahtarı + R ile Si♭")]},
- {t:X("Over the break: the R key","Über den Bruch: die R-Klappe","Kırılmanın üstü: R anahtarı"),why:X("With the R key the same fingering sounds twelve notes higher. That needs more air and a steady embouchure.","Mit der R-Klappe wird derselbe Griff zwölf Töne höher. Dafür braucht es mehr Luft und einen stabilen Ansatz.","R anahtarıyla aynı parmak pozisyonu on iki ses daha tiz çıkar. Bunun için daha fazla nefes ve sabit dudak gerekir."),
-  items:[X("Play low E, then add R: high B appears","Mi↓ spielen, dann R dazu: Si↑ kommt","Pes Mi çal, sonra R ekle: tiz Si gelir"),X("Low F → high C, low G → high D, low A → high E","Fa↓ → Do↑, Sol↓ → Re↑, La↓ → Mi↑","Pes Fa → tiz Do, pes Sol → tiz Re, pes La → tiz Mi"),X("Keep the lip steady during the change","Beim Wechsel Lippe nicht lockern","Geçişte dudağı gevşetme"),X("Hold high C cleanly for 4 beats","Do↑ 4 Schläge sauber halten","Tiz Do'yu 4 vuruş temiz tut")]},
- {t:X("Your first own song","Dein erstes eigenes Lied","İlk kendi şarkın"),why:X("Find sheet music (search “sol klarnet nota”) and write it down note by note under “Songs”.","Such ein Notenblatt (z. B. „sol klarnet nota“) und schreib es Ton für Ton unter „Lieder“ auf.","Bir nota bul (“sol klarnet nota” diye ara) ve “Şarkılar” bölümüne nota nota yaz."),
-  items:[X("Found sheet music","Notenblatt gefunden","Nota bulundu"),X("Typed the song under “Songs”","Lied unter „Lieder“ eingetippt","Şarkı “Şarkılar”a yazıldı"),X("First line slowly without mistakes","Erste Zeile langsam ohne Fehler","İlk satır yavaşça hatasız"),X("Whole song slowly","Ganzes Lied langsam","Bütün şarkı yavaşça")]},
- {t:X("First Turkish colour","Erste türkische Färbung","İlk Türk rengi"),why:X("Only now vibrato and sliding, very carefully. The core tone must stay calm.","Jetzt erst Vibrato und Gleiten, ganz vorsichtig. Der Grundton muss ruhig bleiben.","Ancak şimdi vibrato ve kaydırma, çok dikkatli. Ana ses sakin kalmalı."),
-  items:[X("Listen to a lot of Turkish clarinet","Viel türkische Klarinette anhören","Bolca Türk klarneti dinle"),X("Vibrato on G, slow and even","Vibrato auf Sol, langsam und gleichmäßig","Sol'da vibrato, yavaş ve düzenli"),X("Bend a tone slightly down and back","Einen Ton leicht nach unten ziehen und zurück","Bir sesi hafifçe aşağı kaydır ve geri getir"),X("Your song with some vibrato at the end of long notes","Dein Lied mit etwas Vibrato am Ende langer Töne","Uzun seslerin sonunda biraz vibratoyla şarkın")]}
+ {t:X("First tone without the clarinet","Erster Ton ohne Klarinette","Klarnetsiz ilk ses"),why:X("The first days only mouthpiece and barrel. The mouth learns the embouchure without fingers getting in the way.","Die ersten Tage nur mit Mundstück und Birne. So lernt der Mund den Ansatz, ohne dass Finger stören.","İlk günler sadece ağızlık ve fıçı. Ağız, parmaklar karışmadan dudak pozisyonunu öğrenir."),items:[
+  {t:X("Assemble and place the reed","Zusammenbauen und Blatt aufsetzen","Birleştir ve kamışı tak"),d:[
+    X("If the corks are stiff, rub in a little cork grease.","Wenn die Korken schwer gehen, etwas Korkfett einreiben.","Mantarlar sıkıysa biraz mantar yağı sür."),
+    X("Lower joint onto the bell, then the upper joint. Press the upper rings while twisting so the bridge key lifts.","Unteres Teil auf den Becher, dann das obere. Beim Drehen die oberen Ringe drücken, damit sich die Verbindungsklappe hebt.","Alt gövdeyi kalağa, sonra üst gövdeyi tak. Çevirirken üst halkalara bas ki köprü anahtarı kalksın."),
+    X("Barrel on, then the mouthpiece.","Birne drauf, dann das Mundstück.","Fıçıyı, sonra ağızlığı tak."),
+    X("Wet the reed in the mouth. Flat side on the mouthpiece, tip exactly level with the mouthpiece tip.","Blatt im Mund anfeuchten. Flache Seite aufs Mundstück, Spitze genau bündig mit der Mundstückspitze.","Kamışı ağızda ıslat. Düz tarafı ağızlığa, ucu ağızlık ucuyla tam aynı hizada."),
+    X("Ligature over it, tighten lightly. The reed lines up with the thumb hole at the back.","Blattschraube darüber, leicht anziehen. Das Blatt liegt in einer Linie mit dem Daumenloch hinten.","Bileziği üstüne tak, hafifçe sık. Kamış arkadaki başparmak deliğiyle aynı hizada.")]},
+  {t:X("Mouthpiece + barrel give a steady tone","Mundstück + Birne geben einen geraden Ton","Ağızlık + fıçı düz bir ses veriyor"),d:[
+    X("Lower lip slightly over the lower teeth, the reed rests on it.","Unterlippe leicht über die unteren Zähne, das Blatt liegt darauf.","Alt dudak alt dişlerin üstüne hafifçe gelir, kamış onun üstünde."),
+    X("Upper teeth gently on top of the mouthpiece, about 1 to 1.5 cm in.","Obere Zähne sanft oben aufs Mundstück, etwa 1 bis 1,5 cm drin.","Üst dişler ağızlığın üstüne nazikçe, yaklaşık 1-1,5 cm içeride."),
+    X("Mouth corners firm, chin flat, blow fast and steady.","Mundwinkel fest, Kinn flach, schnell und gleichmäßig blasen.","Dudak kenarları sıkı, çene düz, hızlı ve düzenli üfle."),
+    X("Only air? Press less. Squeak? Take a little less mouthpiece.","Nur Luft? Weniger drücken. Quietschen? Etwas weniger Mundstück.","Sadece hava mı? Daha az bastır. Ciyaklama mı? Biraz daha az ağızlık al.")]},
+  {t:X("Hold the tone calmly for 5 seconds","Den Ton 5 Sekunden ruhig halten","Sesi 5 saniye sakin tut"),d:[
+    X("Use the air challenge further down on this page.","Nutze die Luft-Challenge weiter unten auf dieser Seite.","Bu sayfanın aşağısındaki nefes meydan okumasını kullan."),
+    X("Breathe deep into the belly first, shoulders stay down.","Vorher tief in den Bauch atmen, Schultern bleiben unten.","Önce karına derin nefes al, omuzlar aşağıda kalsın."),
+    X("The tone should stay the same height and volume.","Der Ton soll gleich hoch und gleich laut bleiben.","Ses aynı yükseklikte ve aynı güçte kalmalı.")]},
+  {t:X("Start the tone with the tongue (“dee”)","Mit der Zunge „dii“ den Ton beginnen","Sesi dille başlat (“dii”)"),d:[
+    X("Tongue tip lightly on the reed tip.","Zungenspitze leicht an die Blattspitze.","Dil ucu hafifçe kamış ucuna."),
+    X("Build air pressure behind the tongue.","Hinter der Zunge Luftdruck aufbauen.","Dilin arkasında hava basıncı oluştur."),
+    X("Release the tongue as in “dee”. Don't slap the reed.","Zunge wegnehmen wie bei „dii“. Nicht gegen das Blatt schlagen.","Dili “dii” der gibi çek. Kamışa vurma.")]},
+  {t:X("Cheeks stay flat (mirror check)","Wangen bleiben flach (Spiegel)","Yanaklar düz kalıyor (ayna kontrolü)"),d:[
+    X("Play in front of a mirror.","Vor einem Spiegel spielen.","Aynanın karşısında çal."),
+    X("Puffed cheeks lose air and make the tone thin.","Dicke Backen verlieren Luft und machen den Ton dünn.","Şişik yanaklar hava kaybettirir ve sesi inceltir."),
+    X("Think “ew”: corners firm, cheeks against the teeth.","Denk an „ü“: Mundwinkel fest, Wangen an den Zähnen.","“Ü” de: dudak kenarları sıkı, yanaklar dişlere yakın.")]}]},
+ {t:X("Left hand: G down to C","Linke Hand: Sol bis Do","Sol el: Sol'dan Do'ya"),why:X("Whole clarinet. Start with the open G and add at most one finger per day.","Ganze Klarinette. Fang mit Sol an und nimm pro Tag höchstens einen Finger dazu.","Bütün klarnet. Açık Sol ile başla ve günde en fazla bir parmak ekle."),items:[
+  {t:X("Open G: calm tone, 4 beats","Sol: ruhiger Ton, 4 Schläge","Sol: sakin ses, 4 vuruş"),go:"practice",set:{level:0,idx:0},show:{fing:"G4"},d:[
+    X("Press nothing. Hold the clarinet with the right thumb under the thumb rest.","Nichts drücken. Klarinette mit dem rechten Daumen unter der Daumenstütze halten.","Hiçbir şeye basma. Klarneti sağ başparmakla dayanağın altından tut."),
+    X("Hold the tone 4 beats, rest 4 beats, five times.","Ton 4 Schläge halten, 4 Schläge Pause, fünfmal.","Sesi 4 vuruş tut, 4 vuruş dinlen, beş kez."),
+    X("Under “Practice” the page tells you whether the note is right (on your own website).","Unter „Üben“ sagt dir die Seite, ob der Ton stimmt (auf deiner eigenen Webseite).","“Pratik”te sayfa sesin doğru olup olmadığını söyler (kendi web sitende).")]},
+  {t:X("F: thumb hole closed","Fa: Daumenloch zu","Fa: başparmak deliği kapalı"),go:"practice",set:{level:0,idx:1},show:{fing:"F4"},d:[
+    X("Only the left thumb covers the hole at the back.","Nur der linke Daumen deckt das Loch hinten ab.","Sadece sol başparmak arkadaki deliği kapatır."),
+    X("Use the soft pad of the thumb, flat.","Mit dem weichen Daumenballen, flach.","Başparmağın yumuşak kısmıyla, düz.")]},
+  {t:X("E and D: fingers flat, holes fully closed","Mi und Re: Finger flach, Loch ganz zu","Mi ve Re: parmaklar düz, delik tam kapalı"),go:"practice",set:{level:0,idx:2},show:{fing:"D4"},d:[
+    X("E: thumb + left index on hole 1.","Mi: Daumen + linker Zeigefinger auf Loch 1.","Mi: başparmak + sol işaret 1. delikte."),
+    X("D: plus the left middle finger on hole 2.","Re: dazu der linke Mittelfinger auf Loch 2.","Re: artı sol orta parmak 2. delikte."),
+    X("Fingertips flat, not the very tip. The ring must go down fully.","Fingerkuppen flach, nicht die Spitze. Der Ring muss ganz runter.","Parmak uçları düz, en uç değil. Halka tamamen inmeli.")]},
+  {t:X("C: three fingers of the left hand","Do: drei Finger links","Do: sol elin üç parmağı"),go:"practice",set:{level:0,idx:4},show:{fing:"C4"},d:[
+    X("Thumb + index, middle and ring of the left hand.","Daumen + Zeige-, Mittel- und Ringfinger links.","Başparmak + sol işaret, orta ve yüzük."),
+    X("If it squeaks: one finger isn't sealing. Check each one.","Quietscht es: Ein Finger ist nicht dicht. Jeden prüfen.","Ciyaklıyorsa bir parmak kapatmıyor. Her birini kontrol et.")]},
+  {t:X("G – F – E – D – C slowly down and up","Sol–Fa–Mi–Re–Do langsam runter und rauf","Sol – Fa – Mi – Re – Do yavaşça aşağı ve yukarı"),go:"songs",set:{song:4,loadSong:true,bpm:60},d:[
+    X("Each note 4 beats. Lift or place one finger at a time.","Jeder Ton 4 Schläge. Immer nur einen Finger heben oder setzen.","Her ses 4 vuruş. Her seferinde bir parmak kaldır ya da koy."),
+    X("Keep the air flowing during the change.","Beim Wechsel die Luft weiterfließen lassen.","Geçiş sırasında hava akmaya devam etsin.")]}]},
+ {t:X("Right hand: low B to low G","Rechte Hand: Si↓ bis Sol↓","Sağ el: pes Si'den pes Sol'a"),why:X("Now the right hand joins. Every finger must seal its hole completely, or it squeaks.","Jetzt kommen die Finger der rechten Hand dazu. Jeder Finger muss das Loch ganz dicht machen, sonst quietscht es.","Şimdi sağ el katılıyor. Her parmak deliğini tamamen kapatmalı, yoksa ciyaklar."),items:[
+  {t:X("Right thumb under the thumb rest","Rechter Daumen unter der Daumenstütze","Sağ başparmak dayanağın altında"),d:[
+    X("The thumb rest is the small metal hook at the back of the lower joint.","Die Daumenstütze ist der kleine Metallhaken hinten am unteren Teil.","Başparmak dayanağı alt gövdenin arkasındaki küçük metal kancadır."),
+    X("The right thumb carries the weight, the fingers stay relaxed above the holes.","Der rechte Daumen trägt das Gewicht, die Finger bleiben locker über den Löchern.","Sağ başparmak ağırlığı taşır, parmaklar deliklerin üstünde gevşek kalır.")]},
+  {t:X("Low B, A, G held one by one","Si↓, La↓, Sol↓ einzeln halten","Pes Si, La, Sol tek tek tut"),go:"practice",set:{level:1,idx:1},show:{fing:"G3"},d:[
+    X("Low B: left hand fully + right index.","Si↓: linke Hand komplett + rechter Zeigefinger.","Pes Si: sol el tamamen + sağ işaret."),
+    X("Low A: + right middle. Low G: + right ring.","La↓: + rechter Mittelfinger. Sol↓: + rechter Ringfinger.","Pes La: + sağ orta. Pes Sol: + sağ yüzük."),
+    X("Lower notes need a bit more air and a steady lip.","Tiefere Töne brauchen etwas mehr Luft und eine ruhige Lippe.","Pes sesler biraz daha hava ve sabit dudak ister.")]},
+  {t:X("C – B – A – G without squeaking","Do–Si↓–La↓–Sol↓ ohne Quietschen","Do – Si – La – Sol ciyaklamadan"),go:"songs",set:{song:3,loadSong:true,bpm:60},d:[
+    X("Going down: keep the lip exactly the same. That's where most squeaks happen.","Nach unten: Lippe genau gleich lassen. Dort passiert das meiste Quietschen.","Aşağı inerken dudağı aynen koru. Ciyaklamanın çoğu burada olur."),
+    X("Use the low scale example under “Songs”.","Nutze das Beispiel „Tonleiter tief“ unter „Lieder“.","“Şarkılar”daki pes gam örneğini kullan.")]},
+  {t:X("Air challenge: 8 seconds","Luft-Challenge: 8 Sekunden","Nefes meydan okuması: 8 saniye"),d:[
+    X("Further down on this page. Play a calm G and time it.","Weiter unten auf dieser Seite. Spiel ein ruhiges Sol und stopp die Zeit.","Bu sayfanın aşağısında. Sakin bir Sol çal ve süreyi tut."),
+    X("Breathe into the belly, let the air out slowly but steadily.","In den Bauch atmen, Luft langsam aber gleichmäßig ausströmen lassen.","Karına nefes al, havayı yavaş ama düzenli bırak.")]}]},
+ {t:X("Reading notes and a first song","Noten lesen und erstes Lied","Nota okuma ve ilk şarkı"),why:X("Once you know where a note sits and how long it lasts, you can learn any song yourself.","Wenn du weißt, wo die Note steht und wie lange sie dauert, kannst du jedes Lied selbst lernen.","Notanın nerede durduğunu ve ne kadar sürdüğünü bilince her şarkıyı kendin öğrenebilirsin."),items:[
+  {t:X("Find your notes on the staff","Deine Töne auf den Notenlinien finden","Seslerini portede bul"),go:"read",d:[
+    X("Below the lines: C (with a ledger line), D. On the lines: E, G…","Unter den Linien: Do (mit Hilfslinie), Re. Auf den Linien: Mi, Sol…","Çizgilerin altında: Do (ek çizgiyle), Re. Çizgilerde: Mi, Sol…"),
+    X("Tap each note under “Read music” and say its name aloud.","Unter „Noten lesen“ jede Note antippen und laut benennen.","“Nota okuma”da her notaya dokun ve adını yüksek sesle söyle.")]},
+  {t:X("Clap whole, half and quarter notes","Ganze, Halbe, Viertel mitklatschen","Birlik, ikilik, dörtlük notaları alkışla"),go:"read",d:[
+    X("Whole = 4 beats, half = 2, quarter = 1.","Ganze = 4 Schläge, Halbe = 2, Viertel = 1.","Birlik = 4 vuruş, ikilik = 2, dörtlük = 1."),
+    X("Use “Listen” on each value and clap along.","Bei jedem Wert „Anhören“ drücken und mitklatschen.","Her değerde “Dinle”ye bas ve alkışla.")]},
+  {t:X("First example song at tempo 50","Erstes Beispiellied bei Tempo 50","İlk örnek şarkı tempo 50'de"),go:"songs",set:{song:0,loadSong:true,bpm:50},d:[
+    X("Press “Play” once and listen.","Einmal „Vorspielen“ drücken und zuhören.","Bir kez “Çal”a bas ve dinle."),
+    X("Then play along. The page shows the fingering for each note.","Dann mitspielen. Die Seite zeigt den Griff für jeden Ton.","Sonra birlikte çal. Sayfa her ses için parmak pozisyonunu gösterir.")]},
+  {t:X("The same song at tempo 70","Dasselbe Lied bei Tempo 70","Aynı şarkı tempo 70'te"),go:"songs",set:{song:0,loadSong:true,bpm:70},d:[
+    X("Only when tempo 50 works without stopping.","Erst wenn Tempo 50 ohne Stopp klappt.","Ancak tempo 50 durmadan olunca.")]}]},
+ {t:X("Very low and the throat tones","Ganz tief und die Kehltöne","En pes ve boğaz sesleri"),why:X("The lowest notes need sealed fingers and the little finger. Throat tones often sound thin at first, that's normal.","Die tiefsten Töne brauchen dichte Finger und den kleinen Finger. Die Kehltöne klingen anfangs oft dünn, das ist normal.","En pes sesler sıkı kapalı parmaklar ve serçe parmak ister. Boğaz sesleri başta ince çıkar, bu normal."),items:[
+  {t:X("Low F with key F/C","Fa↓ mit Taste F/C","F/C anahtarıyla pes Fa"),go:"practice",set:{level:2,idx:1},show:{fing:"F3"},d:[
+    X("All holes closed, plus the right little finger on F/C.","Alle Löcher zu, dazu der rechte kleine Finger auf F/C.","Tüm delikler kapalı, artı sağ serçe F/C'de.")]},
+  {t:X("Low E with key E/B, the lowest note","Mi↓ mit Taste E/H, der tiefste Ton","E/B anahtarıyla pes Mi, en pes ses"),go:"practice",set:{level:2,idx:2},show:{fing:"E3"},d:[
+    X("All holes closed, plus the right little finger on E/B.","Alle Löcher zu, dazu der rechte kleine Finger auf E/H.","Tüm delikler kapalı, artı sağ serçe E/B'de."),
+    X("Any tiny leak stops this note. Check every finger.","Jede kleine Undichtigkeit verhindert diesen Ton. Jeden Finger prüfen.","En küçük kaçak bu sesi engeller. Her parmağı kontrol et.")]},
+  {t:X("G♯ and A with the left index","Sol♯ und La mit dem linken Zeigefinger","Sol işaretle Sol♯ ve La"),go:"practice",set:{level:3,idx:2},show:{fing:"A4"},d:[
+    X("A: roll the left index up onto the A key at the very top.","La: linken Zeigefinger nach oben auf die A-Klappe rollen.","La: sol işareti en üstteki A anahtarına yuvarla."),
+    X("G♯: the small key next to it, pressed with the side of the index.","Sol♯: die kleine Klappe daneben, mit der Seite des Zeigefingers.","Sol♯: yanındaki küçük anahtar, işaretin yanıyla.")]},
+  {t:X("B♭ with A key + R","Si♭ mit A-Klappe + R","A anahtarı + R ile Si♭"),go:"practice",set:{level:3,idx:3},show:{fing:"Bb4"},d:[
+    X("A key with the index, plus the thumb presses R (thumb hole stays open).","A-Klappe mit dem Zeigefinger, dazu drückt der Daumen R (Daumenloch bleibt offen).","İşaretle A anahtarı, artı başparmak R'ye basar (başparmak deliği açık kalır).")]}]},
+ {t:X("Over the break: the R key","Über den Bruch: die R-Klappe","Kırılmanın üstü: R anahtarı"),why:X("With R the same fingering sounds twelve notes higher. That needs more air and a steady embouchure.","Mit R wird derselbe Griff zwölf Töne höher. Dafür braucht es mehr Luft und einen stabilen Ansatz.","R ile aynı pozisyon on iki ses tiz çıkar. Daha fazla hava ve sabit dudak gerekir."),items:[
+  {t:X("Low E, then add R: high B","Mi↓ spielen, dann R dazu: Si↑","Pes Mi, sonra R ekle: tiz Si"),go:"practice",set:{level:4,idx:0},show:{fing:"B4"},d:[
+    X("Play low E and hold it.","Mi↓ spielen und halten.","Pes Mi çal ve tut."),
+    X("Without stopping the air, the thumb also presses R.","Ohne die Luft zu stoppen, drückt der Daumen zusätzlich R.","Havayı kesmeden başparmak R'ye de basar."),
+    X("The tone jumps to high B. Keep the lip still.","Der Ton springt auf Si↑. Lippe ruhig halten.","Ses tiz Si'ye atlar. Dudağı sabit tut.")]},
+  {t:X("Low F → high C, low G → high D, low A → high E","Fa↓ → Do↑, Sol↓ → Re↑, La↓ → Mi↑","Pes Fa → tiz Do, pes Sol → tiz Re, pes La → tiz Mi"),go:"practice",set:{level:4,idx:1},show:{fing:"C5"},d:[
+    X("Same trick: low note, then add R.","Gleicher Trick: tiefer Ton, dann R dazu.","Aynı yöntem: pes ses, sonra R ekle."),
+    X("A little more air, never bite harder.","Etwas mehr Luft, nie fester beißen.","Biraz daha hava, asla daha sert ısırma.")]},
+  {t:X("Keep the lip steady during the change","Beim Wechsel Lippe nicht lockern","Geçişte dudağı gevşetme"),d:[
+    X("Practise in a mirror: nothing in your face should move.","Vor dem Spiegel üben: Im Gesicht soll sich nichts bewegen.","Aynada çalış: yüzünde hiçbir şey kıpırdamamalı."),
+    X("If it squeaks when adding R, the lip loosened or too much mouthpiece.","Quietscht es mit R: Lippe gelockert oder zu viel Mundstück.","R eklerken ciyaklıyorsa dudak gevşedi ya da çok ağızlık var.")]},
+  {t:X("Hold high C cleanly for 4 beats","Do↑ 4 Schläge sauber halten","Tiz Do'yu 4 vuruş temiz tut"),go:"practice",set:{level:4,idx:1},show:{fing:"C5"},d:[
+    X("Check with the tuner under “Practice”.","Mit dem Stimmgerät unter „Üben“ prüfen.","“Pratik”teki akort cihazıyla kontrol et.")]}]},
+ {t:X("Your first own song","Dein erstes eigenes Lied","İlk kendi şarkın"),why:X("Find sheet music (search “sol klarnet nota”) and write it down note by note under “Songs”.","Such ein Notenblatt (z. B. „sol klarnet nota“) und schreib es Ton für Ton unter „Lieder“ auf.","Bir nota bul (“sol klarnet nota” diye ara) ve “Şarkılar”a nota nota yaz."),items:[
+  {t:X("Find sheet music","Notenblatt finden","Nota bul"),d:[
+    X("Search “song name sol klarnet nota”.","Suche nach „Liedname sol klarnet nota“.","“şarkı adı sol klarnet nota” diye ara."),
+    X("Sheets for G clarinet can be read directly with the fingerings here.","Noten für Sol-Klarinette kannst du direkt mit den Griffen hier lesen.","Sol klarnet notalarını buradaki pozisyonlarla doğrudan okuyabilirsin.")]},
+  {t:X("Type the song under “Songs”","Lied unter „Lieder“ eintippen","Şarkıyı “Şarkılar”a yaz"),go:"songs",d:[
+    X("One note after another: Sol Sol:2 La | …","Ton für Ton: Sol Sol:2 La | …","Nota nota: Sol Sol:2 La | …"),
+    X("Comma for low notes, apostrophe for high notes.","Komma für tiefe Töne, Apostroph für hohe.","Pes sesler için virgül, tiz sesler için kesme işareti.")]},
+  {t:X("First line slowly without mistakes","Erste Zeile langsam ohne Fehler","İlk satır yavaşça hatasız"),go:"songs",d:[
+    X("Lower the tempo until it works without mistakes.","Tempo runter, bis es fehlerfrei klappt.","Hatasız olana kadar tempoyu düşür.")]},
+  {t:X("Whole song slowly","Ganzes Lied langsam","Bütün şarkı yavaşça"),go:"songs",d:[
+    X("Breathe at rests and at the end of phrases.","An Pausen und am Ende von Phrasen atmen.","Suslarda ve cümle sonlarında nefes al.")]}]},
+ {t:X("First Turkish colour","Erste türkische Färbung","İlk Türk rengi"),why:X("Only now vibrato and sliding, very carefully. The core tone must stay calm.","Jetzt erst Vibrato und Gleiten, ganz vorsichtig. Der Grundton muss ruhig bleiben.","Ancak şimdi vibrato ve kaydırma, çok dikkatli. Ana ses sakin kalmalı."),items:[
+  {t:X("Listen to a lot of Turkish clarinet","Viel türkische Klarinette anhören","Bolca Türk klarneti dinle"),d:[
+    X("Daily, 10 minutes. Listen to how long notes are shaped.","Täglich 10 Minuten. Achte darauf, wie lange Töne geformt werden.","Her gün 10 dakika. Uzun seslerin nasıl şekillendiğine dikkat et.")]},
+  {t:X("Vibrato on G, slow and even","Vibrato auf Sol, langsam und gleichmäßig","Sol'da vibrato, yavaş ve düzenli"),go:"practice",set:{level:0,idx:0},d:[
+    X("Move the lower jaw very slightly, like saying “ya-ya-ya” silently.","Unterkiefer ganz leicht bewegen, wie stumm „ja-ja-ja“.","Alt çeneyi çok hafifçe oynat, sessizce “ya-ya-ya” der gibi."),
+    X("Start with 4 waves per beat at tempo 60.","Mit 4 Wellen pro Schlag bei Tempo 60 beginnen.","Tempo 60'ta vuruş başına 4 dalgayla başla.")]},
+  {t:X("Bend a note slightly down and back","Einen Ton leicht nach unten ziehen und zurück","Bir sesi hafifçe aşağı bük ve geri getir"),d:[
+    X("Drop the jaw a little and relax the lip, the pitch sinks.","Kiefer etwas senken und Lippe lockern, der Ton sinkt.","Çeneyi biraz indir ve dudağı gevşet, ses pesleşir."),
+    X("Come back to the clean tone.","Wieder zum sauberen Ton zurück.","Temiz sese geri dön.")]},
+  {t:X("Your song with some vibrato","Dein Lied mit etwas Vibrato","Biraz vibratoyla şarkın"),go:"songs",d:[
+    X("Only on long notes, towards their end.","Nur auf langen Tönen, gegen Ende.","Sadece uzun seslerde, sonlarına doğru.")]}]}
 ];
 K.ROUTINE=()=>[
  {m:2,t:X("Arrive and breathe","Ankommen und atmen","Hazırlan ve nefes al"),d:X("Assemble, wet the reed. Three deep breaths into the belly, shoulders loose.","Zusammenbauen, Blatt anfeuchten. 3 tiefe Atemzüge in den Bauch, Schultern locker.","Birleştir, kamışı ıslat. Karına üç derin nefes, omuzlar gevşek.")},
@@ -872,6 +1121,7 @@ K.keyFacts=()=>`<div class="facts">
 K.render={
 start:()=>`
 <div class="panel"><h2>${X("Your path in 8 weeks","Dein Weg in 8 Wochen","8 haftalık yolun")}</h2><p class="lead">${X("Small goals, a little every day. Tick off what you managed. Move on only when a week feels solid. Progress stays in this browser.","Kleine Ziele, jeden Tag ein bisschen. Hak ab, was du geschafft hast. Erst wenn eine Woche sitzt, weiter. Dein Fortschritt bleibt in diesem Browser.","Küçük hedefler, her gün biraz. Başardıklarını işaretle. Bir hafta oturunca devam et. İlerlemen bu tarayıcıda kalır.")}</p>${pathHTML()}</div>
+${coachHTML()}
 <div class="two">
  <div class="panel"><h2>${X("Daily practice (20 min)","Tägliche Übe-Runde (20 Min.)","Günlük çalışma (20 dk)")}</h2><p class="lead">${X("Better 20 minutes every day than two hours once a week. Lips tire quickly. When they shake: rest, don't push. Two short sessions beat one long one.","Lieber jeden Tag 20 Minuten als einmal pro Woche zwei Stunden. Die Lippen werden schnell müde. Wenn sie zittern: Pause. Zwei kurze Runden sind besser als eine lange.","Haftada bir iki saat yerine her gün 20 dakika. Dudaklar çabuk yorulur. Titrediğinde mola ver, zorlama. İki kısa seans, bir uzun seanstan iyidir.")}</p>${routineHTML()}</div>
  <div class="panel"><h2>${X("Air challenge","Luft-Challenge","Nefes meydan okuması")}</h2><p class="lead">${X("Play a calm tone and press Start. When the tone ends, press Stop. How long can you hold it steady? Pros manage 20 to 30 seconds. At the start, 8 seconds is great.","Spiel einen ruhigen Ton und drück „Start“. Wenn der Ton aufhört, „Stopp“. Wie lange hältst du ihn gerade? Profis schaffen 20 bis 30 Sekunden. Für den Anfang sind 8 Sekunden super.","Sakin bir ses çal ve Başla'ya bas. Ses bitince Durdur'a bas. Ne kadar düz tutabiliyorsun? Profesyoneller 20-30 saniye tutar. Başta 8 saniye harika.")}</p>
@@ -954,7 +1204,7 @@ tips:()=>`<div class="facts">
 
 K.bind={
 start(root){
-  bindPath(root,K.WEEKS(),"fn-k-path"); bindRoutine(root,K.ROUTINE()); bindFix(root,K.PROBS());
+  bindPath(root,K.WEEKS(),"fn-k-path",K,v=>v&&v.fing?{svg:K.svg(K.byId[v.fing].k),steps:K.steps(K.byId[v.fing].k)}:null); bindRoutine(root,K.ROUTINE()); bindFix(root,K.PROBS());
   const $=id=>root.querySelector("#"+id); let raf=null,t0=0,best=store.get("fn-k-air",0);
   const fmt=s=>s.toFixed(1)+" s";
   const showBest=()=>$("kAirBest").textContent=best?fill(X("Your record: {s} seconds","Dein Rekord: {s} Sekunden","Rekorun: {s} saniye"),{s:best.toFixed(1)}):X("No record yet.","Noch kein Rekord.","Henüz rekor yok.");
@@ -965,7 +1215,7 @@ start(root){
   showBest();
 },
 practice(root){
-  const S=K.state, $=id=>root.querySelector("#"+id), LV=K.LEVELS(); if(S.level>=LV.length) S.level=0;
+  const S=K.state, $=id=>root.querySelector("#"+id), LV=K.LEVELS(); if(S.level>=LV.length) S.level=0; store.set("fn-k-level",S.level);
   let hold=0, smooth=[];
   const status=(txt,cls="")=>{ $("kStatus").textContent=txt; $("kStatus").className="status "+cls; };
   const draw=()=>{ const n=K.byId[LV[S.level].notes[S.idx]];
@@ -1037,6 +1287,7 @@ songs(root){
   $("kBpm").oninput=()=>{ S.bpm=+$("kBpm").value; $("kBpmVal").textContent=S.bpm; };
   $("kSongSel").onchange=()=>{ S.song=+$("kSongSel").value; if(S.song>=0){ $("kSongText").value=K.SONGS[S.song].txt; store.set("fn-k-song",$("kSongText").value); } stop(); render(); now(0); };
   let typing; $("kSongText").oninput=()=>{ clearTimeout(typing); typing=setTimeout(()=>{ store.set("fn-k-song",$("kSongText").value); render(); },250); };
+  if(S.loadSong&&S.song>=0){ store.set("fn-k-song",K.SONGS[S.song].txt); S.loadSong=false; }
   $("kSongText").value=store.get("fn-k-song",K.SONGS[0].txt); render(); now(0);
 },
 tuner(root){
