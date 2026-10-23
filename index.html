@@ -181,6 +181,7 @@ textarea{width:100%;min-height:110px;font:1rem/1.5 ui-monospace,Menlo,Consolas,m
 .nb.bad{border-color:var(--warn);color:var(--warn)}
 .nb.cur{background:var(--hi-soft);border-color:var(--hi);box-shadow:0 0 0 2px var(--hi)}
 footer{font-size:.8rem;color:var(--muted);max-width:980px;margin:24px auto 0}
+footer a{color:inherit}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -248,14 +249,15 @@ function windTone(m,dur=1.4,vol=.22){
 const pluckCache={};
 function pluckBuffer(m){
   if(pluckCache[m]) return pluckCache[m];
+  // the string model gives a period of N-0.5 samples; pluck() corrects the rest with playbackRate
   const c=ctx(), sr=c.sampleRate, len=Math.floor(sr*2.6), b=c.createBuffer(1,len,sr), d=b.getChannelData(0);
   const N=Math.max(2,Math.round(sr/hz(m))), r=new Float32Array(N);
   let prev=0; for(let i=0;i<N;i++){ const w=Math.random()*2-1; prev=prev*.6+w*.4; r[i]=prev; }
   const decay=m<50?.9975:.9965; let k=0;
   for(let i=0;i<len;i++){ const a=r[k], nb=r[(k+1)%N]; r[k]=decay*.5*(a+nb); d[i]=a*.6; k=(k+1)%N; }
-  return pluckCache[m]=b;
+  b.period=N-0.5; return pluckCache[m]=b;
 }
-function pluck(m,when=0,vol=.6){ try{ const c=ctx(), s=c.createBufferSource(), g=c.createGain(); s.buffer=pluckBuffer(m); g.gain.value=vol; s.connect(g); g.connect(c.destination); s.start(c.currentTime+when); return s; }catch(e){ return null; } }
+function pluck(m,when=0,vol=.6){ try{ const c=ctx(), s=c.createBufferSource(), g=c.createGain(); s.buffer=pluckBuffer(m); s.playbackRate.value=hz(m)*s.buffer.period/c.sampleRate; g.gain.value=vol; s.connect(g); g.connect(c.destination); s.start(c.currentTime+when); return s; }catch(e){ return null; } }
 function click(accent,when=0){ try{ const c=ctx(), t=c.currentTime+when, o=c.createOscillator(), g=c.createGain(); o.frequency.value=accent?1500:1000; g.gain.setValueAtTime(.12,t); g.gain.exponentialRampToValueAtTime(.001,t+.05); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+.06);}catch(e){} }
 
 // ---------- pitch detection (autocorrelation) ----------
@@ -1138,7 +1140,8 @@ K.PC=NAME_PC;
 K.RANGES={low:[52,59],mid:[60,70],high:[71,76]};
 K.parse=t=>parseWind(t,K);
 K.state={view:"start",level:store.get("fn-k-level",0),idx:0,done:new Set(),fing:"G4",read:"C4",song:-1,bpm:60};
-K.VIEWS=()=>[["start",X("Start here","Start hier","Buradan başla")],["practice",X("Practice","Üben","Pratik")],["fingers",X("Fingering chart","Grifftabelle","Parmak tablosu")],["read",X("Read music","Noten lesen","Nota okuma")],["songs",X("Songs","Lieder","Şarkılar")],["tuner",X("Tuner","Stimmgerät","Akort")],["tips",X("Tips","Tipps","İpuçları")]];
+K.VIEWS=()=>[["start",X("Start here","Start hier","Buradan başla")],["practice",X("Practice","Üben","Pratik")],["fingers",X("Fingering chart","Grifftabelle","Parmak tablosu")],["read",X("Read music","Noten lesen","Nota okuma")],["songs",X("Songs","Lieder","Şarkılar")],["tuner",X("Note finder","Ton-Erkenner","Ses bulucu")],["tips",X("Tips","Tipps","İpuçları")]];
+K.tunerLead=()=>`<h2>${X("Which note am I playing?","Welchen Ton spiele ich?","Hangi sesi çalıyorum?")}</h2><p class="lead">${X("A clarinet isn't tuned note by note like a guitar. Play any note: the page shows which written note it is for G clarinet and whether it's a bit high or low. Only the overall pitch can be adjusted slightly by pulling out the barrel (lower) or pushing it in (higher).","Eine Klarinette stimmt man nicht Ton für Ton wie eine Gitarre. Spiel einen beliebigen Ton: Die Seite zeigt, welcher geschriebene Ton für Sol-Klarinette es ist und ob er etwas zu hoch oder zu tief ist. Nur die Gesamtstimmung lässt sich leicht ändern: Birne herausziehen (tiefer) oder hineinschieben (höher).","Klarnet gitar gibi ses ses akort edilmez. Herhangi bir ses çal: sayfa bunun Sol klarnet için hangi yazılı ses olduğunu ve biraz tiz ya da pes olup olmadığını gösterir. Sadece genel akort hafifçe değiştirilebilir: fıçıyı dışarı çek (pes) ya da içeri it (tiz).")}</p>`;
 K.title=()=>X("Learn the G clarinet","Sol-Klarinette lernen","Sol klarnet öğren");
 K.intro=()=>X("For the Turkish G clarinet (Sol klarnet, Boehm system). See the fingering, play the note, and the page listens and tells you whether it's right.","Für die türkische G-Klarinette (Sol klarnet, Böhm-System). Griff ansehen, Ton spielen, die Seite hört zu und sagt dir, ob er stimmt.","Türk Sol klarneti için (Böhm sistemi). Parmak pozisyonuna bak, sesi çal, sayfa dinler ve doğru olup olmadığını söyler.");
 K.keyFacts=()=>`<div class="facts">
@@ -1199,7 +1202,7 @@ songs:()=>`
 ${M.songsFoot()}`,
 
 tuner:()=>`
-<div class="panel"><div class="row" style="align-items:baseline"><div class="big" id="kTName">–</div><div class="muted" id="kTSub">${X("Play a note","Spiel einen Ton","Bir ses çal")}</div></div>
+<div class="panel">${M.tunerLead?M.tunerLead():""}<div class="row" style="align-items:baseline"><div class="big" id="kTName">–</div><div class="muted" id="kTSub">${X("Play a note","Spiel einen Ton","Bir ses çal")}</div></div>
  ${meterHTML("kTNeedle")}<div class="muted" id="kTHz">&nbsp;</div>
  <button class="btn" id="kTMic" style="margin-top:12px">${X("Start listening","Zuhören starten","Dinlemeye başla")}</button><div class="notice" id="kTNote" hidden></div>
  ${M.tunerNote()}</div>`,
@@ -1297,8 +1300,9 @@ songs(root){
 tuner(root){
   const $=id=>root.querySelector("#"+id);
   $("kTMic").onclick=async()=>{ if(mic.on){ mic.stop(); $("kTMic").textContent=X("Start listening","Zuhören starten","Dinlemeye başla"); return; }
-    const ok=await mic.start(f=>{ if(f<0){ $("kTHz").innerHTML="&nbsp;"; return; } const w=69+12*Math.log2(f/440)-M.SHIFT, near=Math.round(w), cents=(w-near)*100;
-      $("kTName").textContent=M.nm(near); $("kTSub").textContent=`${X("written","geschrieben","yazılan")} ${noteName(near)} · ${cents>0?"+":""}${cents.toFixed(0)} cent`;
+    const ok=await mic.start(f=>{ if(f<0){ $("kTHz").innerHTML="&nbsp;"; return; } const w=69+12*Math.log2(f/440)-M.SHIFT; let near=Math.round(w), cents=(w-near)*100, label=M.nm(near);
+      if(M.identify){ const r=M.identify(w); near=r.m; cents=r.cents; label=r.name; }
+      $("kTName").textContent=label; $("kTSub").textContent=`${X("written","geschrieben","yazılan")} ${noteName(near)} · ${cents>0?"+":""}${cents.toFixed(0)} cent`;
       $("kTHz").textContent=`${f.toFixed(1)} Hz · ${X("sounds","klingt","duyulan")} ${noteName(near+M.SHIFT)}`; setNeedle($("kTNeedle"),cents); },90,1100);
     if(!ok){ $("kTNote").textContent=micBlocked(); $("kTNote").hidden=false; return; }
     $("kTNote").hidden=true; $("kTMic").textContent=X("Stop listening","Zuhören stoppen","Dinlemeyi durdur"); };
@@ -1423,7 +1427,10 @@ N.SONGS=[
 N.hint=up=>up?X("A bit high: less air pressure, turn the ney slightly towards you.","Etwas zu hoch: weniger Luftdruck, Ney etwas zu dir drehen.","Biraz tiz: hava basıncını azalt, neyi biraz kendine çevir."):X("A bit low: a little more air, open the angle slightly.","Etwas zu tief: etwas mehr Luft, Winkel etwas öffnen.","Biraz pes: biraz daha hava, açıyı hafifçe aç.");
 N.songExtra=()=>`<p class="muted small" style="margin:0 0 8px">${X("Perde names work too: Rast, Dügah, Kürdi, Segah, Çargah, Nim Hicaz, Neva. Add a comma for the low register (Rast,).","Perde-Namen gehen auch: Rast, Dügah, Kürdi, Segah, Çargah, Nim Hicaz, Neva. Komma für die tiefe Lage (Rast,).","Perde adları da olur: Rast, Dügah, Kürdi, Segah, Çargah, Nim Hicaz, Neva. Pes bölge için virgül ekle (Rast,).")}</p>`;
 N.state={view:"start",level:store.get("fn-n-level",0),idx:0,done:new Set(),fing:"Ra",read:"Ra",song:-1,bpm:60};
-N.VIEWS=()=>[["start",X("Start here","Start hier","Buradan başla")],["practice",X("Practice","Üben","Pratik")],["fingers",X("Fingering chart","Grifftabelle","Parmak tablosu")],["read",X("Read music","Noten lesen","Nota okuma")],["songs",X("Songs","Lieder","Şarkılar")],["tuner",X("Tuner","Stimmgerät","Akort")],["tips",X("Tips","Tipps","İpuçları")]];
+N.VIEWS=()=>[["start",X("Start here","Start hier","Buradan başla")],["practice",X("Practice","Üben","Pratik")],["fingers",X("Fingering chart","Grifftabelle","Parmak tablosu")],["read",X("Read music","Noten lesen","Nota okuma")],["songs",X("Songs","Lieder","Şarkılar")],["tuner",X("Note finder","Ton-Erkenner","Ses bulucu")],["tips",X("Tips","Tipps","İpuçları")]];
+N.tunerLead=()=>`<h2>${X("Which perde am I playing?","Welche Perde spiele ich?","Hangi perdeyi çalıyorum?")}</h2><p class="lead">${X("A ney can't be tuned. Its pitch comes from your breath and the angle. Play any note: the page names the perde and shows how close you are. Too high: less air or turn the ney towards you. Too low: a little more air.","Eine Ney kann man nicht stimmen. Die Tonhöhe kommt von Atem und Winkel. Spiel einen Ton: Die Seite nennt die Perde und zeigt, wie nah du dran bist. Zu hoch: weniger Luft oder Ney zu dir drehen. Zu tief: etwas mehr Luft.","Ney akort edilemez. Perdesi nefesinden ve açıdan gelir. Herhangi bir ses çal: sayfa perdeyi söyler ve ne kadar yakın olduğunu gösterir. Çok tiz: daha az hava ya da neyi kendine çevir. Çok pes: biraz daha hava.")}</p>`;
+N.identify=w=>{ let best=N.N[0],bd=1e9; N.N.forEach(n=>{ const d=Math.abs(w-(n.m+n.c/100)); if(d<bd){bd=d;best=n;} }); const cents=(w-(best.m+best.c/100))*100;
+  return Math.abs(cents)<=60?{m:best.m,cents,name:N.nm(best.m)}:{m:Math.round(w),cents:(w-Math.round(w))*100,name:noteName(Math.round(w))}; };
 N.title=()=>X("Learn the ney","Ney lernen","Ney öğren");
 N.intro=()=>X("For the Turkish ney, the reed flute of Sufi and classical Turkish music. Set up for a Mansur ney (Rast = G). See the fingering, play the perde, and the page listens.","Für die türkische Ney, die Rohrflöte der Sufi- und klassischen türkischen Musik. Eingestellt auf eine Mansur-Ney (Rast = G). Griff ansehen, Perde spielen, die Seite hört zu.","Tasavvuf ve klasik Türk müziğinin kamış flütü ney için. Mansur ney'e göre ayarlı (Rast = Sol). Parmak pozisyonuna bak, perdeyi çal, sayfa dinler.");
 N.attack=()=>`<h2 style="margin-top:22px">${X("Starting a tone","So beginnt ein Ton","Ses nasıl başlar")}</h2><p class="lead" style="margin-bottom:0">${X("On the ney the tone starts with the breath, like a soft whispered “hu”. Don't push hard. Later you can start notes with the tongue (“tu”) for clear attacks.","Auf der Ney beginnt der Ton mit dem Atem, wie ein sanft geflüstertes „hu“. Nicht hart pusten. Später kannst du Töne auch mit der Zunge („tu“) beginnen.","Neyde ses nefesle başlar, yumuşakça fısıldanan bir “hu” gibi. Sert üfleme. Sonra notaları dille de (“tu”) başlatabilirsin.")}</p>`;
@@ -1623,7 +1630,7 @@ S.keyFacts=()=>`<div class="facts">
 S.readLead=()=>`<h2>${X("Saz notes on the staff","Saz-Töne auf den Notenlinien","Porte üzerinde saz sesleri")}</h2><p class="lead">${X("Bağlama music is written on the treble staff. The open alt course La sits in the second space. Tap a note to see the fret and hear it. The saz sounds an octave lower than written.","Bağlama-Noten stehen im Violinschlüssel. Das leere Alt-La steht im zweiten Zwischenraum. Tippe eine Note an: Du siehst das Perde und hörst den Ton. Die Saz klingt eine Oktave tiefer als geschrieben.","Bağlama notaları sol anahtarlı porteye yazılır. Boş alt tel La ikinci aralıktadır. Bir notaya dokun: perdeyi gör ve sesi duy. Saz yazılandan bir oktav pes çalar.")}</p>`;
 S.readLegend=()=>`<p class="muted" style="margin-top:12px">${X("Gold = koma fret (Si♭², two komas below Si). In Turkish sheet music it carries a special flat sign.","Gold = Koma-Perde (Si♭², zwei Koma unter Si). In türkischen Noten hat er ein besonderes Vorzeichen.","Altın = koma perde (Si♭², Si'nin iki koma altı). Türk notasında özel bir bemol işareti taşır.")}</p>`;
 S.songsFoot=()=>`<p class="muted">${X("Bağlama sheet music (search “türkü adı bağlama nota”) can be copied into this notation note by note.","Bağlama-Noten (z. B. „türkü adı bağlama nota“) kannst du Ton für Ton in diese Schreibweise übertragen.","Bağlama notalarını (“türkü adı bağlama nota” diye ara) bu yazıma nota nota aktarabilirsin.")}</p>`;
-S.tunerNote=()=>`<p class="muted small" style="margin-top:12px">${X("Shows the written note (the saz sounds an octave lower). For tuning the courses use the La – Re – Mi buttons under “Start here”.","Zeigt den geschriebenen Ton (die Saz klingt eine Oktave tiefer). Zum Stimmen der Chöre die La – Re – Mi-Knöpfe unter „Start hier“ nutzen.","Yazılan sesi gösterir (saz bir oktav pes çalar). Telleri akort etmek için “Buradan başla”daki La – Re – Mi düğmelerini kullan.")}</p>`;
+S.tunerNote=()=>"";
 S.tips=()=>`<div class="facts">
  <div><b>${X("1. Relaxed wrist","1. Lockeres Handgelenk","1. Gevşek bilek")}</b><span>${X("The mızrap moves from the wrist. A stiff arm makes the rhythm heavy.","Das Mızrap bewegt sich aus dem Handgelenk. Ein steifer Arm macht den Rhythmus schwer.","Mızrap bilekten hareket eder. Kaskatı bir kol ritmi ağırlaştırır.")}</span></div>
  <div><b>${X("2. Always down-up","2. Immer ab-auf","2. Hep aşağı-yukarı")}</b><span>${X("Keep the down-up motion going like a pendulum, also when a stroke is skipped.","Die Ab-Auf-Bewegung läuft wie ein Pendel weiter, auch wenn ein Schlag ausgelassen wird.","Bir vuruş atlansa bile aşağı-yukarı hareket sarkaç gibi devam eder.")}</span></div>
@@ -1695,6 +1702,40 @@ S.bind.neck=root=>{
   $("sNeck").onclick=act; $("sNeck").onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); act(e); } };
   $("sNeckPlay").onclick=play; show();
 };
+
+// Saz tuner: own reference tones per course (not the guitar strings)
+S.TUNE=()=>[{id:"alt",m:S.COURSES[0]+S.SHIFT,name:"La",course:X("alt","Alt","alt")},{id:"orta",m:S.COURSES[1]+S.SHIFT,name:"Re",course:X("orta","Orta","orta")},{id:"ust",m:S.COURSES[2]+S.SHIFT,name:"Mi",course:X("üst","Üst","üst")},{id:"bam",m:S.COURSES[2]+S.SHIFT-12,name:"Mi",course:X("bam (thick üst string)","Bam (dicke Üst-Saite)","bam (kalın üst tel)")}];
+S.render.tuner=()=>`
+<div class="panel"><h2>${X("Tuning the saz (bağlama düzeni)","Saz stimmen (bağlama düzeni)","Sazı akort et (bağlama düzeni)")}</h2><p class="lead">${X("Tap a course, listen, and turn its peg until your strings sound the same. All strings of one course are tuned to the same note; the thick bam string of the üst course sounds an octave lower.","Tippe einen Chor an, hör zu und dreh den Wirbel, bis deine Saiten gleich klingen. Alle Saiten eines Chors bekommen denselben Ton; die dicke Bam-Saite im Üst-Chor klingt eine Oktave tiefer.","Bir tele dokun, dinle ve tellerin aynı duyulana kadar burguyu çevir. Bir gruptaki tüm teller aynı sese akort edilir; üst gruptaki kalın bam teli bir oktav pes çalar.")}</p>
+ <div class="strings" style="grid-template-columns:repeat(4,minmax(0,1fr))" id="sStr">${S.TUNE().map((t,i)=>`<button data-i="${i}">${t.name}<small>${t.course}</small></button>`).join("")}</div>
+ <p class="muted small" style="margin:10px 0 0">${X("The tone repeats until you stop it or tap another course. Tapping the same course again stops it.","Der Ton wiederholt sich, bis du stoppst oder einen anderen Chor antippst. Nochmal denselben antippen stoppt auch.","Ses sen durdurana ya da başka bir tele dokunana kadar tekrar eder. Aynı tele tekrar dokunmak da durdurur.")}</p>
+ <button class="btn alt" id="sRefStop" hidden style="margin-top:10px">${X("Stop tone","Ton stoppen","Sesi durdur")}</button>
+ <p class="muted small" style="margin-top:10px">${X("Check by ear: alt at fret 7 = orta open, orta at fret 3 = üst open.","Mit dem Ohr prüfen: Alt im 7. Perde = Orta leer, Orta im 3. Perde = Üst leer.","Kulakla kontrol: alt 7. perde = orta boş, orta 3. perde = üst boş.")}</p></div>
+<div class="panel"><h2>${X("Tuner (microphone)","Stimmgerät (Mikrofon)","Akort cihazı (mikrofon)")}</h2>
+ <div class="row" style="justify-content:space-between;align-items:baseline"><div class="big" id="sTunName">–</div><div class="muted" id="sTunSub">${X("Strike one course","Einen Chor anschlagen","Bir teli çal")}</div></div>
+ ${meterHTML("sTunNeedle")}<div class="muted" id="sTunHz">&nbsp;</div>
+ <button class="btn go" id="sMic" style="margin-top:10px">${X("Start listening","Zuhören starten","Dinlemeye başla")}</button><div class="notice" id="sMicNote" hidden></div>
+ <p class="muted small" style="margin-top:12px">${X("Set to kısa sap in bağlama düzeni: alt La, orta Re, üst Mi. These are other notes than on a guitar, so use this tuner, not the guitar one. The microphone is only analysed in your browser.","Eingestellt auf Kısa Sap in bağlama düzeni: Alt La, Orta Re, Üst Mi. Das sind andere Töne als bei der Gitarre, darum dieses Stimmgerät nutzen, nicht das der Gitarre. Das Mikrofon wird nur im Browser ausgewertet.","Bağlama düzeninde kısa sap'a ayarlı: alt La, orta Re, üst Mi. Bunlar gitardan farklı seslerdir, bu yüzden gitarınkini değil bu akort cihazını kullan. Mikrofon sadece tarayıcında işlenir.")}</p></div>`;
+S.bind.tuner=root=>{
+  const $=id=>root.querySelector("#"+id), T=S.TUNE(); let src=null,t=null,on=-1;
+  const stopRef=()=>{ try{src&&src.stop();}catch(e){} src=null; if(t){clearInterval(t); t=null;} on=-1; $("sStr").querySelectorAll("button").forEach(b=>b.classList.remove("cur")); $("sRefStop").hidden=true; };
+  $("sStr").onclick=e=>{ const b=e.target.closest("button"); if(!b) return; const i=+b.dataset.i, same=on===i; stopRef(); if(same) return;
+    on=i; b.classList.add("cur"); $("sRefStop").hidden=false; let n=0;
+    const hit=()=>{ try{src&&src.stop();}catch(e){} src=pluck(T[i].m,0,.75); if(++n>=8) setTimeout(stopRef,1800); };
+    hit(); t=setInterval(()=>{ if(n<8) hit(); },2000); running.add(stopRef); };
+  $("sRefStop").onclick=stopRef;
+  $("sMic").onclick=async()=>{
+    if(mic.on){ mic.stop(); $("sMic").textContent=X("Start listening","Zuhören starten","Dinlemeye başla"); return; }
+    const ok=await mic.start(f=>{ if(f<0){ $("sTunHz").innerHTML="&nbsp;"; return; }
+      const m=69+12*Math.log2(f/440); let best=T[0],bd=1e9; T.forEach(x=>{ const d=Math.abs(m-x.m); if(d<bd){bd=d;best=x;} });
+      const cents=(m-best.m)*100;
+      $("sTunName").textContent=`${best.name} · ${best.course}`;
+      $("sTunSub").textContent=Math.abs(cents)<8?"✓ "+X("in tune","passt","doğru"):cents<0?fill(X("too low ({c} cents): tighten","zu tief ({c} Cent): straffer drehen","pes ({c} sent): ger"),{c:cents.toFixed(0)}):fill(X("too high (+{c} cents): loosen","zu hoch (+{c} Cent): lockerer drehen","tiz (+{c} sent): gevşet"),{c:cents.toFixed(0)});
+      $("sTunHz").textContent=Math.abs(cents)>250?X("Far away from all courses: tune roughly by ear first.","Weit weg von allen Chören: erst grob nach Gehör stimmen.","Tüm tellerden çok uzak: önce kulakla kabaca akort et."):`${f.toFixed(1)} Hz`;
+      setNeedle($("sTunNeedle"),cents); },60,700);
+    if(!ok){ $("sMicNote").textContent=micBlocked(); $("sMicNote").hidden=false; return; }
+    $("sMicNote").hidden=true; $("sMic").textContent=X("Stop listening","Zuhören stoppen","Dinlemeyi durdur"); };
+};
 S.WEEKS=()=>[
  {t:X("Holding and the mızrap","Halten und das Mızrap","Tutuş ve mızrap"),why:X("Good habits from day one: relaxed body, loose wrist.","Gute Gewohnheiten ab Tag eins: lockerer Körper, lockeres Handgelenk.","İlk günden iyi alışkanlıklar: gevşek beden, gevşek bilek."),items:[
   {t:X("Hold the saz","Die Saz halten","Sazı tut"),d:[X("Body on the right thigh, neck up and to the left.","Korpus auf dem rechten Oberschenkel, Hals schräg nach links oben.","Gövde sağ uylukta, sap sola ve yukarı."),X("Right forearm rests on the body.","Rechter Unterarm liegt auf dem Korpus.","Sağ önkol gövdenin üstünde."),X("Left thumb behind the neck.","Linker Daumen hinter dem Hals.","Sol başparmak sapın arkasında.")]},
@@ -1760,7 +1801,7 @@ function render(){
     <nav class="tabs" role="tablist">${views.map(([id,n])=>`<button role="tab" data-view="${id}" aria-selected="${id===M.state.view}">${n}</button>`).join("")}</nav>
     <section id="view" class="wrap">${M.render[M.state.view]()}</section>`;
   M.bind[M.state.view](app.querySelector("#view"));
-  document.getElementById("foot").textContent=X("First Notes · free and open source. Sounds are generated in your browser. The microphone is analysed locally only; nothing is sent or stored.","First Notes · frei und Open Source. Töne werden im Browser erzeugt. Das Mikrofon wird nur lokal ausgewertet, nichts wird gesendet oder gespeichert.","First Notes · ücretsiz ve açık kaynak. Sesler tarayıcında üretilir. Mikrofon sadece yerel olarak işlenir; hiçbir şey gönderilmez ya da saklanmaz.");
+  document.getElementById("foot").innerHTML=X("First Notes · made by <a href=\"https://github.com/SinanDmrr\">Sinan</a> with the help of Claude (Anthropic) · free and open source. Sounds are generated in your browser. The microphone is analysed locally only; nothing is sent or stored.","First Notes · von <a href=\"https://github.com/SinanDmrr\">Sinan</a> mit Hilfe von Claude (Anthropic) erstellt · frei und Open Source. Töne werden im Browser erzeugt. Das Mikrofon wird nur lokal ausgewertet, nichts wird gesendet oder gespeichert.","First Notes · <a href=\"https://github.com/SinanDmrr\">Sinan</a> tarafından Claude (Anthropic) yardımıyla hazırlandı · ücretsiz ve açık kaynak. Sesler tarayıcında üretilir. Mikrofon sadece yerel olarak işlenir; hiçbir şey gönderilmez ya da saklanmaz.");
 }
 app.addEventListener("click",e=>{ const b=e.target.closest(".tabs button"); if(!b) return; INST[inst].state.view=b.dataset.view; render(); });
 document.getElementById("instSeg").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b||b.dataset.inst===inst) return; inst=b.dataset.inst; render(); window.scrollTo(0,0); });
