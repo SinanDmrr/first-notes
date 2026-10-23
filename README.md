@@ -11,7 +11,7 @@ Languages: **English** (default), **Deutsch**, **Türkçe**. The chosen language
 ## What's inside
 
 ### Guitar
-- **Start here** – an 8-week learning path with checkboxes, a 20-minute practice timer, how to sit, how to read a chord sheet, and a troubleshooter.
+- **Start here** – an 8-week learning path with a step coach: every step has its own instructions, a chord diagram where useful, ← → arrows, a “done, next step” button and a shortcut that opens the matching tool with the right settings. Plus a 20-minute practice timer, how to read a chord sheet, and a troubleshooter.
 - **Chords** – how to read a chord diagram, 13 beginner chords with diagrams, step-by-step finger instructions and sound, plus a one-minute chord-change drill with a personal record.
 - **Strumming** – patterns shown as ↓ ↑ on “1 and 2 and…”, played back with a chord progression and click.
 - **Picking** – what p i m a means, six patterns shown as tabs and played back.
@@ -20,7 +20,7 @@ Languages: **English** (default), **Deutsch**, **Türkçe**. The chosen language
 - **Tuning** – reference tones per string and a microphone tuner.
 
 ### Clarinet (G / Sol, written pitch)
-- **Start here** – 8-week path, practice timer, air challenge, tonguing, troubleshooter, assembly and care, the Turkish sound (vibrato, sliding, makam).
+- **Start here** – 8-week path with the same step coach (instructions and fingering diagram per step), practice timer, air challenge, tonguing, troubleshooter, assembly and care, the Turkish sound (vibrato, sliding, makam).
 - **Practice** – five levels; the page shows the fingering and listens through the microphone to check the note.
 - **Fingering chart**, **Read music** (staff with registers), **Songs** (simple text notation with playback), **Tuner**, **Embouchure tips**.
 
