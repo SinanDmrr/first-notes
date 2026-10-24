@@ -131,7 +131,13 @@ tr.click{cursor:pointer} tr.click:hover,tr.click[aria-selected="true"]{backgroun
 .week .body{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px}
 .week .why{color:var(--muted);font-size:.93rem;margin:0}
 .eyebrow{font:700 .75rem var(--text);letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
-.coach{border:2px solid var(--accent)}
+.slline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+@media (min-width:640px){.slline{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.slline .slbar{min-width:0}
+.coach{border:2px solid var(--accent);border-radius:12px;padding:14px;margin-top:8px;background:var(--surface)}
+.week summary .chev{flex:none;transition:transform .2s;color:var(--muted)}
+.week[open] summary .chev{transform:rotate(180deg)}
+.week summary{-webkit-tap-highlight-color:transparent;user-select:none}
 .btn.arrow{padding:8px 14px;font-size:1.1rem;line-height:1}
 .btn:disabled{opacity:.35;cursor:default}
 .stepbtn{font:inherit;color:var(--ink);background:none;border:none;padding:0;text-align:left;cursor:pointer;line-height:1.4}
@@ -351,40 +357,49 @@ const fmtTime=s=>`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,"0")
 
 /** Checklist learning path, routine timer and troubleshooter are shared by both instruments. */
 /** Learning path (checklist) + step coach. weeks: [{t,why,items:[{t,d:[...],go,set,show}]}] (all text already translated) */
+/** Learning path: weeks you open and close yourself; the step coach sits inside the open week. */
 function pathHTML(){ return `<div class="bar-prog"><i data-role="pbar"></i></div><p class="muted" data-role="ptxt" style="margin:0 0 12px"></p><div class="path" data-role="path"></div>`; }
-function coachHTML(){ return `<div class="panel coach" data-role="coach" aria-live="polite"></div>`; }
+function coachHTML(){ return ""; }
 function bindPath(root,weeks,key,M,visual){
-  const prog=store.get(key,{}), box=root.querySelector('[data-role="path"]'), coach=root.querySelector('[data-role="coach"]');
+  const prog=store.get(key,{}), box=root.querySelector('[data-role="path"]');
   const flat=[]; weeks.forEach((w,wi)=>w.items.forEach((it,ii)=>flat.push({wi,ii,it,k:wi+"-"+ii})));
   const firstOpen=()=>{ const i=flat.findIndex(f=>!prog[f.k]); return i<0?flat.length-1:i; };
   let sel=store.get(key+"-sel",-1); if(sel<0||sel>=flat.length) sel=firstOpen();
-  const select=(i,scroll)=>{ sel=Math.max(0,Math.min(flat.length-1,i)); store.set(key+"-sel",sel); draw(); if(scroll) coach.scrollIntoView({behavior:"smooth",block:"start"}); };
-  function draw(){
-    let all=0,dn=0; const open=[...box.querySelectorAll(".week")].map(d=>d.open), cur=flat[sel];
-    box.innerHTML=weeks.map((w,wi)=>{ const c=w.items.filter((_,ii)=>prog[wi+"-"+ii]).length; all+=w.items.length; dn+=c; const full=c===w.items.length;
-      const isOpen=open.length?(open[wi]||cur.wi===wi):cur.wi===wi;
-      return `<details class="week ${full?"full":""}" ${isOpen?"open":""}><summary data-w="${wi}"><span class="wk">${X("Week","Woche","Hafta")} ${wi+1}</span><span class="wt">${w.t}</span><span class="wp">${full?"✓ "+X("done","geschafft","tamam"):c+"/"+w.items.length}</span></summary><div class="body"><p class="why">${w.why}</p>${w.items.map((it,ii)=>{ const fi=flat.findIndex(f=>f.wi===wi&&f.ii===ii);
-        return `<div class="check ${fi===sel?"sel":""}"><input type="checkbox" id="${key}-${wi}-${ii}" data-k="${wi}-${ii}" ${prog[wi+"-"+ii]?"checked":""} aria-label="${X("Done","Erledigt","Tamam")}"><button class="stepbtn" data-f="${fi}">${it.t}</button></div>`; }).join("")}</div></details>`; }).join("");
-    root.querySelector('[data-role="pbar"]').style.width=(dn/all*100)+"%";
-    root.querySelector('[data-role="ptxt"]').textContent=fill(X("{a} of {b} steps done","{a} von {b} Schritten geschafft","{b} adımdan {a} tanesi tamam"),{a:dn,b:all});
-    // coach
+  const openSet=new Set([flat[sel].wi]);
+  const firstInWeek=wi=>{ const i=flat.findIndex(f=>f.wi===wi&&!prog[f.k]); return i<0?flat.findIndex(f=>f.wi===wi):i; };
+  function coach(cur){
     const it=cur.it, w=weeks[cur.wi], done=!!prog[cur.k], vis=visual(it.show);
-    coach.innerHTML=`<div class="row" style="justify-content:space-between">
-        <span class="eyebrow">${X("Week","Woche","Hafta")} ${cur.wi+1} · ${fill(X("step {a} of {b}","Schritt {a} von {b}","adım {a} / {b}"),{a:cur.ii+1,b:w.items.length})}</span>
+    return `<div class="coach" aria-live="polite"><div class="row" style="justify-content:space-between">
+        <span class="eyebrow">${fill(X("Step {a} of {b}","Schritt {a} von {b}","Adım {a} / {b}"),{a:cur.ii+1,b:w.items.length})}</span>
         <div class="row" style="gap:6px"><button class="btn alt arrow" data-nav="-1" ${sel===0?"disabled":""} aria-label="${X("Previous step","Vorheriger Schritt","Önceki adım")}">←</button><button class="btn alt arrow" data-nav="1" ${sel===flat.length-1?"disabled":""} aria-label="${X("Next step","Nächster Schritt","Sonraki adım")}">→</button></div></div>
-      <h2 style="margin-top:6px">${done?"✓ ":""}${it.t}</h2>
+      <h3 style="margin:6px 0 0;font-size:1.2rem">${done?"✓ ":""}${it.t}</h3>
       <div class="${vis?"tool":""}" style="margin-top:8px">${vis?`<div class="diagram">${vis.svg}</div>`:""}<div>
         <ol class="plain">${it.d.map(x=>`<li>${x}</li>`).join("")}</ol>${vis&&vis.steps?`<h3>${X("Fingering:","Griff:","Parmaklar:")}</h3><ol class="steps">${vis.steps}</ol>`:""}</div></div>
-      <div class="row" style="margin-top:16px">
+      <div class="row" style="margin-top:14px">
         ${it.go?`<button class="btn alt" data-go="1">${X("Open:","Öffnen:","Aç:")} ${M.VIEWS().find(v=>v[0]===it.go)[1]} ↗</button>`:""}
-        <button class="btn go" data-done="1">${done?X("Mark as not done","Als offen markieren","Yapılmadı olarak işaretle"):X("✓ Done, next step","✓ Geschafft, nächster Schritt","✓ Tamam, sonraki adım")}</button></div>`;
+        <button class="btn go" data-done="1">${done?X("Mark as not done","Als offen markieren","Yapılmadı olarak işaretle"):X("✓ Done, next step","✓ Geschafft, nächster Schritt","✓ Tamam, sonraki adım")}</button></div></div>`;
   }
+  function draw(){
+    let all=0,dn=0; const cur=flat[sel];
+    box.innerHTML=weeks.map((w,wi)=>{ const c=w.items.filter((_,ii)=>prog[wi+"-"+ii]).length; all+=w.items.length; dn+=c; const full=c===w.items.length;
+      return `<details class="week ${full?"full":""}" data-w="${wi}" ${openSet.has(wi)?"open":""}><summary><span class="wk">${X("Week","Woche","Hafta")} ${wi+1}</span><span class="wt">${w.t}</span><span class="wp">${full?"✓ "+X("done","geschafft","tamam"):c+"/"+w.items.length}</span><span class="chev" aria-hidden="true">▾</span></summary><div class="body"><p class="why">${w.why}</p>${w.items.map((it,ii)=>{ const fi=flat.findIndex(f=>f.wi===wi&&f.ii===ii);
+        return `<div class="check ${fi===sel?"sel":""}"><input type="checkbox" id="${key}-${wi}-${ii}" data-k="${wi}-${ii}" ${prog[wi+"-"+ii]?"checked":""} aria-label="${X("Done","Erledigt","Tamam")}"><button class="stepbtn" data-f="${fi}">${it.t}</button></div>`; }).join("")}${cur.wi===wi?coach(cur):""}</div></details>`; }).join("");
+    root.querySelector('[data-role="pbar"]').style.width=(dn/all*100)+"%";
+    root.querySelector('[data-role="ptxt"]').textContent=fill(X("{a} of {b} steps done","{a} von {b} Schritten geschafft","{b} adımdan {a} tanesi tamam"),{a:dn,b:all});
+  }
+  const focusCoach=()=>{ const c=box.querySelector(".coach"); if(c) c.scrollIntoView({behavior:"smooth",block:"nearest"}); };
+  const select=(i,opts={})=>{ const prev=flat[sel].wi; sel=Math.max(0,Math.min(flat.length-1,i)); store.set(key+"-sel",sel); const wi=flat[sel].wi;
+    if(opts.closePrev&&prev!==wi) openSet.delete(prev); openSet.add(wi); draw(); if(prev!==wi||opts.scroll) focusCoach(); };
+  // native open/close; only react when the state really changed (re-renders fire toggle too)
+  box.addEventListener("toggle",e=>{ const d=e.target; if(!d.matches||!d.matches("details.week")) return; const wi=+d.dataset.w;
+    if(d.open===openSet.has(wi)) return;
+    if(d.open){ openSet.add(wi); if(flat[sel].wi!==wi){ sel=firstInWeek(wi); store.set(key+"-sel",sel); draw(); } } else openSet.delete(wi); },true);
   box.addEventListener("change",e=>{ const k=e.target.dataset.k; if(!k) return; prog[k]=e.target.checked; store.set(key,prog); draw(); });
-  box.addEventListener("click",e=>{ const b=e.target.closest(".stepbtn"); if(b){ select(+b.dataset.f,true); return; }
-    const s=e.target.closest("summary"); if(s){ const wi=+s.dataset.w; const i=flat.findIndex(f=>f.wi===wi&&!prog[f.k]); const j=i<0?flat.findIndex(f=>f.wi===wi):i; setTimeout(()=>{ sel=j; store.set(key+"-sel",sel); draw(); },0); } });
-  coach.addEventListener("click",e=>{
+  box.addEventListener("click",e=>{
+    const b=e.target.closest(".stepbtn"); if(b){ select(+b.dataset.f,{scroll:true}); return; }
     const n=e.target.closest("[data-nav]"); if(n){ select(sel+ +n.dataset.nav); return; }
-    if(e.target.closest("[data-done]")){ const c=flat[sel]; prog[c.k]=!prog[c.k]; store.set(key,prog); if(prog[c.k]&&sel<flat.length-1){ const nx=flat.findIndex((f,i)=>i>sel&&!prog[f.k]); select(nx<0?sel+1:nx); } else draw(); return; }
+    if(e.target.closest("[data-done]")){ const c=flat[sel]; prog[c.k]=!prog[c.k]; store.set(key,prog);
+      if(prog[c.k]&&sel<flat.length-1){ const nx=flat.findIndex((f,i)=>i>sel&&!prog[f.k]); const weekDone=weeks[c.wi].items.every((_,ii)=>prog[c.wi+"-"+ii]); select(nx<0?sel+1:nx,{closePrev:weekDone}); } else draw(); return; }
     if(e.target.closest("[data-go]")){ const it=flat[sel].it; Object.assign(M.state,it.set||{}); M.state.view=it.go; render(); window.scrollTo(0,0); }
   });
   draw();
@@ -652,7 +667,7 @@ G.STR_OF={i:3,m:4,a:5};
 G.NOTES=[[40,0,0],[41,0,1],[43,0,3],[45,1,0],[47,1,2],[48,1,3],[50,2,0],[52,2,2],[53,2,3],[55,3,0],[57,3,2],[59,4,0],[60,4,1],[62,4,3],[64,5,0],[65,5,1],[67,5,3]];
 
 G.state={view:"start",chord:"Am",pat:0,prog:0,bpm:70,metro:true,ppat:0,pchord:"Am",pbpm:70,capo:0,target:-1,note:0,pair:0};
-G.VIEWS=()=>[["start",X("Start here","Start hier","Buradan başla")],["chords",X("Chords","Akkorde","Akorlar")],["strum",X("Strumming","Anschlag","Ritim")],["pick",X("Picking","Picking","Parmakla çalma")],["capo",X("Capo","Kapodaster","Kapo")],["notes",X("Read music","Noten lesen","Nota okuma")],["tune",X("Tuner","Stimmgerät","Akort")],["tips",X("Tips","Tipps","İpuçları")]];
+G.VIEWS=()=>[["start",X("Start here","Start hier","Buradan başla")],["chords",X("Chords","Akkorde","Akorlar")],["strum",X("Strumming","Anschlag","Ritim")],["pick",X("Picking","Picking","Parmakla çalma")],["capo",X("Capo","Kapodaster","Kapo")],["songs",X("Songs","Lieder","Şarkılar")],["notes",X("Read music","Noten lesen","Nota okuma")],["tune",X("Tuner","Stimmgerät","Akort")],["tips",X("Tips","Tipps","İpuçları")]];
 G.title=()=>X("Learn guitar","Gitarre lernen","Gitar öğren");
 G.intro=()=>X("Classical guitar from zero: reading chord diagrams, strumming, picking, capo and notes. Everything with sound.","Klassische Gitarre von null: Griffbilder lesen, Anschlag, Picking, Kapodaster und Noten. Alles mit Ton zum Anhören.","Sıfırdan klasik gitar: akor şeması okuma, ritim, parmakla çalma, kapo ve notalar. Hepsi sesli.");
 
@@ -891,6 +906,8 @@ G.render.tips=()=>`<div class="facts">
  <div><b>${X("6. Slow and clean beats fast","6. Langsam und sauber schlägt schnell","6. Yavaş ve temiz, hızlıdan iyidir")}</b><span>${X("Use the click and raise the tempo only after five clean repetitions.","Klick nutzen und erst nach fünf sauberen Durchgängen schneller werden.","Metronom kullan ve tempoyu ancak beş temiz tekrardan sonra artır.")}</span></div>
  <div><b>${X("7. Tune every time","7. Jedes Mal stimmen","7. Her seferinde akort et")}</b><span>${X("A guitar out of tune makes even correct chords sound wrong.","Eine verstimmte Gitarre lässt selbst richtige Akkorde falsch klingen.","Akordu bozuk bir gitarda doğru akorlar bile yanlış duyulur.")}</span></div></div>`;
 G.bind.tips=()=>{};
+G.render.songs=()=>songLibHTML(G);
+G.bind.songs=root=>bindSongLib(root,G);
 
 /** Parse the simple song notation for a wind instrument M (uses M.PC, M.RANGES, M.N). */
 function parseWind(txt,M){
@@ -1190,7 +1207,7 @@ read:()=>`
  ${M.readLegend()}</div>
 <div class="panel"><h2>${X("How long do I hold the note?","Wie lange halte ich den Ton?","Sesi ne kadar tutarım?")}</h2><p class="lead">${X("The shape of a note tells how many beats you hold it. Count evenly “1, 2, 3, 4” like a clock. A bar (between two vertical lines) usually has 4 beats.","Die Form der Note sagt, wie viele Schläge du den Ton hältst. Zähl gleichmäßig „1, 2, 3, 4“ wie eine Uhr. Ein Takt (zwischen zwei senkrechten Strichen) hat meist 4 Schläge.","Notanın şekli sesi kaç vuruş tutacağını söyler. Saat gibi düzenli say: “1, 2, 3, 4”. Bir ölçü (iki dikey çizgi arası) genelde 4 vuruştur.")}</p>${dursHTML()}</div>`,
 
-songs:()=>`
+songs:()=>songLibHTML(M)+`
 <div class="panel"><h2>${X("Songs in simple notation","Lieder in einfacher Schreibweise","Basit yazımla şarkılar")}</h2><p class="lead">${X("Like guitar chord sheets: you write note names, how long they last and bar lines. The page shows bar by bar what to play and plays it for you.","Wie bei Gitarren-Akkordseiten: Du schreibst Tonnamen, wie lange sie dauern, und Taktstriche. Die Seite zeigt Takt für Takt, was du spielst, und spielt es vor.","Gitar akor sayfaları gibi: ses adlarını, ne kadar sürdüklerini ve ölçü çizgilerini yazarsın. Sayfa ölçü ölçü ne çalacağını gösterir ve çalar.")}</p>
  <div class="howto"><code>Sol</code><span>${X("G (Sol), 1 beat. Solfège or letters both work.","Sol, 1 Schlag. Solfège oder Buchstaben gehen beide.","Sol, 1 vuruş. Solfej ya da harf, ikisi de olur.")}</span><code>Sol:2</code><span>${X("hold 2 beats","2 Schläge halten","2 vuruş tut")}</span><code>Mi,</code><span>${X("comma or ↓ = low register","Komma oder ↓ = tiefe Lage","virgül ya da ↓ = pes bölge")}</span><code>Do'</code><span>${X("apostrophe or ↑ = high register","Apostroph oder ↑ = hohe Lage","kesme işareti ya da ↑ = tiz bölge")}</span><code>P:2</code><span>${X("rest, 2 beats","Pause, 2 Schläge","sus, 2 vuruş")}</span><code>|</code><span>${X("bar line","Taktstrich","ölçü çizgisi")}</span></div>${M.songExtra()}
  <div class="row"><label for="kSongSel">${X("Example:","Beispiel:","Örnek:")}</label><select id="kSongSel"></select></div>
@@ -1271,6 +1288,7 @@ read(root){
   bindDurs(root,d=>M.tone(67,d));
 },
 songs(root){
+  bindSongLib(root,M);
   const S=M.state, $=id=>root.querySelector("#"+id); let flat=[], timers=[];
   $("kSongSel").innerHTML=`<option value="-1">–</option>`+M.SONGS.map((s,i)=>`<option value="${i}">${typeof s.n==="function"?s.n():s.n}</option>`).join("");
   $("kSongSel").value=S.song; $("kBpm").value=S.bpm; $("kBpmVal").textContent=S.bpm;
@@ -1781,8 +1799,116 @@ S.WEEKS=()=>[
 
 
 /* =====================================================================
+   SONG LIBRARY – well-known songs with public-domain lyrics.
+   Melody is stored in C (reference) as letter+octave tokens, e.g. "E4 D4:2".
+   Each instrument transposes it (tr) into notes it can play; the guitar uses
+   the chords (written for its own key) and plays the melody along.
+   ===================================================================== */
+const SONGLIB=[
+ {id:"mary",lvl:"easy",title:"Mary Had a Little Lamb",meter:"4/4",info:()=>X("Sarah Josepha Hale, 1830 · public domain","Sarah Josepha Hale, 1830 · gemeinfrei","Sarah Josepha Hale, 1830 · kamu malı"),
+  for:["g","s","k","n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4],bars:[
+  {c:"G",m:"E4 D4 C4 D4",w:"Ma-ry had a"},{c:"G",m:"E4 E4 E4:2",w:"lit-tle lamb,"},{c:"D",m:"D4 D4 D4:2",w:"lit-tle lamb,"},{c:"G",m:"E4 G4 G4:2",w:"lit-tle lamb,"},
+  {c:"G",m:"E4 D4 C4 D4",w:"Ma-ry had a"},{c:"G",m:"E4 E4 E4 E4",w:"lit-tle lamb, its"},{c:"D",m:"D4 D4 E4 D4",w:"fleece was white as"},{c:"G",m:"C4:4",w:"snow."}]},
+ {id:"ode",lvl:"easy",lvlFor:{n:"medium"},title:"Ode an die Freude",meter:"4/4",info:()=>X("Beethoven 1824, text Friedrich Schiller 1785 · public domain","Beethoven 1824, Text Friedrich Schiller 1785 · gemeinfrei","Beethoven 1824, söz Friedrich Schiller 1785 · kamu malı"),
+  for:["g","s","k","n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4],bars:[
+  {c:"G",m:"E4 E4 F4 G4",w:"Freu-de, schö-ner"},{c:"D",m:"G4 F4 E4 D4",w:"Göt-ter-fun-ken,"},{c:"G",m:"C4 C4 D4 E4",w:"Toch-ter aus E-"},{c:"D",m:"E4:3/2 D4:1/2 D4:2",w:"-ly-si-um!"},
+  {c:"G",m:"E4 E4 F4 G4",w:"Wir be-tre-ten"},{c:"D",m:"G4 F4 E4 D4",w:"feu-er-trun-ken,"},{c:"G",m:"C4 C4 D4 E4",w:"Himm-li-sche, dein"},{c:"D G",m:"D4:3/2 C4:1/2 C4:2",w:"Hei-lig-tum!"}]},
+ {id:"hcb",lvl:"easy",title:"Hot Cross Buns",meter:"4/4",info:()=>X("Traditional, 18th century · public domain","Traditionell, 18. Jh. · gemeinfrei","Geleneksel, 18. yüzyıl · kamu malı"),
+  for:["n"],tr:{g:-5,s:12,k:0,n:7},lines:[2,2],bars:[
+  {c:"G",m:"E4 D4 C4:2",w:"Hot cross buns!"},{c:"G",m:"E4 D4 C4:2",w:"Hot cross buns!"},
+  {c:"G",m:"C4:1/2 C4:1/2 C4:1/2 C4:1/2 D4:1/2 D4:1/2 D4:1/2 D4:1/2",w:"One a pen-ny, two a pen-ny,"},{c:"D G",m:"E4 D4 C4:2",w:"hot cross buns!"}]},
+ {id:"twinkle",lvl:"medium",title:"Twinkle, Twinkle, Little Star",meter:"4/4",info:()=>X("Text Jane Taylor 1806, French melody 18th century · public domain","Text Jane Taylor 1806, französische Melodie 18. Jh. · gemeinfrei","Söz Jane Taylor 1806, Fransız melodisi 18. yüzyıl · kamu malı"),
+  for:["g","s","k"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4,4],bars:[
+  {c:"G",m:"C4 C4 G4 G4",w:"Twin-kle, twin-kle,"},{c:"C G",m:"A4 A4 G4:2",w:"lit-tle star,"},{c:"C G",m:"F4 F4 E4 E4",w:"how I won-der"},{c:"D G",m:"D4 D4 C4:2",w:"what you are!"},
+  {c:"G C",m:"G4 G4 F4 F4",w:"Up a-bove the"},{c:"G D",m:"E4 E4 D4:2",w:"world so high,"},{c:"G C",m:"G4 G4 F4 F4",w:"like a dia-mond"},{c:"G D",m:"E4 E4 D4:2",w:"in the sky."},
+  {c:"G",m:"C4 C4 G4 G4",w:"Twin-kle, twin-kle,"},{c:"C G",m:"A4 A4 G4:2",w:"lit-tle star,"},{c:"C G",m:"F4 F4 E4 E4",w:"how I won-der"},{c:"D G",m:"D4 D4 C4:2",w:"what you are!"}]},
+ {id:"haensel",lvl:"medium",title:"Hänschen klein",meter:"4/4",info:()=>X("German folk song, text Franz Wiedemann 1860 · public domain","Deutsches Volkslied, Text Franz Wiedemann 1860 · gemeinfrei","Alman halk şarkısı, söz Franz Wiedemann 1860 · kamu malı"),
+  for:["n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4,4,4],bars:[
+  {c:"G",m:"G4 E4 E4:2",w:"Häns-chen klein"},{c:"D",m:"F4 D4 D4:2",w:"ging al-lein"},{c:"G",m:"C4 D4 E4 F4",w:"in die wei-te"},{c:"G",m:"G4 G4 G4:2",w:"Welt hin-ein."},
+  {c:"G",m:"G4 E4 E4:2",w:"Stock und Hut"},{c:"D",m:"F4 D4 D4:2",w:"steht ihm gut,"},{c:"G",m:"C4 E4 G4 G4",w:"ist gar wohl-ge-"},{c:"G",m:"C4:4",w:"-mut."},
+  {c:"D",m:"D4 D4 D4 D4",w:"A-ber Mut-ter"},{c:"D",m:"D4 E4 F4:2",w:"wei-net sehr,"},{c:"G",m:"E4 E4 E4 E4",w:"hat ja nun kein"},{c:"G",m:"E4 F4 G4:2",w:"Häns-chen mehr."},
+  {c:"G",m:"G4 E4 E4:2",w:"Da be-sinnt"},{c:"D",m:"F4 D4 D4:2",w:"sich das Kind,"},{c:"G",m:"C4 E4 G4 G4",w:"kehrt nach Haus ge-"},{c:"G",m:"C4:4",w:"-schwind."}]},
+ {id:"jingle",lvl:"medium",lvlFor:{n:"hard"},title:"Jingle Bells",meter:"4/4",info:()=>X("James Lord Pierpont, 1857 (chorus) · public domain","James Lord Pierpont, 1857 (Refrain) · gemeinfrei","James Lord Pierpont, 1857 (nakarat) · kamu malı"),
+  for:["g","s","k","n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4,4,4],bars:[
+  {c:"G",m:"E4 E4 E4:2",w:"Jin-gle bells,"},{c:"G",m:"E4 E4 E4:2",w:"jin-gle bells,"},{c:"G",m:"E4 G4 C4:3/2 D4:1/2",w:"jin-gle all the"},{c:"G",m:"E4:4",w:"way!"},
+  {c:"C",m:"F4 F4 F4:3/2 F4:1/2",w:"Oh, what fun it"},{c:"G",m:"F4 E4 E4 E4:1/2 E4:1/2",w:"is to ride in a"},{c:"A7",m:"E4 D4 D4 E4",w:"one-horse o-pen"},{c:"D7",m:"D4:2 G4:2",w:"sleigh, hey!"},
+  {c:"G",m:"E4 E4 E4:2",w:"Jin-gle bells,"},{c:"G",m:"E4 E4 E4:2",w:"jin-gle bells,"},{c:"G",m:"E4 G4 C4:3/2 D4:1/2",w:"jin-gle all the"},{c:"G",m:"E4:4",w:"way!"},
+  {c:"C",m:"F4 F4 F4:3/2 F4:1/2",w:"Oh, what fun it"},{c:"G",m:"F4 E4 E4 E4:1/2 E4:1/2",w:"is to ride in a"},{c:"D7",m:"G4 G4 F4 D4",w:"one-horse o-pen"},{c:"G",m:"C4:4",w:"sleigh!"}]},
+ {id:"saints",lvl:"hard",title:"When the Saints Go Marching In",meter:"4/4",info:()=>X("Traditional spiritual · public domain","Traditionelles Spiritual · gemeinfrei","Geleneksel spiritüel · kamu malı"),
+  for:["g","s","k","n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4,4,3],bars:[
+  {c:"G",m:"R C4 E4 F4",w:"Oh, when the"},{c:"G",m:"G4:4",w:"saints"},{c:"G",m:"R C4 E4 F4",w:"go march-ing"},{c:"G",m:"G4:4",w:"in,"},
+  {c:"G",m:"R C4 E4 F4",w:"oh, when the"},{c:"G",m:"G4:2 E4:2",w:"saints go"},{c:"G",m:"C4:2 E4:2",w:"march-ing"},{c:"D7",m:"D4:4",w:"in,"},
+  {c:"G",m:"R E4 E4 D4",w:"oh, Lord, I"},{c:"G7",m:"C4:3 C4",w:"want to"},{c:"C",m:"E4:2 G4 G4",w:"be in that"},{c:"C",m:"F4:4",w:"num-ber,"},
+  {c:"G",m:"R E4 F4 G4",w:"when the saints"},{c:"G D7",m:"E4:2 C4:2",w:"go march-"},{c:"D7 G",m:"D4:2 C4:2",w:"-ing in!"}]},
+ {id:"grace",lvl:"hard",title:"Amazing Grace",meter:"3/4",info:()=>X("Text John Newton 1779, melody “New Britain” 1835 · public domain","Text John Newton 1779, Melodie „New Britain“ 1835 · gemeinfrei","Söz John Newton 1779, melodi “New Britain” 1835 · kamu malı"),
+  for:["g","s","k"],tr:{g:-5,s:14,k:0,n:7},lines:[4,4,4,4],bars:[
+  {c:"",m:"R:2 G3",w:"A-"},{c:"G",m:"C4:2 E4:1/2 C4:1/2",w:"-maz-ing"},{c:"G",m:"E4:2 D4",w:"grace, how"},{c:"C",m:"C4:2 A3",w:"sweet the"},
+  {c:"G",m:"G3:2 G3",w:"sound that"},{c:"G",m:"C4:2 E4:1/2 C4:1/2",w:"saved a"},{c:"G",m:"E4:2 D4",w:"wretch like"},{c:"D",m:"G4:3",w:"me!"},
+  {c:"D",m:"G4:2 E4",w:"I"},{c:"G",m:"G4:2 E4:1/2 G4:1/2",w:"once was"},{c:"G",m:"E4:2 C4",w:"lost, but"},{c:"C",m:"G3:2 A3",w:"now am"},
+  {c:"G",m:"C4:2 C4",w:"found, was"},{c:"Em",m:"A3:2 G3",w:"blind, but"},{c:"G D",m:"C4:2 E4:1/2 C4:1/2",w:"now I"},{c:"G",m:"E4:2 D4 C4:3",w:"see."}]}
+];
+const slLvl=(s,id)=>(s.lvlFor&&s.lvlFor[id])||s.lvl;
+const SL_LVL=()=>({easy:X("Easy","Leicht","Kolay"),medium:X("Medium","Mittel","Orta"),hard:X("Hard","Schwer","Zor")});
+const SL_PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+/** "E4:3/2" → {m:64,b:1.5}; "R" → rest */
+function slParse(str,tr){ return str.trim().split(/\s+/).map(t=>{ const [n,d]=t.split(":"); const b=d?(d.includes("/")?d.split("/").reduce((a,c)=>a/c):+d):1;
+  if(n==="R") return {rest:true,b}; const m=n.match(/^([A-G])([#b]?)(\d)$/); return {m:(+m[3]+1)*12+SL_PC[m[1]]+(m[2]==="#"?1:m[2]==="b"?-1:0)+tr,b}; }); }
+function slSongs(id){ return SONGLIB.filter(s=>s.for.includes(id)); }
+const SL_STATE={};
+function songLibHTML(M){
+  const id=M.lib, list=slSongs(id), lv=SL_LVL();
+  return `<div class="panel"><h2>${X("Song library","Liederbibliothek","Şarkı kütüphanesi")}</h2>
+  <p class="lead">${id==="g"?X("Well-known songs with lyrics and chords. Strum one chord per bar (pattern 1) or pick it. Tap a bar to see its chord.","Bekannte Lieder mit Text und Akkorden. Spiel pro Takt einen Akkord (Anschlag 1) oder zupfe ihn. Tippe einen Takt an, um den Griff zu sehen.","Sözleri ve akorlarıyla bilinen şarkılar. Ölçü başına bir akor çal (ritim 1) ya da parmakla çal. Akoru görmek için bir ölçüye dokun."):X("Well-known songs with lyrics and the melody in notes you have learned. Tap a bar to hear it and see the fingering of its first note.","Bekannte Lieder mit Text und der Melodie in Tönen, die du gelernt hast. Tippe einen Takt an, um ihn zu hören und den Griff des ersten Tons zu sehen.","Sözleri ve öğrendiğin seslerle melodisiyle bilinen şarkılar. Dinlemek ve ilk sesin pozisyonunu görmek için bir ölçüye dokun.")} ${X("All lyrics are public domain.","Alle Texte sind gemeinfrei.","Tüm sözler kamu malıdır.")}</p>
+  ${["easy","medium","hard"].map(l=>`<div class="row" style="margin:6px 0"><span class="eyebrow" style="width:64px">${lv[l]}</span><div class="chips">${list.filter(s=>slLvl(s,id)===l).map(s=>`<button class="chip" data-song="${s.id}" style="font-size:.9rem">${s.title}</button>`).join("")}</div></div>`).join("")}
+  <div id="slView" style="margin-top:14px"></div>
+  <div class="row" style="margin-top:12px"><label for="slBpm">${X("Tempo","Tempo","Tempo")}</label><input type="range" id="slBpm" min="40" max="140"><span class="muted" id="slBpmVal"></span>
+   ${id==="g"?`<label><input type="checkbox" id="slMel" checked> ${X("Melody","Melodie","Melodi")}</label>`:""}</div>
+  <div class="row" style="margin-top:10px"><button class="btn go" id="slPlay">${X("Play","Abspielen","Çal")}</button><button class="btn alt" id="slStop">${X("Stop","Stopp","Durdur")}</button></div>
+  <div class="tool" style="margin-top:14px"><div class="diagram" id="slDiag"></div><div><h3 id="slNow" style="margin-top:0"></h3><ol class="steps" id="slSteps"></ol></div></div></div>`;
+}
+function bindSongLib(root,M){
+  const id=M.lib, $=x=>root.querySelector("#"+x), st=SL_STATE[id]=SL_STATE[id]||{song:slSongs(id)[0].id,bpm:id==="g"?80:70};
+  let timers=[];
+  const song=()=>SONGLIB.find(s=>s.id===st.song);
+  const noteLbl=n=>n.rest?"–":M.nm?M.nm(n.m):noteName(n.m);
+  const showChord=c=>{ if(!c) return; const ch=G.byId[c]; if(!ch) return; $("slDiag").innerHTML=G.chordSVG(ch); $("slNow").textContent=G.name(ch); $("slSteps").innerHTML=G.steps(ch); };
+  const showNote=n=>{ if(!n||n.rest) return; const x=M.byMidi(n.m); if(!x) return; $("slDiag").innerHTML=M.svg(x.k); $("slNow").textContent=M.nm(n.m); $("slSteps").innerHTML=M.steps(x.k); };
+  const draw=()=>{ const s=song(); root.querySelectorAll("[data-song]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.song===st.song));
+    let i=0; const lines=s.lines.map(n=>s.bars.slice(i,i+=n));
+    $("slView").innerHTML=`<div class="row" style="justify-content:space-between;align-items:baseline"><h3 style="margin:0">${s.title}</h3><span class="muted small">${s.meter} · ${s.info()}</span></div>
+     ${id==="g"?`<div class="chips" style="margin:8px 0">${[...new Set(s.bars.flatMap(b=>b.c.split(" ")).filter(Boolean))].map(c=>`<button class="chip" data-chord="${c}" style="font-size:.85rem;padding:5px 10px">${G.name(G.byId[c])}</button>`).join("")}</div>`:""}
+     <div class="song" style="margin-top:8px">${lines.map((ln,li)=>`<div class="slline">${ln.map((b,bi)=>{ const k=s.lines.slice(0,li).reduce((a,c)=>a+c,0)+bi; const notes=slParse(b.m,s.tr[id]);
+       return `<button class="nb slbar" data-bar="${k}">${id==="g"?`<b style="color:var(--accent)">${b.c.split(" ").filter(Boolean).map(c=>G.name(G.byId[c])).join(" · ")||"&nbsp;"}</b>`:`<b style="font-size:.95rem">${notes.map(noteLbl).join(" ")}</b>`}<span style="font-size:.9rem">${b.w}</span></button>`; }).join("")}</div>`).join("")}</div>`;
+    if(id==="g") showChord(s.bars.find(b=>b.c).c.split(" ")[0]); else showNote(slParse(s.bars[0].m,s.tr[id]).find(n=>!n.rest));
+  };
+  const mark=k=>{ root.querySelectorAll(".slbar.cur").forEach(b=>b.classList.remove("cur")); const b=root.querySelector(`.slbar[data-bar="${k}"]`); if(b) b.classList.add("cur"); };
+  const stop=()=>{ timers.forEach(clearTimeout); timers=[]; root.querySelectorAll(".slbar.cur").forEach(b=>b.classList.remove("cur")); };
+  const playNote=(n,dur)=>{ if(n.rest) return; if(id==="g"){ pluck(n.m,0,.7); } else if(id==="s"){ S.tone(n.m); } else M.tone(n.m,dur); };
+  const schedule=(from,to,count)=>{ stop(); ctx(); const s=song(), beat=60/st.bpm; let t=0;
+    const perBar=+s.meter[0];
+    if(count) for(let k=0;k<perBar;k++){ timers.push(setTimeout(()=>click(k===0),t*1000)); t+=beat; }
+    s.bars.slice(from,to).forEach((b,j)=>{ const k=from+j, notes=slParse(b.m,s.tr[id]); const len=notes.reduce((a,n)=>a+n.b,0);
+      timers.push(setTimeout(()=>{ mark(k); if(id==="g") showChord(b.c.split(" ")[0]||""); },t*1000));
+      if(id==="g"){ const cs=b.c.split(" ").filter(Boolean); cs.forEach((c,ci)=>{ const ch=G.byId[c], at=t+ci*len/cs.length*beat;
+          for(let q=0;q<len/cs.length;q++) timers.push(setTimeout(()=>G.strum(ch,"D",0,($("slMel")&&$("slMel").checked)?.28:.45),(at+q*beat)*1000));
+          if(ci>0) timers.push(setTimeout(()=>showChord(c),at*1000)); }); }
+      let u=t; notes.forEach(n=>{ const at=u; if(id!=="g"||($("slMel")&&$("slMel").checked)) timers.push(setTimeout(()=>{ playNote(n,n.b*beat*.9); if(id!=="g") showNote(n); },at*1000)); u+=n.b*beat; });
+      t+=len*beat; });
+    timers.push(setTimeout(stop,t*1000)); running.add(stop); };
+  root.querySelectorAll("[data-song]").forEach(b=>b.onclick=()=>{ stop(); st.song=b.dataset.song; draw(); });
+  $("slBpm").value=st.bpm; $("slBpmVal").textContent=st.bpm;
+  $("slBpm").oninput=()=>{ st.bpm=+$("slBpm").value; $("slBpmVal").textContent=st.bpm; };
+  $("slPlay").onclick=()=>schedule(0,song().bars.length,true);
+  $("slStop").onclick=stop;
+  $("slView").addEventListener("click",e=>{ const c=e.target.closest("[data-chord]"); if(c){ showChord(c.dataset.chord); G.strum(G.byId[c.dataset.chord]); return; }
+    const b=e.target.closest(".slbar"); if(b){ const k=+b.dataset.bar; schedule(k,k+1,false); const s=song(); if(id==="g"){ const c0=s.bars[k].c.split(" ")[0]; if(c0) showChord(c0); } else showNote(slParse(s.bars[k].m,s.tr[id]).find(n=>!n.rest)); } });
+  draw();
+}
+
+/* =====================================================================
    APP SHELL
    ===================================================================== */
+G.lib="g"; S.lib="s"; K.lib="k"; N.lib="n";
 const INST={g:G,s:S,k:K,n:N};
 let inst="g"; // guitar is the default instrument on every visit
 const hash=(location.hash||"").replace("#","");

@@ -12,10 +12,11 @@ Languages: **English** (default), **Deutsch**, **Türkçe**. The chosen language
 
 Every instrument has the same structure, so nothing is left out:
 
-- **Start here** – an 8-week learning path with a **step coach**: each step has its own instructions, a diagram where useful, ← → arrows, a “done, next step” button and a shortcut that opens the matching tool with the right settings. Plus a 20-minute practice timer and a troubleshooter.
+- **Start here** – an 8-week learning path; weeks open and close like an accordion and the **step coach** sits inside the open week: each step has its own instructions, a diagram where useful, ← → arrows, a “done, next step” button and a shortcut that opens the matching tool with the right settings. Plus a 20-minute practice timer and a troubleshooter.
 - **Instrument tools** – see below.
 - **Read music** – notes on the staff, tap to see where to play them and to hear them; note values.
 - **Tuner / Note finder** – guitar and saz get a tuner with their own reference tones per string/course; clarinet and ney, which aren't tuned note by note, get a note finder that names the note you play and shows how close it is (microphone, needs HTTPS hosting, e.g. GitHub Pages).
+- **Songs** – a song library per instrument: 2 easy, 2 medium, 2 hard well-known songs with public-domain lyrics (chords for guitar, melody in learned notes for saz, clarinet and ney), with playback and highlighting.
 - **Tips** – technique basics.
 
 ### Guitar
