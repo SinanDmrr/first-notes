@@ -186,6 +186,13 @@ textarea{width:100%;min-height:110px;font:1rem/1.5 ui-monospace,Menlo,Consolas,m
 .nb.rest{background:transparent;border-style:dashed;color:var(--muted)}
 .nb.bad{border-color:var(--warn);color:var(--warn)}
 .nb.cur{background:var(--hi-soft);border-color:var(--hi);box-shadow:0 0 0 2px var(--hi)}
+.sheet{margin-top:14px;overflow-x:auto;font:clamp(.82rem,3.4vw,1rem)/1.35 ui-monospace,Menlo,Consolas,monospace;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.sheet .sl{white-space:pre;min-height:1.35em}
+.sheet .sch{color:var(--accent);font-weight:700;margin-top:6px}
+.sheet .sc{cursor:pointer;border-radius:4px}
+.sheet .sc:hover,.sheet .sc:focus-visible{background:var(--accent-soft);outline:none}
+.sheet .sc.hard{color:var(--warn)}
+.sheet .sc.cur{background:var(--hi-soft);color:var(--hi)}
 footer{font-size:.8rem;color:var(--muted);max-width:980px;margin:24px auto 0}
 footer a{color:inherit}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -757,7 +764,8 @@ capo:()=>`
   <div><b>${X("What for?","Wozu?","Ne için?")}</b><span>${X("So a song fits your voice or the original recording without learning hard shapes.","Damit ein Lied zu deiner Stimme oder zur Original-Aufnahme passt, ohne schwere Griffe zu lernen.","Zor akorlar öğrenmeden şarkı sesine ya da orijinal kayda uysun diye.")}</span></div>
   <div><b>${X("Where to clamp?","Wo klemmen?","Nereye takılır?")}</b><span>${X("Just behind the fret wire, straight and firm enough that nothing buzzes. Retune afterwards.","Kurz vor dem Bundstäbchen, gerade und fest genug, dass nichts schnarrt. Danach kurz nachstimmen.","Perde telinin hemen arkasına, düz ve hiçbir şey cızırdamayacak kadar sıkı. Sonra akordu kontrol et.")}</span></div>
   <div><b>${X("How to count?","Wie zählen?","Nasıl sayılır?")}</b><span>${X("With a capo, count frets from the capo. The capo is now “0”. Diagrams apply from there.","Mit Kapo die Bünde ab dem Kapo neu zählen. Der Kapo ist jetzt „0“.","Kapoyla perdeleri kapodan itibaren say. Kapo artık “0”dır.")}</span></div>
-  <div><b>${X("“Capo 3” on a sheet","„Kapo 3“ auf dem Blatt","Sayfada “Kapo 3”")}</b><span>${X("Capo at fret 3, then play the shapes shown above the lyrics. Don't convert anything.","Kapo in den 3. Bund, dann die Griffe spielen, die über dem Text stehen. Nicht umrechnen.","Kapo 3. perdeye, sonra sözlerin üstündeki akorları çal. Hiçbir şeyi dönüştürme.")}</span></div></div></div>
+  <div><b>${X("“Capo 3” on a sheet","„Kapo 3“ auf dem Blatt","Sayfada “Kapo 3”")}</b><span>${X("Capo at fret 3, then play the shapes shown above the lyrics. Don't convert anything.","Kapo in den 3. Bund, dann die Griffe spielen, die über dem Text stehen. Nicht umrechnen.","Kapo 3. perdeye, sonra sözlerin üstündeki akorları çal. Hiçbir şeyi dönüştürme.")}</span></div>
+  <div><b>${X("“Capo 11” on a sheet?","„Kapo 11“ auf dem Blatt?","Sayfada “Kapo 11” mi?")}</b><span>${X("Some sites only calculate: easy shapes + 11 half steps = original key. On a classical guitar that's unplayable. 11 up is the same as 1 down: play the shapes without capo (a half step lower) or find a capo up to 5 with the calculator below or under Songs → My chord sheets.","Manche Seiten rechnen nur: leichte Griffe + 11 Halbtöne = Original-Tonart. Auf der Konzertgitarre ist das unspielbar. 11 hoch ist dasselbe wie 1 runter: Griffe ohne Kapo spielen (einen Halbton tiefer) oder mit dem Rechner unten bzw. unter Lieder → Eigene Akkordblätter einen Kapo bis 5 finden.","Bazı siteler sadece hesaplar: kolay akorlar + 11 yarım ses = orijinal ton. Klasik gitarda bu çalınmaz. 11 yukarı, 1 aşağı ile aynıdır: akorları kaposuz çal (yarım ses pes) ya da aşağıdaki hesaplayıcıyla veya Şarkılar → Kendi akor sayfalarım bölümünde 5'e kadar bir kapo bul.")}</span></div></div></div>
 <div class="panel"><h2>${X("Capo calculator","Kapo-Rechner","Kapo hesaplayıcı")}</h2><p class="lead">${X("Choose a fret. The table shows which chord really sounds when you play a shape.","Wähle den Bund. Die Tabelle zeigt, welcher Akkord wirklich erklingt, wenn du einen Griff spielst.","Perdeyi seç. Tablo, bir akor şeklini çaldığında gerçekte hangi akorun duyulduğunu gösterir.")}</p>
  <div class="row"><label for="gCapo">${X("Capo at","Kapo im","Kapo")}</label><select id="gCapo"></select><button class="btn alt" id="gCapoPlay"></button></div>
  <div class="scroll-x" style="margin-top:12px"><table><thead><tr><th>${X("You press","Du greifst","Bastığın")}</th><th>${X("It sounds","Es klingt","Duyulan")}</th></tr></thead><tbody id="gCapoTable"></tbody></table></div>
@@ -906,8 +914,111 @@ G.render.tips=()=>`<div class="facts">
  <div><b>${X("6. Slow and clean beats fast","6. Langsam und sauber schlägt schnell","6. Yavaş ve temiz, hızlıdan iyidir")}</b><span>${X("Use the click and raise the tempo only after five clean repetitions.","Klick nutzen und erst nach fünf sauberen Durchgängen schneller werden.","Metronom kullan ve tempoyu ancak beş temiz tekrardan sonra artır.")}</span></div>
  <div><b>${X("7. Tune every time","7. Jedes Mal stimmen","7. Her seferinde akort et")}</b><span>${X("A guitar out of tune makes even correct chords sound wrong.","Eine verstimmte Gitarre lässt selbst richtige Akkorde falsch klingen.","Akordu bozuk bir gitarda doğru akorlar bile yanlış duyulur.")}</span></div></div>`;
 G.bind.tips=()=>{};
-G.render.songs=()=>songLibHTML(G);
-G.bind.songs=root=>bindSongLib(root,G);
+/* =====================================================================
+   CHORD SHEETS – paste a song like on chord websites (chord line above the
+   lyric line, or ChordPro [Am]inline). Stored only in this browser.
+   Sounding chords = written shape + capo on the sheet. You choose your own
+   capo (0–7) and a transposition; the page shows which shapes to play.
+   ===================================================================== */
+const CS_PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11,H:11};
+const CS_EN=["C","C#","D","Eb","E","F","F#","G","G#","A","Bb","B"];
+const CS_RE=/^([A-H])([#b♯♭]?)((?:maj|min|dim|aug|sus|add|m|M|\d|[#b+°ø()])*)(?:\/([A-H])([#b♯♭]?))?$/;
+const csEsc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function csChord(tok){ const m=tok.match(CS_RE); if(!m) return null;
+  const acc=a=>a==="#"||a==="♯"?1:a==="b"||a==="♭"?-1:0;
+  let q=m[3].replace(/^min/,"m"); if(q==="M") q="";
+  return {r:pc(CS_PC[m[1]]+acc(m[2])),q,bass:m[4]?pc(CS_PC[m[4]]+acc(m[5])):null}; }
+const csIsChordLine=l=>{ const t=l.trim().split(/\s+/).filter(x=>!/^(\||-|x\d+|\(|\)|\/)$/i.test(x)); return t.length>0&&t.every(x=>csChord(x.replace(/[()]/g,""))); };
+const csName=(c,k=0)=>chordName(c.r+k,c.q)+(c.bass!=null?"/"+CHORD_ROOT[lang][pc(c.bass+k)]:"");
+const csShape=(c,k)=>G.byId[CS_EN[pc(c.r+k)]+c.q]||null;
+/** text → lines: {t:"chords",items:[{col,c}]} | {t:"text",s} */
+function csParse(txt){ const out=[];
+  txt.replace(/\r/g,"").split("\n").forEach(l=>{
+    if(/\[[A-H][^\]]*\]/.test(l)&&!csIsChordLine(l)){ // ChordPro inline
+      let text="", items=[]; l.split(/(\[[^\]]+\])/).forEach(p=>{ const m=p.match(/^\[([^\]]+)\]$/); const c=m&&csChord(m[1].trim()); if(c) items.push({col:text.length,c}); else text+=p; });
+      if(items.length){ out.push({t:"chords",items}); out.push({t:"text",s:text}); return; } }
+    if(csIsChordLine(l)){ const items=[]; l.replace(/\S+/g,(tok,col)=>{ const c=csChord(tok.replace(/[()]/g,"")); if(c) items.push({col,c}); return tok; }); out.push({t:"chords",items}); }
+    else out.push({t:"text",s:l}); });
+  return out; }
+function csChords(lines){ const seen=new Map(); lines.forEach(l=>l.t==="chords"&&l.items.forEach(i=>{ const k=i.c.r+"|"+i.c.q; if(!seen.has(k)) seen.set(k,i.c); })); return [...seen.values()]; }
+/** best own capo 0–7 for the sounding chords: most open shapes, then lowest fret */
+function csBest(sound){ let best=null; for(let k=0;k<=7;k++){ const n=sound.filter(c=>csShape(c,-k)).length; if(!best||n>best.n) best={k,n}; } return best; }
+const CS_DEMO=()=>[{id:"demo",title:"Amazing Grace (public domain)",sheetCapo:0,capo:0,tr:0,text:
+`G                 C        G
+Amazing grace, how sweet the sound
+G                      D
+That saved a wretch like me
+G                G7        C       G
+I once was lost, but now am found
+Em        D       G
+Was blind, but now I see`}];
+function sheetHTML(){ return `<div class="panel"><h2>${X("My chord sheets","Eigene Akkordblätter","Kendi akor sayfalarım")}</h2>
+ <p class="lead">${X("Paste a song the way chord websites show it: a line with chords, then the lyric line below it. <code>[Am]inline</code> chords work too. Then pick your capo: the page shows which easy shapes to play and still sound right.","Füge ein Lied so ein, wie Akkord-Seiten es zeigen: eine Zeile mit Akkorden, darunter die Textzeile. <code>[Am]im Text</code> geht auch. Dann wählst du deinen Kapo: Die Seite zeigt, welche leichten Griffe du spielst, damit es trotzdem richtig klingt.","Bir şarkıyı akor sitelerindeki gibi yapıştır: akorların olduğu satır, altında söz satırı. <code>[Am]satır içi</code> akorlar da olur. Sonra kapoyu seç: sayfa hangi kolay akorları basacağını gösterir, yine doğru duyulur.")}</p>
+ <div class="row"><label for="csSel">${X("Sheet","Blatt","Sayfa")}</label><select id="csSel"></select><button class="btn alt" id="csNew">${X("New","Neu","Yeni")}</button><button class="btn alt" id="csDel">${X("Delete","Löschen","Sil")}</button></div>
+ <div class="row" style="margin-top:10px"><label for="csTitle">${X("Title","Titel","Başlık")}</label><input id="csTitle" type="text" style="flex:1;min-width:180px;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></div>
+ <details style="margin-top:10px"><summary class="strong">${X("Edit text","Text bearbeiten","Metni düzenle")}</summary><textarea id="csText" rows="12" spellcheck="false" style="margin-top:8px;min-height:220px"></textarea></details>
+ <p class="muted small" style="margin:8px 0 0">${X("Saved only in this browser, nothing is uploaded. Lyrics of protected songs are fine for your own practice; just don't publish them.","Wird nur in diesem Browser gespeichert, nichts wird hochgeladen. Texte geschützter Lieder sind für dein eigenes Üben ok, nur nicht veröffentlichen.","Sadece bu tarayıcıda saklanır, hiçbir şey yüklenmez. Telifli şarkı sözleri kendi pratiğin için sorun değil; sadece yayınlama.")}</p>
+ <div class="row" style="margin-top:14px">
+  <label for="csSheetCapo">${X("Capo on the sheet","Kapo laut Blatt","Sayfadaki kapo")}</label><select id="csSheetCapo"></select>
+  <label for="csCapo">${X("My capo","Mein Kapo","Benim kapom")}</label><select id="csCapo"></select>
+  <button class="btn go" id="csBest">${X("Easiest capo","Leichtester Kapo","En kolay kapo")}</button></div>
+ <div class="row" style="margin-top:10px"><span>${X("Key for my voice","Tonart für meine Stimme","Sesime göre ton")}</span><button class="btn alt" id="csDown" aria-label="-1">−</button><b id="csTr" style="min-width:3ch;text-align:center"></b><button class="btn alt" id="csUp" aria-label="+1">+</button></div>
+ <div class="notice" id="csInfo"></div>
+ <div class="sheet" id="csView"></div>
+ <div class="tool" style="margin-top:14px"><div class="diagram" id="csDiag"></div><div><h3 id="csNow" style="margin-top:0"></h3><p class="muted" id="csNowSub" style="margin:0 0 8px"></p><ol class="steps" id="csSteps"></ol></div></div></div>`; }
+function bindSheets(root){
+  const $=x=>root.querySelector("#"+x);
+  let list=store.get("fn-g-sheets",null); if(!Array.isArray(list)||!list.length) list=CS_DEMO();
+  let cur=store.get("fn-g-sheet",list[0].id); if(!list.find(s=>s.id===cur)) cur=list[0].id;
+  const sh=()=>list.find(s=>s.id===cur);
+  const save=()=>{ store.set("fn-g-sheets",list); store.set("fn-g-sheet",cur); };
+  const fret=i=>i===0?X("none","keiner","yok"):String(i);
+  $("csSheetCapo").innerHTML=Array.from({length:12},(_,i)=>`<option value="${i}">${fret(i)}</option>`).join("");
+  $("csCapo").innerHTML=Array.from({length:8},(_,i)=>`<option value="${i}">${fret(i)}</option>`).join("");
+  const fillSel=()=>{ $("csSel").innerHTML=list.map(s=>`<option value="${s.id}">${csEsc(s.title||X("Untitled","Ohne Titel","Başlıksız"))}</option>`).join(""); $("csSel").value=cur; };
+  /* shift: sounding = written + sheetCapo + tr; played = sounding − capo */
+  const shift=s=>s.sheetCapo+s.tr-s.capo;
+  const showChord=c=>{ const s=sh(), sh2=csShape(c,shift(s)); const snd=csName(c,s.sheetCapo+s.tr);
+    $("csNow").textContent=csName(c,shift(s));
+    $("csNowSub").textContent=(s.capo?fill(X("Capo {k} · sounds as {c}","Kapo {k} · klingt als {c}","Kapo {k} · {c} olarak duyulur"),{k:s.capo,c:snd}):fill(X("Sounds as {c}","Klingt als {c}","{c} olarak duyulur"),{c:snd}));
+    if(sh2){ $("csDiag").innerHTML=G.chordSVG(sh2); $("csSteps").innerHTML=G.steps(sh2); G.strum(sh2,"D",0,.5,s.capo); }
+    else { $("csDiag").innerHTML=""; $("csSteps").innerHTML=`<li><span class="n x">!</span><span>${X("Not one of the easy open shapes in this app (often a barre chord). Try “Easiest capo” or change the key.","Kein leichter offener Griff aus dieser App (oft ein Barré-Akkord). Probier „Leichtester Kapo“ oder eine andere Tonart.","Bu uygulamadaki kolay açık akorlardan değil (genelde barre). “En kolay kapo”yu dene ya da tonu değiştir.")}</span></li>`; } };
+  const draw=()=>{ const s=sh(), lines=csParse(s.text), k=shift(s);
+    $("csTitle").value=s.title; $("csText").value=s.text; $("csSheetCapo").value=s.sheetCapo; $("csCapo").value=s.capo;
+    $("csTr").textContent=(s.tr>0?"+":"")+s.tr;
+    let chordN=0;
+    $("csView").innerHTML=lines.map(l=>{ if(l.t==="text") return `<div class="sl">${csEsc(l.s)||"&nbsp;"}</div>`;
+      let h="", pos=0; l.items.forEach(it=>{ const nm=csName(it.c,k), col=Math.max(it.col,pos+(pos?1:0)); h+=" ".repeat(col-pos)+`<span class="sc${csShape(it.c,k)?"":" hard"}" role="button" tabindex="0" data-ci="${chordN++}">${csEsc(nm)}</span>`; pos=col+nm.length; });
+      return `<div class="sl sch">${h}</div>`; }).join("");
+    const flat=lines.filter(l=>l.t==="chords").flatMap(l=>l.items.map(i=>i.c));
+    root._cs=flat;
+    const uniq=csChords(lines), sound=uniq.map(c=>({r:pc(c.r+s.sheetCapo+s.tr),q:c.q,bass:null})), best=csBest(sound);
+    const easy=uniq.filter(c=>csShape(c,k)).length;
+    let info=uniq.length?`<b>${X("Sounds in:","Klingt in:","Duyulan:")}</b> ${sound.map(c=>csName(c)).join(" · ")}<br><b>${X("You play:","Du greifst:","Bastığın:")}</b> ${uniq.map(c=>csName(c,k)).join(" · ")} ${s.capo?fill(X("with capo {k}","mit Kapo {k}","kapo {k} ile"),{k:s.capo}):X("without capo","ohne Kapo","kapo olmadan")} (${easy}/${uniq.length} ${X("easy","leicht","kolay")})`:X("No chords found yet. Chords must stand alone on their own line.","Noch keine Akkorde gefunden. Akkorde müssen allein in einer eigenen Zeile stehen.","Henüz akor bulunamadı. Akorlar kendi satırında tek başına olmalı.");
+    if(s.sheetCapo>7){ const d=12-s.sheetCapo, h=d===1?X("one half step","einen Halbton","bir yarım ses"):fill(X("{d} half steps","{d} Halbtöne","{d} yarım ses"),{d});
+      info+=`<br><br>${fill(X("<b>Capo {n} on the sheet?</b> The website only did maths: shapes + {n} half steps = the original key. On a classical guitar the neck meets the body around fret 12, so you can't play there. Capo {n} sounds the same as {h} <i>lower</i>. Easier ways: set “Capo on the sheet” to none and play the shapes as written (sounds {h} lower, fine if you play alone), or use “Easiest capo” to match the recording.","<b>Kapo {n} auf dem Blatt?</b> Die Seite hat nur gerechnet: Griffe + {n} Halbtöne = Original-Tonart. Auf der Konzertgitarre trifft der Hals bei Bund 12 auf den Korpus, dort kann man nicht spielen. Kapo {n} klingt wie {h} <i>tiefer</i>. Leichtere Wege: „Kapo laut Blatt“ auf keiner stellen und die Griffe so spielen (klingt {h} tiefer, egal wenn du allein spielst) oder „Leichtester Kapo“ nutzen, damit es zur Aufnahme passt.","<b>Sayfada kapo {n} mi?</b> Site sadece hesap yapmış: akorlar + {n} yarım ses = orijinal ton. Klasik gitarda sap gövdeye 12. perde civarında birleşir, orada çalınmaz. Kapo {n}, {h} <i>pes</i> ile aynı duyulur. Kolay yollar: “Sayfadaki kapo”yu yok yap ve akorları yazıldığı gibi çal ({h} pes duyulur, tek başına çalıyorsan sorun değil) ya da kayda uysun diye “En kolay kapo”yu kullan."),{n:s.sheetCapo,h})}`; }
+    if(uniq.length&&best.k!==s.capo&&best.n>easy) info+=`<br><br>💡 ${fill(X("Capo {k} gives {n} of {t} easy shapes: {c}.","Kapo {k} ergibt {n} von {t} leichten Griffen: {c}.","Kapo {k} ile {t} akordan {n} tanesi kolay: {c}."),{k:best.k,n:best.n,t:uniq.length,c:uniq.map(c=>csName(c,s.sheetCapo+s.tr-best.k)).join(" · ")})}`;
+    $("csInfo").innerHTML=info;
+    const first=flat[0]; if(first){ const sh2=csShape(first,k); $("csDiag").innerHTML=sh2?G.chordSVG(sh2):""; $("csSteps").innerHTML=sh2?G.steps(sh2):""; $("csNow").textContent=csName(first,k); $("csNowSub").textContent=""; }
+  };
+  const upd=fn=>{ fn(sh()); save(); draw(); };
+  fillSel(); draw();
+  $("csSel").onchange=()=>{ cur=$("csSel").value; save(); draw(); };
+  $("csNew").onclick=()=>{ const id="s"+Date.now(); list.push({id,title:X("New song","Neues Lied","Yeni şarkı"),sheetCapo:0,capo:0,tr:0,text:"Am        G\n"}); cur=id; save(); fillSel(); draw(); root.querySelector("details").open=true; $("csText").focus(); };
+  $("csDel").onclick=()=>{ if(!confirm(X("Delete this sheet?","Dieses Blatt löschen?","Bu sayfa silinsin mi?"))) return; list=list.filter(s=>s.id!==cur); if(!list.length) list=CS_DEMO(); cur=list[0].id; save(); fillSel(); draw(); };
+  let tm; $("csText").oninput=()=>{ clearTimeout(tm); tm=setTimeout(()=>upd(s=>s.text=$("csText").value),250); };
+  $("csTitle").oninput=()=>{ sh().title=$("csTitle").value; save(); fillSel(); };
+  $("csSheetCapo").onchange=()=>upd(s=>s.sheetCapo=+$("csSheetCapo").value);
+  $("csCapo").onchange=()=>upd(s=>s.capo=+$("csCapo").value);
+  $("csUp").onclick=()=>upd(s=>s.tr=Math.min(6,s.tr+1));
+  $("csDown").onclick=()=>upd(s=>s.tr=Math.max(-6,s.tr-1));
+  $("csBest").onclick=()=>upd(s=>{ const sound=csChords(csParse(s.text)).map(c=>({r:pc(c.r+s.sheetCapo+s.tr),q:c.q})); s.capo=csBest(sound).k; });
+  const pick=e=>{ const b=e.target.closest(".sc"); if(!b) return; root.querySelectorAll(".sc.cur").forEach(x=>x.classList.remove("cur")); b.classList.add("cur"); showChord(root._cs[+b.dataset.ci]); };
+  $("csView").addEventListener("click",pick);
+  $("csView").addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); pick(e); } });
+}
+G.render.songs=()=>songLibHTML(G)+sheetHTML();
+G.bind.songs=root=>{ bindSongLib(root,G); bindSheets(root); };
 
 /** Parse the simple song notation for a wind instrument M (uses M.PC, M.RANGES, M.N). */
 function parseWind(txt,M){
