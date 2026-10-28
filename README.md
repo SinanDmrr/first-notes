@@ -16,7 +16,7 @@ Every instrument has the same structure, so nothing is left out:
 - **Instrument tools** – see below.
 - **Read music** – notes on the staff, tap to see where to play them and to hear them; note values.
 - **Tuner / Note finder** – guitar and saz get a tuner with their own reference tones per string/course; clarinet and ney, which aren't tuned note by note, get a note finder that names the note you play and shows how close it is (microphone, needs HTTPS hosting, e.g. GitHub Pages).
-- **Songs** – a song library that follows the page language and the instrument: English, German and Turkish songs, each chosen for what that instrument can play (chords for guitar, melody in learned notes for saz, clarinet and ney), with playback and highlighting. All lyrics are public domain (traditional or authors dead more than 70 years). Each entry in `SONGLIB` has `ln` (en/de/tr) and `for` (one instrument).
+- **Songs** – a song library per language and instrument: every instrument gets 2 easy, 2 medium and 2 hard songs in English, German and Turkish (folk songs, classics like Für Elise, Bach, Mozart, Grieg's Mountain King, and rock-friendly pieces like Drunken Sailor and the Toccata). Each song only uses notes that instrument can play; chords for guitar, melody in learned notes for saz, clarinet and ney, with playback and highlighting. All lyrics are public domain; pieces without lyrics are instrumental.
 - **My chord sheets (guitar)** – paste a song the way chord websites show it (chord line above the lyric line, or ChordPro `[Am]inline`). The page converts the capo on the sheet, suggests the easiest capo up to fret 7, transposes for your voice and shows each chord as a diagram. Sheets stay in your browser only; nothing is uploaded.
 - **Tips** – technique basics.
 
@@ -30,7 +30,7 @@ Frets (all 17 frets per octave on all three courses, koma frets marked, tap to h
 Practice (5 levels, the page listens and checks the note) · Fingering chart · Songs (simple text notation with playback) · air challenge, tonguing, assembly and care, the Turkish sound.
 
 ### Ney (Mansur ney, Rast = G)
-Practice (5 levels incl. low register and octave jumps) · Fingering chart for Rast, Dügah, Kürdi, Segah, Çargah, Nim Hicaz, Neva in two registers · Songs with perde names · holding, embouchure, care, angle and makam. The tuner expects Segah and Kürdi slightly below the piano note.
+Practice (5 levels incl. low register and octave jumps) · Fingering chart for Rast, Dügah, Kürdi, Segah, Çargah, Nim Hicaz, Neva, Hüseyni and Acem in two registers · Songs with perde names · holding, embouchure, care, angle and makam. The tuner expects Segah and Kürdi slightly below the piano note.
 
 ## Run it
 
