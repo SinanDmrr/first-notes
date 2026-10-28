@@ -966,7 +966,9 @@ function sheetHTML(){ return `<div class="panel"><h2>${X("My chord sheets","Eige
  <p class="lead">${X("Paste a song the way chord websites show it: a line with chords, then the lyric line below it. <code>[Am]inline</code> chords work too. Then pick your capo: the page shows which easy shapes to play and still sound right.","Füge ein Lied so ein, wie Akkord-Seiten es zeigen: eine Zeile mit Akkorden, darunter die Textzeile. <code>[Am]im Text</code> geht auch. Dann wählst du deinen Kapo: Die Seite zeigt, welche leichten Griffe du spielst, damit es trotzdem richtig klingt.","Bir şarkıyı akor sitelerindeki gibi yapıştır: akorların olduğu satır, altında söz satırı. <code>[Am]satır içi</code> akorlar da olur. Sonra kapoyu seç: sayfa hangi kolay akorları basacağını gösterir, yine doğru duyulur.")}</p>
  <div class="row"><label for="csSel">${X("Sheet","Blatt","Sayfa")}</label><select id="csSel"></select><button class="btn alt" id="csNew">${X("New","Neu","Yeni")}</button><button class="btn alt" id="csDel">${X("Delete","Löschen","Sil")}</button></div>
  <div class="row" style="margin-top:10px"><label for="csTitle">${X("Title","Titel","Başlık")}</label><input id="csTitle" type="text" style="flex:1;min-width:180px;font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></div>
- <details style="margin-top:10px"><summary class="strong">${X("Edit text","Text bearbeiten","Metni düzenle")}</summary><textarea id="csText" rows="12" spellcheck="false" style="margin-top:8px;min-height:220px"></textarea></details>
+ <div class="row" style="margin-top:10px" id="csEditRow"><button class="btn alt" id="csEdit">✎ ${X("Edit text","Text bearbeiten","Metni düzenle")}</button></div>
+ <div id="csEditor" hidden style="margin-top:10px"><textarea id="csText" rows="12" spellcheck="false" style="min-height:220px"></textarea>
+  <div class="row" style="margin-top:8px"><button class="btn go" id="csSave">✓ ${X("Apply","Übernehmen","Uygula")}</button><button class="btn alt" id="csCancel">${X("Cancel","Abbrechen","Vazgeç")}</button><span class="muted small">${X("Ctrl + Enter applies too.","Strg + Enter übernimmt auch.","Ctrl + Enter ile de uygulanır.")}</span></div></div>
  <p class="muted small" style="margin:8px 0 0">${X("Saved only in this browser, nothing is uploaded. Lyrics of protected songs are fine for your own practice; just don't publish them.","Wird nur in diesem Browser gespeichert, nichts wird hochgeladen. Texte geschützter Lieder sind für dein eigenes Üben ok, nur nicht veröffentlichen.","Sadece bu tarayıcıda saklanır, hiçbir şey yüklenmez. Telifli şarkı sözleri kendi pratiğin için sorun değil; sadece yayınlama.")}</p>
  <div class="row" style="margin-top:14px">
   <label for="csSheetCapo">${X("Capo on the sheet","Kapo laut Blatt","Sayfadaki kapo")}</label><select id="csSheetCapo"></select>
@@ -994,7 +996,7 @@ function bindSheets(root){
     if(sh2){ $("csDiag").innerHTML=G.chordSVG(sh2); $("csSteps").innerHTML=G.steps(sh2); G.strum(sh2,"D",0,.5,s.capo); }
     else { $("csDiag").innerHTML=""; $("csSteps").innerHTML=`<li><span class="n x">!</span><span>${X("Not one of the easy open shapes in this app (often a barre chord). Try “Easiest capo” or change the key.","Kein leichter offener Griff aus dieser App (oft ein Barré-Akkord). Probier „Leichtester Kapo“ oder eine andere Tonart.","Bu uygulamadaki kolay açık akorlardan değil (genelde barre). “En kolay kapo”yu dene ya da tonu değiştir.")}</span></li>`; } };
   const draw=()=>{ const s=sh(), lines=csParse(s.text), k=shift(s);
-    $("csTitle").value=s.title; $("csText").value=s.text; $("csSheetCapo").value=s.sheetCapo; $("csCapo").value=s.capo;
+    $("csTitle").value=s.title; if(document.activeElement!==$("csText")) $("csText").value=s.text; $("csSheetCapo").value=s.sheetCapo; $("csCapo").value=s.capo;
     $("csTr").textContent=(s.tr>0?"+":"")+s.tr;
     let chordN=0;
     $("csView").innerHTML=lines.map(l=>{ if(l.t==="text") return `<div class="sl">${csEsc(l.s)||"&nbsp;"}</div>`;
@@ -1014,9 +1016,18 @@ function bindSheets(root){
   const upd=fn=>{ fn(sh()); save(); draw(); };
   fillSel(); draw();
   $("csSel").onchange=()=>{ cur=$("csSel").value; save(); draw(); };
-  $("csNew").onclick=()=>{ const id="s"+Date.now(); list.push({id,title:X("New song","Neues Lied","Yeni şarkı"),sheetCapo:0,capo:0,tr:0,text:"Am        G\n"}); cur=id; save(); fillSel(); draw(); root.querySelector("details").open=true; $("csText").focus(); };
+  $("csNew").onclick=()=>{ const id="s"+Date.now(); list.push({id,title:X("New song","Neues Lied","Yeni şarkı"),sheetCapo:0,capo:0,tr:0,text:"Am        G\n"}); cur=id; save(); fillSel(); draw(); openEd(); };
   $("csDel").onclick=()=>{ if(!confirm(X("Delete this sheet?","Dieses Blatt löschen?","Bu sayfa silinsin mi?"))) return; list=list.filter(s=>s.id!==cur); if(!list.length) list=CS_DEMO(); cur=list[0].id; save(); fillSel(); draw(); };
-  let tm; $("csText").oninput=()=>{ clearTimeout(tm); tm=setTimeout(()=>upd(s=>s.text=$("csText").value),250); };
+  /* edit mode: live preview while typing, "Apply" closes the editor, "Cancel" restores the old text */
+  let tm, before=null;
+  const openEd=()=>{ before=sh().text; $("csText").value=sh().text; $("csEditor").hidden=false; $("csEditRow").hidden=true; $("csText").focus(); };
+  const closeEd=()=>{ before=null; $("csEditor").hidden=true; $("csEditRow").hidden=false; };
+  $("csEdit").onclick=openEd;
+  $("csSave").onclick=()=>{ clearTimeout(tm); upd(s=>s.text=$("csText").value); closeEd(); $("csView").scrollIntoView({behavior:"smooth",block:"nearest"}); };
+  $("csCancel").onclick=()=>{ clearTimeout(tm); if(before!==null) upd(s=>s.text=before); closeEd(); };
+  $("csText").onkeydown=e=>{ if(e.key==="Enter"&&(e.ctrlKey||e.metaKey)){ e.preventDefault(); $("csSave").click(); } };
+  $("csText").oninput=()=>{ clearTimeout(tm); tm=setTimeout(()=>upd(s=>s.text=$("csText").value),250); };
+  $("csSel").addEventListener("change",closeEd);
   $("csTitle").oninput=()=>{ sh().title=$("csTitle").value; save(); fillSel(); };
   $("csSheetCapo").onchange=()=>upd(s=>s.sheetCapo=+$("csSheetCapo").value);
   $("csCapo").onchange=()=>upd(s=>s.capo=+$("csCapo").value);
