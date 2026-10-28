@@ -1910,53 +1910,160 @@ S.WEEKS=()=>[
 
 
 /* =====================================================================
-   SONG LIBRARY – well-known songs with public-domain lyrics.
-   Melody is stored in C (reference) as letter+octave tokens, e.g. "E4 D4:2".
-   Each instrument transposes it (tr) into notes it can play; the guitar uses
-   the chords (written for its own key) and plays the melody along.
+   SONG LIBRARY – every song belongs to ONE language (ln) and ONE instrument
+   (for). The library shows the songs for the current page language and
+   instrument, so English, German and Turkish users each get songs from
+   their own culture, picked for what that instrument can play.
+   Melody tokens: letter+octave, e.g. "E4 D4:2" (":2" = 2 beats, "R" = rest).
+   tr[id] transposes the melody into the instrument's own pitch:
+   guitar = sounding pitch (chords are written for the guitar key),
+   clarinet = written pitch, saz = written pitch on the alt course (+12),
+   ney = sounding pitch (Rast = G4).
+   In 6/8 and 7/8 songs one beat = one eighth note.
+   All lyrics are public domain (traditional or authors dead > 70 years).
    ===================================================================== */
 const SONGLIB=[
- {id:"mary",lvl:"easy",title:"Mary Had a Little Lamb",meter:"4/4",info:()=>X("Sarah Josepha Hale, 1830 · public domain","Sarah Josepha Hale, 1830 · gemeinfrei","Sarah Josepha Hale, 1830 · kamu malı"),
-  for:["g","s","k","n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4],bars:[
-  {c:"G",m:"E4 D4 C4 D4",w:"Ma-ry had a"},{c:"G",m:"E4 E4 E4:2",w:"lit-tle lamb,"},{c:"D",m:"D4 D4 D4:2",w:"lit-tle lamb,"},{c:"G",m:"E4 G4 G4:2",w:"lit-tle lamb,"},
-  {c:"G",m:"E4 D4 C4 D4",w:"Ma-ry had a"},{c:"G",m:"E4 E4 E4 E4",w:"lit-tle lamb, its"},{c:"D",m:"D4 D4 E4 D4",w:"fleece was white as"},{c:"G",m:"C4:4",w:"snow."}]},
- {id:"ode",lvl:"easy",lvlFor:{n:"medium"},title:"Ode an die Freude",meter:"4/4",info:()=>X("Beethoven 1824, text Friedrich Schiller 1785 · public domain","Beethoven 1824, Text Friedrich Schiller 1785 · gemeinfrei","Beethoven 1824, söz Friedrich Schiller 1785 · kamu malı"),
-  for:["g","s","k","n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4],bars:[
-  {c:"G",m:"E4 E4 F4 G4",w:"Freu-de, schö-ner"},{c:"D",m:"G4 F4 E4 D4",w:"Göt-ter-fun-ken,"},{c:"G",m:"C4 C4 D4 E4",w:"Toch-ter aus E-"},{c:"D",m:"E4:3/2 D4:1/2 D4:2",w:"-ly-si-um!"},
-  {c:"G",m:"E4 E4 F4 G4",w:"Wir be-tre-ten"},{c:"D",m:"G4 F4 E4 D4",w:"feu-er-trun-ken,"},{c:"G",m:"C4 C4 D4 E4",w:"Himm-li-sche, dein"},{c:"D G",m:"D4:3/2 C4:1/2 C4:2",w:"Hei-lig-tum!"}]},
- {id:"hcb",lvl:"easy",title:"Hot Cross Buns",meter:"4/4",info:()=>X("Traditional, 18th century · public domain","Traditionell, 18. Jh. · gemeinfrei","Geleneksel, 18. yüzyıl · kamu malı"),
-  for:["n"],tr:{g:-5,s:12,k:0,n:7},lines:[2,2],bars:[
-  {c:"G",m:"E4 D4 C4:2",w:"Hot cross buns!"},{c:"G",m:"E4 D4 C4:2",w:"Hot cross buns!"},
-  {c:"G",m:"C4:1/2 C4:1/2 C4:1/2 C4:1/2 D4:1/2 D4:1/2 D4:1/2 D4:1/2",w:"One a pen-ny, two a pen-ny,"},{c:"D G",m:"E4 D4 C4:2",w:"hot cross buns!"}]},
- {id:"twinkle",lvl:"medium",title:"Twinkle, Twinkle, Little Star",meter:"4/4",info:()=>X("Text Jane Taylor 1806, French melody 18th century · public domain","Text Jane Taylor 1806, französische Melodie 18. Jh. · gemeinfrei","Söz Jane Taylor 1806, Fransız melodisi 18. yüzyıl · kamu malı"),
-  for:["g","s","k"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4,4],bars:[
-  {c:"G",m:"C4 C4 G4 G4",w:"Twin-kle, twin-kle,"},{c:"C G",m:"A4 A4 G4:2",w:"lit-tle star,"},{c:"C G",m:"F4 F4 E4 E4",w:"how I won-der"},{c:"D G",m:"D4 D4 C4:2",w:"what you are!"},
-  {c:"G C",m:"G4 G4 F4 F4",w:"Up a-bove the"},{c:"G D",m:"E4 E4 D4:2",w:"world so high,"},{c:"G C",m:"G4 G4 F4 F4",w:"like a dia-mond"},{c:"G D",m:"E4 E4 D4:2",w:"in the sky."},
-  {c:"G",m:"C4 C4 G4 G4",w:"Twin-kle, twin-kle,"},{c:"C G",m:"A4 A4 G4:2",w:"lit-tle star,"},{c:"C G",m:"F4 F4 E4 E4",w:"how I won-der"},{c:"D G",m:"D4 D4 C4:2",w:"what you are!"}]},
- {id:"haensel",lvl:"medium",title:"Hänschen klein",meter:"4/4",info:()=>X("German folk song, text Franz Wiedemann 1860 · public domain","Deutsches Volkslied, Text Franz Wiedemann 1860 · gemeinfrei","Alman halk şarkısı, söz Franz Wiedemann 1860 · kamu malı"),
-  for:["n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4,4,4],bars:[
-  {c:"G",m:"G4 E4 E4:2",w:"Häns-chen klein"},{c:"D",m:"F4 D4 D4:2",w:"ging al-lein"},{c:"G",m:"C4 D4 E4 F4",w:"in die wei-te"},{c:"G",m:"G4 G4 G4:2",w:"Welt hin-ein."},
-  {c:"G",m:"G4 E4 E4:2",w:"Stock und Hut"},{c:"D",m:"F4 D4 D4:2",w:"steht ihm gut,"},{c:"G",m:"C4 E4 G4 G4",w:"ist gar wohl-ge-"},{c:"G",m:"C4:4",w:"-mut."},
-  {c:"D",m:"D4 D4 D4 D4",w:"A-ber Mut-ter"},{c:"D",m:"D4 E4 F4:2",w:"wei-net sehr,"},{c:"G",m:"E4 E4 E4 E4",w:"hat ja nun kein"},{c:"G",m:"E4 F4 G4:2",w:"Häns-chen mehr."},
-  {c:"G",m:"G4 E4 E4:2",w:"Da be-sinnt"},{c:"D",m:"F4 D4 D4:2",w:"sich das Kind,"},{c:"G",m:"C4 E4 G4 G4",w:"kehrt nach Haus ge-"},{c:"G",m:"C4:4",w:"-schwind."}]},
- {id:"jingle",lvl:"medium",lvlFor:{n:"hard"},title:"Jingle Bells",meter:"4/4",info:()=>X("James Lord Pierpont, 1857 (chorus) · public domain","James Lord Pierpont, 1857 (Refrain) · gemeinfrei","James Lord Pierpont, 1857 (nakarat) · kamu malı"),
-  for:["g","s","k","n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4,4,4],bars:[
-  {c:"G",m:"E4 E4 E4:2",w:"Jin-gle bells,"},{c:"G",m:"E4 E4 E4:2",w:"jin-gle bells,"},{c:"G",m:"E4 G4 C4:3/2 D4:1/2",w:"jin-gle all the"},{c:"G",m:"E4:4",w:"way!"},
-  {c:"C",m:"F4 F4 F4:3/2 F4:1/2",w:"Oh, what fun it"},{c:"G",m:"F4 E4 E4 E4:1/2 E4:1/2",w:"is to ride in a"},{c:"A7",m:"E4 D4 D4 E4",w:"one-horse o-pen"},{c:"D7",m:"D4:2 G4:2",w:"sleigh, hey!"},
-  {c:"G",m:"E4 E4 E4:2",w:"Jin-gle bells,"},{c:"G",m:"E4 E4 E4:2",w:"jin-gle bells,"},{c:"G",m:"E4 G4 C4:3/2 D4:1/2",w:"jin-gle all the"},{c:"G",m:"E4:4",w:"way!"},
-  {c:"C",m:"F4 F4 F4:3/2 F4:1/2",w:"Oh, what fun it"},{c:"G",m:"F4 E4 E4 E4:1/2 E4:1/2",w:"is to ride in a"},{c:"D7",m:"G4 G4 F4 D4",w:"one-horse o-pen"},{c:"G",m:"C4:4",w:"sleigh!"}]},
- {id:"saints",lvl:"hard",title:"When the Saints Go Marching In",meter:"4/4",info:()=>X("Traditional spiritual · public domain","Traditionelles Spiritual · gemeinfrei","Geleneksel spiritüel · kamu malı"),
-  for:["g","s","k","n"],tr:{g:-5,s:12,k:0,n:7},lines:[4,4,4,3],bars:[
-  {c:"G",m:"R C4 E4 F4",w:"Oh, when the"},{c:"G",m:"G4:4",w:"saints"},{c:"G",m:"R C4 E4 F4",w:"go march-ing"},{c:"G",m:"G4:4",w:"in,"},
-  {c:"G",m:"R C4 E4 F4",w:"oh, when the"},{c:"G",m:"G4:2 E4:2",w:"saints go"},{c:"G",m:"C4:2 E4:2",w:"march-ing"},{c:"D7",m:"D4:4",w:"in,"},
-  {c:"G",m:"R E4 E4 D4",w:"oh, Lord, I"},{c:"G7",m:"C4:3 C4",w:"want to"},{c:"C",m:"E4:2 G4 G4",w:"be in that"},{c:"C",m:"F4:4",w:"num-ber,"},
-  {c:"G",m:"R E4 F4 G4",w:"when the saints"},{c:"G D7",m:"E4:2 C4:2",w:"go march-"},{c:"D7 G",m:"D4:2 C4:2",w:"-ing in!"}]},
- {id:"grace",lvl:"hard",title:"Amazing Grace",meter:"3/4",info:()=>X("Text John Newton 1779, melody “New Britain” 1835 · public domain","Text John Newton 1779, Melodie „New Britain“ 1835 · gemeinfrei","Söz John Newton 1779, melodi “New Britain” 1835 · kamu malı"),
-  for:["g","s","k"],tr:{g:-5,s:14,k:0,n:7},lines:[4,4,4,4],bars:[
-  {c:"",m:"R:2 G3",w:"A-"},{c:"G",m:"C4:2 E4:1/2 C4:1/2",w:"-maz-ing"},{c:"G",m:"E4:2 D4",w:"grace, how"},{c:"C",m:"C4:2 A3",w:"sweet the"},
-  {c:"G",m:"G3:2 G3",w:"sound that"},{c:"G",m:"C4:2 E4:1/2 C4:1/2",w:"saved a"},{c:"G",m:"E4:2 D4",w:"wretch like"},{c:"D",m:"G4:3",w:"me!"},
-  {c:"D",m:"G4:2 E4",w:"I"},{c:"G",m:"G4:2 E4:1/2 G4:1/2",w:"once was"},{c:"G",m:"E4:2 C4",w:"lost, but"},{c:"C",m:"G3:2 A3",w:"now am"},
-  {c:"G",m:"C4:2 C4",w:"found, was"},{c:"Em",m:"A3:2 G3",w:"blind, but"},{c:"G D",m:"C4:2 E4:1/2 C4:1/2",w:"now I"},{c:"G",m:"E4:2 D4 C4:3",w:"see."}]}
+ /* ---------------- ENGLISH ---------------- */
+ // Guitar (EN)
+ {id:"en-row",ln:"en",for:["g"],lvl:"easy",title:"Row, Row, Row Your Boat",meter:"6/8",info:()=>"Traditional, 19th century · public domain",
+  tr:{g:0},lines:[4,4],bars:[
+  {c:"G",m:"G3:3 G3:3",w:"Row, row,"},{c:"G",m:"G3:2 A3 B3:3",w:"row your boat"},{c:"G",m:"B3:2 A3 B3:2 C4",w:"gent-ly down the"},{c:"G",m:"D4:6",w:"stream."},
+  {c:"G",m:"G4 G4 G4 D4 D4 D4",w:"Mer-ri-ly, mer-ri-ly,"},{c:"G",m:"B3 B3 B3 G3 G3 G3",w:"mer-ri-ly, mer-ri-ly,"},{c:"D7",m:"D4:2 C4 B3:2 A3",w:"life is but a"},{c:"G",m:"G3:6",w:"dream."}]},
+ {id:"en-mac",ln:"en",for:["g"],lvl:"easy",title:"Old MacDonald Had a Farm",meter:"4/4",info:()=>"Traditional, early 20th century · public domain",
+  tr:{g:0},lines:[4,4],bars:[
+  {c:"G",m:"G3 G3 G3 D3",w:"Old Mac-Don-ald"},{c:"C G",m:"E3 E3 D3:2",w:"had a farm,"},{c:"D7",m:"B3 B3 A3 A3",w:"E-I-E-I-"},{c:"G",m:"G3:3 D3",w:"O! And"},
+  {c:"G",m:"G3 G3 G3 D3",w:"on his farm he"},{c:"C G",m:"E3 E3 D3:2",w:"had a cow,"},{c:"D7",m:"B3 B3 A3 A3",w:"E-I-E-I-"},{c:"G",m:"G3:4",w:"O!"}]},
+ {id:"en-susanna",ln:"en",for:["g"],lvl:"medium",title:"Oh! Susanna",meter:"4/4",info:()=>"Stephen Foster, 1848 · public domain",
+  tr:{g:0},lines:[5,4],bars:[
+  {c:"",m:"G3:1/2 A3:1/2",w:"I come"},{c:"G",m:"B3 D4 D4:3/2 E4:1/2",w:"from Al-a-ba-"},{c:"G",m:"D4 B3 G3:3/2 A3:1/2",w:"-ma with a ban-"},{c:"G",m:"B3 B3 A3 G3",w:"-jo on my"},{c:"D7",m:"A3:3 G3:1/2 A3:1/2",w:"knee, I'm go-"},
+  {c:"G",m:"B3 D4 D4:3/2 E4:1/2",w:"-ing to Lou-i-"},{c:"G",m:"D4 B3 G3:3/2 A3:1/2",w:"-si-an-a, my"},{c:"G D7",m:"B3 B3 A3 A3",w:"true love for to"},{c:"G",m:"G3:4",w:"see."}]},
+ {id:"en-wish",ln:"en",for:["g"],lvl:"hard",title:"We Wish You a Merry Christmas",meter:"3/4",info:()=>"Traditional English carol · public domain",
+  tr:{g:0},lines:[5,4],bars:[
+  {c:"",m:"D3",w:"We"},{c:"G",m:"G3 G3:1/2 A3:1/2 G3:1/2 F#3:1/2",w:"wish you a mer-ry"},{c:"C",m:"E3 E3 E3",w:"Christ-mas, we"},{c:"A7",m:"A3 A3:1/2 B3:1/2 A3:1/2 G3:1/2",w:"wish you a mer-ry"},{c:"D7",m:"F#3 D3 D3",w:"Christ-mas, we"},
+  {c:"Em",m:"B3 B3:1/2 C4:1/2 B3:1/2 A3:1/2",w:"wish you a mer-ry"},{c:"C",m:"G3 E3 D3:1/2 D3:1/2",w:"Christ-mas and a"},{c:"C D7",m:"E3 A3 F#3",w:"hap-py New"},{c:"G",m:"G3:3",w:"Year!"}]},
+ // Clarinet (EN) – written pitch, natural notes + G♯ and B♭
+ {id:"en-twinkle",ln:"en",for:["k"],lvl:"easy",title:"Twinkle, Twinkle, Little Star",meter:"4/4",info:()=>"Text Jane Taylor 1806, French melody 18th century · public domain",
+  tr:{k:0},lines:[4,4,4],bars:[
+  {c:"",m:"C4 C4 G4 G4",w:"Twin-kle, twin-kle,"},{c:"",m:"A4 A4 G4:2",w:"lit-tle star,"},{c:"",m:"F4 F4 E4 E4",w:"how I won-der"},{c:"",m:"D4 D4 C4:2",w:"what you are!"},
+  {c:"",m:"G4 G4 F4 F4",w:"Up a-bove the"},{c:"",m:"E4 E4 D4:2",w:"world so high,"},{c:"",m:"G4 G4 F4 F4",w:"like a dia-mond"},{c:"",m:"E4 E4 D4:2",w:"in the sky."},
+  {c:"",m:"C4 C4 G4 G4",w:"Twin-kle, twin-kle,"},{c:"",m:"A4 A4 G4:2",w:"lit-tle star,"},{c:"",m:"F4 F4 E4 E4",w:"how I won-der"},{c:"",m:"D4 D4 C4:2",w:"what you are!"}]},
+ {id:"en-michael",ln:"en",for:["k"],lvl:"medium",title:"Michael, Row the Boat Ashore",meter:"4/4",info:()=>"Traditional spiritual, 19th century · public domain",
+  tr:{k:0},lines:[4,4],bars:[
+  {c:"",m:"C4 E4 G4:3/2 E4:1/2",w:"Mi-chael, row the"},{c:"",m:"G4 A4 G4:2",w:"boat a-shore,"},{c:"",m:"E4 G4 A4:2",w:"Hal-le-lu-"},{c:"",m:"G4:4",w:"-jah!"},
+  {c:"",m:"E4 G4 G4:3/2 E4:1/2",w:"Mi-chael, row the"},{c:"",m:"F4 E4 D4:2",w:"boat a-shore,"},{c:"",m:"C4 D4 E4:2",w:"Hal-le-lu-"},{c:"",m:"D4:2 C4:2",w:"-jah!"}]},
+ {id:"en-birthday",ln:"en",for:["k"],lvl:"medium",title:"Happy Birthday to You",meter:"3/4",info:()=>"Mildred J. Hill & Patty Hill, 1893 · public domain",
+  tr:{k:0},lines:[5,4],bars:[
+  {c:"",m:"G3:3/4 G3:1/4",w:"Hap-py"},{c:"",m:"A3 G3 C4",w:"birth-day to"},{c:"",m:"B3:2 G3:3/4 G3:1/4",w:"you, hap-py"},{c:"",m:"A3 G3 D4",w:"birth-day to"},{c:"",m:"C4:2 G3:3/4 G3:1/4",w:"you, hap-py"},
+  {c:"",m:"G4 E4 C4",w:"birth-day, dear"},{c:"",m:"B3 A3 F4:3/4 F4:1/4",w:"friend, hap-py"},{c:"",m:"E4 C4 D4",w:"birth-day to"},{c:"",m:"C4:3",w:"you!"}]},
+ {id:"en-auld",ln:"en",for:["k"],lvl:"hard",title:"Auld Lang Syne",meter:"4/4",info:()=>"Robert Burns 1788, Scottish melody · public domain",
+  tr:{k:0},lines:[5,4],bars:[
+  {c:"",m:"G3",w:"Should"},{c:"",m:"C4:3/2 C4:1/2 C4 E4",w:"auld ac-quaint-ance"},{c:"",m:"D4:3/2 C4:1/2 D4 E4",w:"be for-got, and"},{c:"",m:"C4:3/2 C4:1/2 E4 G4",w:"nev-er brought to"},{c:"",m:"A4:3 A4",w:"mind? Should"},
+  {c:"",m:"G4:3/2 E4:1/2 E4 C4",w:"auld ac-quaint-ance"},{c:"",m:"D4:3/2 C4:1/2 D4 E4",w:"be for-got, and"},{c:"",m:"C4:3/2 A3:1/2 A3 G3",w:"days of auld lang"},{c:"",m:"C4:3 R",w:"syne?"}]},
+ // Saz (EN) – alt course, written pitch = melody + 12
+ {id:"en-london",ln:"en",for:["s"],lvl:"easy",title:"London Bridge Is Falling Down",meter:"4/4",info:()=>"Traditional English nursery rhyme · public domain",
+  tr:{s:12},lines:[4,4],bars:[
+  {c:"",m:"G4:3/2 A4:1/2 G4 F4",w:"Lon-don Bridge is"},{c:"",m:"E4 F4 G4:2",w:"fall-ing down,"},{c:"",m:"D4 E4 F4:2",w:"fall-ing down,"},{c:"",m:"E4 F4 G4:2",w:"fall-ing down."},
+  {c:"",m:"G4:3/2 A4:1/2 G4 F4",w:"Lon-don Bridge is"},{c:"",m:"E4 F4 G4:2",w:"fall-ing down,"},{c:"",m:"D4:2 G4:2",w:"my fair"},{c:"",m:"E4 C4:3",w:"la-dy."}]},
+ {id:"en-camptown",ln:"en",for:["s"],lvl:"medium",title:"Camptown Races",meter:"4/4",info:()=>"Stephen Foster, 1850 (verse) · public domain",
+  tr:{s:12},lines:[4,4],bars:[
+  {c:"",m:"G4 G4 E4 G4",w:"Camp-town la-dies"},{c:"",m:"A4 G4 E4:2",w:"sing this song,"},{c:"",m:"E4:2 D4:2",w:"doo-dah!"},{c:"",m:"E4:2 D4:2",w:"doo-dah!"},
+  {c:"",m:"G4 G4 E4 G4",w:"Camp-town race-track's"},{c:"",m:"A4 G4 E4:2",w:"five miles long,"},{c:"",m:"D4 D4 E4 D4",w:"oh, de doo-dah"},{c:"",m:"C4:4",w:"day!"}]},
+ {id:"en-grace",ln:"en",for:["s"],lvl:"hard",title:"Amazing Grace",meter:"3/4",info:()=>"Text John Newton 1779, melody “New Britain” 1835 · public domain",
+  tr:{s:14},lines:[4,4,4,4],bars:[
+  {c:"",m:"R:2 G3",w:"A-"},{c:"",m:"C4:2 E4:1/2 C4:1/2",w:"-maz-ing"},{c:"",m:"E4:2 D4",w:"grace, how"},{c:"",m:"C4:2 A3",w:"sweet the"},
+  {c:"",m:"G3:2 G3",w:"sound that"},{c:"",m:"C4:2 E4:1/2 C4:1/2",w:"saved a"},{c:"",m:"E4:2 D4",w:"wretch like"},{c:"",m:"G4:3",w:"me!"},
+  {c:"",m:"G4:2 E4",w:"I"},{c:"",m:"G4:2 E4:1/2 G4:1/2",w:"once was"},{c:"",m:"E4:2 C4",w:"lost, but"},{c:"",m:"G3:2 A3",w:"now am"},
+  {c:"",m:"C4:2 C4",w:"found, was"},{c:"",m:"A3:2 G3",w:"blind, but"},{c:"",m:"C4:2 E4:1/2 C4:1/2",w:"now I"},{c:"",m:"E4:2 D4 C4:3",w:"see."}]},
+ // Ney (EN) – five-note melodies that fit Rast–Neva
+ {id:"en-buns",ln:"en",for:["n"],lvl:"easy",title:"Hot Cross Buns",meter:"4/4",info:()=>"Traditional, 18th century · public domain",
+  tr:{n:7},lines:[2,2],bars:[
+  {c:"",m:"E4 D4 C4:2",w:"Hot cross buns!"},{c:"",m:"E4 D4 C4:2",w:"Hot cross buns!"},
+  {c:"",m:"C4:1/2 C4:1/2 C4:1/2 C4:1/2 D4:1/2 D4:1/2 D4:1/2 D4:1/2",w:"One a pen-ny, two a pen-ny,"},{c:"",m:"E4 D4 C4:2",w:"hot cross buns!"}]},
+ {id:"en-mary",ln:"en",for:["n"],lvl:"easy",title:"Mary Had a Little Lamb",meter:"4/4",info:()=>"Sarah Josepha Hale, 1830 · public domain",
+  tr:{n:7},lines:[4,4],bars:[
+  {c:"",m:"E4 D4 C4 D4",w:"Ma-ry had a"},{c:"",m:"E4 E4 E4:2",w:"lit-tle lamb,"},{c:"",m:"D4 D4 D4:2",w:"lit-tle lamb,"},{c:"",m:"E4 G4 G4:2",w:"lit-tle lamb,"},
+  {c:"",m:"E4 D4 C4 D4",w:"Ma-ry had a"},{c:"",m:"E4 E4 E4 E4",w:"lit-tle lamb, its"},{c:"",m:"D4 D4 E4 D4",w:"fleece was white as"},{c:"",m:"C4:4",w:"snow."}]},
+ {id:"en-jingle",ln:"en",for:["n"],lvl:"medium",title:"Jingle Bells",meter:"4/4",info:()=>"James Lord Pierpont, 1857 (chorus) · public domain",
+  tr:{n:7},lines:[4,4,4,4],bars:[
+  {c:"",m:"E4 E4 E4:2",w:"Jin-gle bells,"},{c:"",m:"E4 E4 E4:2",w:"jin-gle bells,"},{c:"",m:"E4 G4 C4:3/2 D4:1/2",w:"jin-gle all the"},{c:"",m:"E4:4",w:"way!"},
+  {c:"",m:"F4 F4 F4:3/2 F4:1/2",w:"Oh, what fun it"},{c:"",m:"F4 E4 E4 E4:1/2 E4:1/2",w:"is to ride in a"},{c:"",m:"E4 D4 D4 E4",w:"one-horse o-pen"},{c:"",m:"D4:2 G4:2",w:"sleigh, hey!"},
+  {c:"",m:"E4 E4 E4:2",w:"Jin-gle bells,"},{c:"",m:"E4 E4 E4:2",w:"jin-gle bells,"},{c:"",m:"E4 G4 C4:3/2 D4:1/2",w:"jin-gle all the"},{c:"",m:"E4:4",w:"way!"},
+  {c:"",m:"F4 F4 F4:3/2 F4:1/2",w:"Oh, what fun it"},{c:"",m:"F4 E4 E4 E4:1/2 E4:1/2",w:"is to ride in a"},{c:"",m:"G4 G4 F4 D4",w:"one-horse o-pen"},{c:"",m:"C4:4",w:"sleigh!"}]},
+ {id:"en-saints",ln:"en",for:["n"],lvl:"hard",title:"When the Saints Go Marching In",meter:"4/4",info:()=>"Traditional spiritual · public domain",
+  tr:{n:7},lines:[4,4,4,3],bars:[
+  {c:"",m:"R C4 E4 F4",w:"Oh, when the"},{c:"",m:"G4:4",w:"saints"},{c:"",m:"R C4 E4 F4",w:"go march-ing"},{c:"",m:"G4:4",w:"in,"},
+  {c:"",m:"R C4 E4 F4",w:"oh, when the"},{c:"",m:"G4:2 E4:2",w:"saints go"},{c:"",m:"C4:2 E4:2",w:"march-ing"},{c:"",m:"D4:4",w:"in,"},
+  {c:"",m:"R E4 E4 D4",w:"oh, Lord, I"},{c:"",m:"C4:3 C4",w:"want to"},{c:"",m:"E4:2 G4 G4",w:"be in that"},{c:"",m:"F4:4",w:"num-ber,"},
+  {c:"",m:"R E4 F4 G4",w:"when the saints"},{c:"",m:"E4:2 C4:2",w:"go march-"},{c:"",m:"D4:2 C4:2",w:"-ing in!"}]},
+
+ /* ---------------- DEUTSCH ---------------- */
+ // Gitarre (DE)
+ {id:"de-abend",ln:"de",for:["g"],lvl:"medium",title:"Guten Abend, gut’ Nacht",meter:"3/4",info:()=>"Johannes Brahms 1868, Text Des Knaben Wunderhorn · gemeinfrei",
+  tr:{g:0},lines:[5,4,4,4],bars:[
+  {c:"",m:"B3:1/2 B3:1/2",w:"Gu-ten"},{c:"G",m:"D4:3/2 B3:1/2 B3",w:"A-bend, gut’"},{c:"G",m:"D4:2 B3:1/2 D4:1/2",w:"Nacht, mit Ro-"},{c:"D7",m:"G4 F#4:3/2 E4:1/2",w:"-sen be-dacht,"},{c:"D7",m:"E4 D4 A3:1/2 B3:1/2",w:"mit Näg-lein be-"},
+  {c:"D7",m:"C4 A3 A3:1/2 B3:1/2",w:"-steckt, schlupf un-"},{c:"D7",m:"C4:2 A3:1/2 C4:1/2",w:"-ter die"},{c:"D7",m:"F#4:1/2 E4:1/2 D4 F#4",w:"Deck’."},{c:"G",m:"G4:2 G3:1/2 G3:1/2",w:"Mor-gen"},
+  {c:"C",m:"G4:2 E4:1/2 C4:1/2",w:"früh, wenn Gott"},{c:"G",m:"D4:2 B3:1/2 G3:1/2",w:"will, wirst du"},{c:"D7",m:"C4 D4 E4",w:"wie-der ge-"},{c:"G",m:"D4:2 G3:1/2 G3:1/2",w:"weckt. Mor-gen"},
+  {c:"C",m:"G4:2 E4:1/2 C4:1/2",w:"früh, wenn Gott"},{c:"G",m:"D4:2 B3:1/2 G3:1/2",w:"will, wirst du"},{c:"D7",m:"C4 B3 A3",w:"wie-der ge-"},{c:"G",m:"G3:3",w:"weckt."}]},
+ {id:"de-stille",ln:"de",for:["g"],lvl:"hard",title:"Stille Nacht, heilige Nacht",meter:"6/8",info:()=>"Franz Xaver Gruber 1818, Text Joseph Mohr · gemeinfrei",
+  tr:{g:0},lines:[4,4,4],bars:[
+  {c:"G",m:"D4:3/2 E4:1/2 D4 B3:3",w:"Stil-le Nacht,"},{c:"G",m:"D4:3/2 E4:1/2 D4 B3:3",w:"hei-li-ge Nacht!"},{c:"D7",m:"A4:2 A4 F#4:3",w:"Al-les schläft,"},{c:"G",m:"G4:2 G4 D4:3",w:"ein-sam wacht"},
+  {c:"C",m:"E4:2 E4 G4:3/2 F#4:1/2 E4",w:"nur das trau-te hoch-"},{c:"G",m:"D4:3/2 E4:1/2 D4 B3:3",w:"-hei-li-ge Paar."},{c:"C",m:"E4:2 E4 G4:3/2 F#4:1/2 E4",w:"Hol-der Kna-be im"},{c:"G",m:"D4:3/2 E4:1/2 D4 B3:3",w:"lo-cki-gen Haar,"},
+  {c:"D7",m:"A4:2 A4 C5:3/2 A4:1/2 F#4",w:"schlaf in himm-li-scher"},{c:"G",m:"G4:3 B4:3",w:"Ruh’!"},{c:"G D7",m:"G4 D4 B3 D4:3/2 C4:1/2 A3",w:"Schlaf in himm-li-scher"},{c:"G",m:"G3:6",w:"Ruh’!"}]},
+ // Klarinette (DE)
+ {id:"de-jakob",ln:"de",for:["k"],lvl:"easy",title:"Bruder Jakob",meter:"4/4",info:()=>"Volkslied, Melodie 18. Jh. · gemeinfrei",
+  tr:{k:0},lines:[4,4],bars:[
+  {c:"",m:"C4 D4 E4 C4",w:"Bru-der Ja-kob,"},{c:"",m:"C4 D4 E4 C4",w:"Bru-der Ja-kob,"},{c:"",m:"E4 F4 G4:2",w:"schläfst du noch?"},{c:"",m:"E4 F4 G4:2",w:"Schläfst du noch?"},
+  {c:"",m:"G4:1/2 A4:1/2 G4:1/2 F4:1/2 E4 C4",w:"Hörst du nicht die Glo-cken?"},{c:"",m:"G4:1/2 A4:1/2 G4:1/2 F4:1/2 E4 C4",w:"Hörst du nicht die Glo-cken?"},{c:"",m:"C4 G3 C4:2",w:"Ding, dang, dong!"},{c:"",m:"C4 G3 C4:2",w:"Ding, dang, dong!"}]},
+ {id:"de-geburtstag",ln:"de",for:["k"],lvl:"medium",title:"Zum Geburtstag viel Glück",meter:"3/4",info:()=>"Melodie Mildred J. & Patty Hill 1893, deutscher Text überliefert · gemeinfrei",
+  tr:{k:0},lines:[5,4],bars:[
+  {c:"",m:"G3:3/4 G3:1/4",w:"Zum Ge-"},{c:"",m:"A3 G3 C4",w:"-burts-tag viel"},{c:"",m:"B3:2 G3:3/4 G3:1/4",w:"Glück, zum Ge-"},{c:"",m:"A3 G3 D4",w:"-burts-tag viel"},{c:"",m:"C4:2 G3:3/4 G3:1/4",w:"Glück, zum Ge-"},
+  {c:"",m:"G4 E4 C4",w:"-burts-tag, lie-"},{c:"",m:"B3 A3 F4:3/4 F4:1/4",w:"-ber Freund, zum Ge-"},{c:"",m:"E4 C4 D4",w:"-burts-tag viel"},{c:"",m:"C4:3",w:"Glück!"}]},
+ // Saz (DE)
+ {id:"de-entchen",ln:"de",for:["s"],lvl:"easy",title:"Alle meine Entchen",meter:"4/4",info:()=>"Volkslied, 19. Jh. · gemeinfrei",
+  tr:{s:12},lines:[4,2,4],bars:[
+  {c:"",m:"C4 D4 E4 F4",w:"Al-le mei-ne"},{c:"",m:"G4:2 G4:2",w:"Ent-chen"},{c:"",m:"A4 A4 A4 A4",w:"schwim-men auf dem"},{c:"",m:"G4:4",w:"See,"},
+  {c:"",m:"A4 A4 A4 A4",w:"schwim-men auf dem"},{c:"",m:"G4:4",w:"See."},
+  {c:"",m:"F4 F4 F4 F4",w:"Köpf-chen in das"},{c:"",m:"E4:2 E4:2",w:"Was-ser,"},{c:"",m:"D4 D4 D4 D4",w:"Schwänz-chen in die"},{c:"",m:"C4:4",w:"Höh’."}]},
+ {id:"de-haensel",ln:"de",for:["s"],lvl:"medium",title:"Hänschen klein",meter:"4/4",info:()=>"Volkslied, Text Franz Wiedemann 1860 · gemeinfrei",
+  tr:{s:12},lines:[4,4,4,4],bars:[
+  {c:"",m:"G4 E4 E4:2",w:"Häns-chen klein"},{c:"",m:"F4 D4 D4:2",w:"ging al-lein"},{c:"",m:"C4 D4 E4 F4",w:"in die wei-te"},{c:"",m:"G4 G4 G4:2",w:"Welt hin-ein."},
+  {c:"",m:"G4 E4 E4:2",w:"Stock und Hut"},{c:"",m:"F4 D4 D4:2",w:"steht ihm gut,"},{c:"",m:"C4 E4 G4 G4",w:"ist gar wohl-ge-"},{c:"",m:"C4:4",w:"-mut."},
+  {c:"",m:"D4 D4 D4 D4",w:"A-ber Mut-ter"},{c:"",m:"D4 E4 F4:2",w:"wei-net sehr,"},{c:"",m:"E4 E4 E4 E4",w:"hat ja nun kein"},{c:"",m:"E4 F4 G4:2",w:"Häns-chen mehr."},
+  {c:"",m:"G4 E4 E4:2",w:"Da be-sinnt"},{c:"",m:"F4 D4 D4:2",w:"sich das Kind,"},{c:"",m:"C4 E4 G4 G4",w:"kehrt nach Haus ge-"},{c:"",m:"C4:4",w:"-schwind."}]},
+ // Ney (DE)
+ {id:"de-freude",ln:"de",for:["n"],lvl:"easy",lvlFor:{n:"medium"},title:"Ode an die Freude",meter:"4/4",info:()=>"Beethoven 1824, Text Friedrich Schiller · gemeinfrei",
+  tr:{n:7},lines:[4,4,4,4],bars:[
+  {c:"",m:"E4 E4 F4 G4",w:"Freu-de, schö-ner"},{c:"",m:"G4 F4 E4 D4",w:"Göt-ter-fun-ken,"},{c:"",m:"C4 C4 D4 E4",w:"Toch-ter aus E-"},{c:"",m:"E4:3/2 D4:1/2 D4:2",w:"-ly-si-um!"},
+  {c:"",m:"E4 E4 F4 G4",w:"Wir be-tre-ten"},{c:"",m:"G4 F4 E4 D4",w:"feu-er-trun-ken,"},{c:"",m:"C4 C4 D4 E4",w:"Himm-li-sche, dein"},{c:"",m:"D4:3/2 C4:1/2 C4:2",w:"Hei-lig-tum!"},
+  {c:"",m:"D4 D4 E4 C4",w:"Dei-ne Zau-ber"},{c:"",m:"D4 E4:1/2 F4:1/2 E4 C4",w:"bin-den wie-der,"},{c:"",m:"D4 E4:1/2 F4:1/2 E4 D4",w:"was die Mo-de"},{c:"",m:"C4 D4 G3:2",w:"streng ge-teilt;"},
+  {c:"",m:"E4 E4 F4 G4",w:"al-le Men-schen"},{c:"",m:"G4 F4 E4 D4",w:"wer-den Brü-der,"},{c:"",m:"C4 C4 D4 E4",w:"wo dein sanf-ter"},{c:"",m:"D4:3/2 C4:1/2 C4:2",w:"Flü-gel weilt."}]},
+
+ /* ---------------- TÜRKÇE ---------------- */
+ // Gitar (TR) – La minör, Am ve E7 ile
+ {id:"tr-uskudar",ln:"tr",for:["g"],lvl:"hard",title:"Üsküdar’a Gider İken",meter:"4/4",info:()=>"Anonim, Osmanlı dönemi (İstanbul) · kamu malı",
+  tr:{g:0},lines:[4,4,4,4],bars:[
+  {c:"Am",m:"A3:3/2 E4:1/2 E4 E4",w:"Üs-kü-dar’a"},{c:"Am",m:"F4:1/2 E4:1/2 F4:1/2 G4:1/2 E4 E4",w:"gi-der i-ken al-dı"},{c:"E7",m:"D4 D4:1/2 D4:1/2 C4 D4",w:"da bir yağ-"},{c:"Am",m:"E4:4",w:"-mur."},
+  {c:"Am",m:"A3:3/2 E4:1/2 E4 E4",w:"Kâ-ti-bi-min"},{c:"Am",m:"F4:1/2 E4:1/2 F4:1/2 G4:1/2 E4 E4",w:"set-re-si u-zun"},{c:"E7",m:"D4 D4:1/2 D4:1/2 C4 D4",w:"e-te-ği ça-"},{c:"Am",m:"E4:4",w:"-mur."},
+  {c:"Am",m:"A3:3/2 B3:1/2 C4 D4",w:"Kâ-tip uy-ku-"},{c:"Am",m:"E4:1/2 F4:1/2 E4:1/2 D4:1/2 C4:1/2 B3:1/2 A3",w:"-dan u-yan-mış"},{c:"E7",m:"B3:3/2 C4:1/2 B3:1/2 A3:1/2 G#3:1/2 A3:1/2",w:"göz-le-ri mah-"},{c:"E",m:"B3:4",w:"-mur."},
+  {c:"Am",m:"A3:3/2 B3:1/2 C4 D4",w:"Kâ-tip be-nim"},{c:"Am",m:"E4:1/2 F4:1/2 E4:1/2 D4:1/2 C4:1/2 B3:1/2 A3",w:"ben kâ-ti-bin"},{c:"E7",m:"D4:1/2 C4:1/2 C4:1/2 B3:1/2 B3:1/2 A3:1/2 G#3:1/2 B3:1/2",w:"el ne ka-rı-"},{c:"Am",m:"A3:4",w:"-şır."}]},
+ // Klarnet (TR) – yazılı ses, La♭ = Sol♯ perdesi
+ {id:"tr-canakkale",ln:"tr",for:["k"],lvl:"medium",title:"Çanakkale İçinde",meter:"4/4",info:()=>"Anonim, Çanakkale Savaşı 1915 · kamu malı",
+  tr:{k:0},lines:[4,3,5],bars:[
+  {c:"",m:"C4:1/2",w:"Ça-"},{c:"",m:"D4:1/2 D4 D4:1/2 C5 B4:1/2 C5:1/2",w:"-nak-ka-le i-çin-"},{c:"",m:"A4:3/2 G4:1/2 A4 A4:1/2 B4:1/2",w:"-de ay-na-"},{c:"",m:"C5:1/2 A4:1/2 A4:1/2 G4:1/2 G4:3/2 C4:1/2",w:"-lı çar-şı. A-"},
+  {c:"",m:"D4:1/2 D4 D4:1/2 C5 B4:1/2 C5:1/2",w:"-na ben gi-di-"},{c:"",m:"A4:3/2 G4:1/2 A4 A4:1/2 B4:1/2",w:"-yom düş-ma-"},{c:"",m:"C5:1/2 A4:1/2 A4:1/2 G4:1/2 G4 A4:1/2 A4:1/2",w:"-na kar-şı. Of,"},
+  {c:"",m:"A4 A4 G4 G#4:1/2 G4:1/2",w:"of, gen-"},{c:"",m:"F4:1/2 E4:1/2 F4 E4:1/2 F4:1/2 G4",w:"-çli-ğim"},{c:"",m:"G#4:1/2 G4:1/2 F4:1/2 E4:1/2 D4:2",w:"ey-vah!"},{c:"",m:"F4:1/2 E4:1/2 F4:1/2 G4:1/2 F4:3/2 E4:1/2",w:"Of, gen-çli-"},{c:"",m:"G4:1/2 E4:1/2 E4:1/2 D4:1/2 D4:2",w:"-ğim ey-vah!"}]},
+ // Saz (TR) – Si üzerinde Hicaz, alt telde
+ {id:"tr-dandini",ln:"tr",for:["s"],lvl:"easy",title:"Dandini Dandini Dastana",meter:"7/8",info:()=>"Anonim ninni · kamu malı",
+  tr:{s:12},lines:[2,2,2,2],bars:[
+  {c:"",m:"A3:2 B3 B3 B3:2 B3",w:"Dan-di-ni dan-di-"},{c:"",m:"B3 D#4 E4 F#4 D#4 E4:2",w:"-ni das-ta-na,"},
+  {c:"",m:"E4 E4 E4 D#4 C4:2 B3",w:"Da-na-lar gir-miş"},{c:"",m:"C4 D#4:2 D#4 E4 C4:2",w:"bos-ta-na."},
+  {c:"",m:"E4:2 E4 D#4 C4:2 B3",w:"Kov bos-tan-cı"},{c:"",m:"C4 D#4 D#4:2 E4 C4:2",w:"da-na-yı,"},
+  {c:"",m:"A3:2 B3:2 B3:2 D#4",w:"Ye-me-sin"},{c:"",m:"E4 D#4 C4 C4 B3 B3:2",w:"la-ha-na-yı."}]},
+ // Ney (TR) – Rast’ta Hicaz dörtlüsü
+ {id:"tr-canakkale-nakarat",ln:"tr",for:["n"],lvl:"medium",title:"Çanakkale Türküsü – Nakarat",meter:"4/4",info:()=>"Anonim, 1915 · nakarat kısmı · kamu malı",
+  tr:{n:5},lines:[3,3],bars:[
+  {c:"",m:"A4:1/2 A4:1/2",w:"Of,"},{c:"",m:"A4 A4 G4 G#4:1/2 G4:1/2",w:"of, gen-"},{c:"",m:"F4:1/2 E4:1/2 F4 E4:1/2 F4:1/2 G4",w:"-çli-ğim"},
+  {c:"",m:"G#4:1/2 G4:1/2 F4:1/2 E4:1/2 D4:2",w:"ey-vah!"},{c:"",m:"F4:1/2 E4:1/2 F4:1/2 G4:1/2 F4:3/2 E4:1/2",w:"Of, gen-çli-"},{c:"",m:"G4:1/2 E4:1/2 E4:1/2 D4:1/2 D4:2",w:"-ğim ey-vah!"}]}
 ];
 const slLvl=(s,id)=>(s.lvlFor&&s.lvlFor[id])||s.lvl;
 const SL_LVL=()=>({easy:X("Easy","Leicht","Kolay"),medium:X("Medium","Mittel","Orta"),hard:X("Hard","Schwer","Zor")});
@@ -1964,13 +2071,14 @@ const SL_PC={C:0,D:2,E:4,F:5,G:7,A:9,B:11};
 /** "E4:3/2" → {m:64,b:1.5}; "R" → rest */
 function slParse(str,tr){ return str.trim().split(/\s+/).map(t=>{ const [n,d]=t.split(":"); const b=d?(d.includes("/")?d.split("/").reduce((a,c)=>a/c):+d):1;
   if(n==="R") return {rest:true,b}; const m=n.match(/^([A-G])([#b]?)(\d)$/); return {m:(+m[3]+1)*12+SL_PC[m[1]]+(m[2]==="#"?1:m[2]==="b"?-1:0)+tr,b}; }); }
-function slSongs(id){ return SONGLIB.filter(s=>s.for.includes(id)); }
+function slSongs(id){ return SONGLIB.filter(s=>s.for.includes(id)&&s.ln===lang); }
 const SL_STATE={};
 function songLibHTML(M){
   const id=M.lib, list=slSongs(id), lv=SL_LVL();
   return `<div class="panel"><h2>${X("Song library","Liederbibliothek","Şarkı kütüphanesi")}</h2>
   <p class="lead">${id==="g"?X("Well-known songs with lyrics and chords. Strum one chord per bar (pattern 1) or pick it. Tap a bar to see its chord.","Bekannte Lieder mit Text und Akkorden. Spiel pro Takt einen Akkord (Anschlag 1) oder zupfe ihn. Tippe einen Takt an, um den Griff zu sehen.","Sözleri ve akorlarıyla bilinen şarkılar. Ölçü başına bir akor çal (ritim 1) ya da parmakla çal. Akoru görmek için bir ölçüye dokun."):X("Well-known songs with lyrics and the melody in notes you have learned. Tap a bar to hear it and see the fingering of its first note.","Bekannte Lieder mit Text und der Melodie in Tönen, die du gelernt hast. Tippe einen Takt an, um ihn zu hören und den Griff des ersten Tons zu sehen.","Sözleri ve öğrendiğin seslerle melodisiyle bilinen şarkılar. Dinlemek ve ilk sesin pozisyonunu görmek için bir ölçüye dokun.")} ${X("All lyrics are public domain.","Alle Texte sind gemeinfrei.","Tüm sözler kamu malıdır.")}</p>
-  ${["easy","medium","hard"].map(l=>`<div class="row" style="margin:6px 0"><span class="eyebrow" style="width:64px">${lv[l]}</span><div class="chips">${list.filter(s=>slLvl(s,id)===l).map(s=>`<button class="chip" data-song="${s.id}" style="font-size:.9rem">${s.title}</button>`).join("")}</div></div>`).join("")}
+  <p class="muted small" style="margin-top:-4px">${X("The songs follow the page language and are chosen for this instrument. Switch to DE or TR for German or Turkish songs.","Die Lieder richten sich nach der Seitensprache und passen zu diesem Instrument. Mit EN oder TR bekommst du englische oder türkische Lieder.","Şarkılar sayfa diline göre değişir ve bu çalgıya göre seçilmiştir. İngilizce veya Almanca şarkılar için EN ya da DE seç.")}</p>
+  ${["easy","medium","hard"].filter(l=>list.some(s=>slLvl(s,id)===l)).map(l=>`<div class="row" style="margin:6px 0"><span class="eyebrow" style="width:64px">${lv[l]}</span><div class="chips">${list.filter(s=>slLvl(s,id)===l).map(s=>`<button class="chip" data-song="${s.id}" style="font-size:.9rem">${s.title}</button>`).join("")}</div></div>`).join("")}
   <div id="slView" style="margin-top:14px"></div>
   <div class="row" style="margin-top:12px"><label for="slBpm">${X("Tempo","Tempo","Tempo")}</label><input type="range" id="slBpm" min="40" max="140"><span class="muted" id="slBpmVal"></span>
    ${id==="g"?`<label><input type="checkbox" id="slMel" checked> ${X("Melody","Melodie","Melodi")}</label>`:""}</div>
@@ -1978,7 +2086,8 @@ function songLibHTML(M){
   <div class="tool" style="margin-top:14px"><div class="diagram" id="slDiag"></div><div><h3 id="slNow" style="margin-top:0"></h3><ol class="steps" id="slSteps"></ol></div></div></div>`;
 }
 function bindSongLib(root,M){
-  const id=M.lib, $=x=>root.querySelector("#"+x), st=SL_STATE[id]=SL_STATE[id]||{song:slSongs(id)[0].id,bpm:id==="g"?80:70};
+  const id=M.lib, $=x=>root.querySelector("#"+x), list=slSongs(id), sk=id+"-"+lang, st=SL_STATE[sk]=SL_STATE[sk]||{song:list[0].id,bpm:id==="g"?80:70};
+  if(!list.some(x=>x.id===st.song)) st.song=list[0].id;
   let timers=[];
   const song=()=>SONGLIB.find(s=>s.id===st.song);
   const noteLbl=n=>n.rest?"–":M.nm?M.nm(n.m):noteName(n.m);
